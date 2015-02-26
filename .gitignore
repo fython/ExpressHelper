@@ -27,3 +27,5 @@ unused.txt
 /keystore/publish.keystore.properties
 /PagerSlidingTabStrip/bin
 /PagerSlidingTabStrip/gen
+/.gradle
+/.idea/libraries

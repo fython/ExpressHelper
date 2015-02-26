@@ -7,5 +7,9 @@
 	<string name="title_section_1">Home</string>
 	<string name="title_section_2">Favorite</string>
 	<string name="title_section_3">Sort by name</string>
+
+	<string name="title_add_express">Add express track</string>
+	<string name="hint_et_company">Express company name</string>
+	<string name="hint_et_number">Express No.</string>
 	
 </resources>

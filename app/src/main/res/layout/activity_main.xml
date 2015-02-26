@@ -28,7 +28,20 @@
 		<FrameLayout
 			android:id="@+id/container"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
+			android:layout_height="match_parent">
+
+			<com.melnykov.fab.FloatingActionButton
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/fab"
+				android:layout_gravity="right|bottom"
+				android:layout_marginBottom="16dp"
+				android:layout_marginRight="16dp"
+				android:src="@drawable/ic_add_white_24dp"
+				app:fab_colorNormal="@color/pink_500"
+				app:fab_colorPressed="@color/pink_300"/>
+
+		</FrameLayout>
 
 	</LinearLayout>
 

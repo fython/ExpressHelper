@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<ImageView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:src="@drawable/background_title"
+				android:scaleType="centerCrop"/>
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:text="@string/title_add_express"
+				android:id="@+id/textView"
+				android:layout_gravity="left|bottom"
+				android:paddingLeft="24dp"
+				android:paddingBottom="16dp"
+				android:textColor="@android:color/white"
+				android:textSize="28sp"/>
+
+		</FrameLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp"
+			android:paddingTop="12dp"
+			android:paddingBottom="10dp"
+			android:layout_weight="1">
+
+			<com.rengwuxian.materialedittext.MaterialEditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/et_company"
+				android:hint="@string/hint_et_company"
+				app:floatingLabel="highlight"
+				app:iconLeft="@drawable/ic_local_shipping_black_24dp"
+				app:iconPadding="0dp"/>
+
+			<com.rengwuxian.materialedittext.MaterialEditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/et_number"
+				android:hint="@string/hint_et_number"
+				android:layout_marginTop="4dp"
+				app:floatingLabel="highlight"
+				app:iconLeft="@drawable/ic_assignment_black_24dp"
+				app:iconPadding="0dp"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="@dimen/abc_action_bar_default_height_material"
+			android:orientation="horizontal"
+			android:gravity="right"
+			android:background="#cccc">
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:gravity="center"
+				android:id="@+id/btn_done"
+				android:paddingLeft="48dp"
+				android:paddingRight="48dp"
+				android:layout_marginRight="16dp"
+				android:text="@android:string/ok"
+				android:textAppearance="?android:attr/textAppearanceMedium"
+				android:background="?attr/selectableItemBackgroundBorderless"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<View
+			android:id="@+id/statusHeaderView"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:background="@android:color/transparent"/>
+
+		<android.support.v7.widget.Toolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:background="@android:color/transparent"
+			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+			app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+	</LinearLayout>
+
+</FrameLayout>

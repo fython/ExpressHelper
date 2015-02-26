@@ -3,13 +3,13 @@ package info.papdt.express.helper.ui;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -20,44 +20,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Utility;
 import info.papdt.express.helper.ui.fragment.NavigationDrawerFragment;
 
-public class MainActivity extends ActionBarActivity implements
+public class MainActivity extends AbsActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private FloatingActionButton mFAB;
 
 	private CharSequence mTitle;
 
 	private ActionBarHelper mActionBar;
 
-	private int statusBarHeight;
+	public static final int REQUEST_ADD = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		/** Set up translucent status bar */
-		if (Build.VERSION.SDK_INT >= 19 && !Utility.isChrome()) {
-			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-			statusBarHeight = Utility.getStatusBarHeight(getApplicationContext());
-		}
-
-		if (Build.VERSION.SDK_INT >= 21) {
-			getWindow().setStatusBarColor(Color.TRANSPARENT);
-		}
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		/** Init toolbar */
-		Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(mToolbar);
-
 		/** Init Navigation Drawer */
 		mNavigationDrawerFragment = new NavigationDrawerFragment();
+		mNavigationDrawerFragment.setHeaderHeight(statusBarHeight);
 		mActionBar = new ActionBarHelper();
 		mActionBar.init();
 
@@ -67,14 +57,20 @@ public class MainActivity extends ActionBarActivity implements
 				.commit();
 
 		setUpDrawer();
-		setUpViews();
 	}
 
-	private void setUpViews() {
-		/** Add views padding for Lollipop Devices */
-		View statusBarView = findViewById(R.id.statusHeaderView);
-		statusBarView.getLayoutParams().height = statusBarHeight;
-		mNavigationDrawerFragment.setHeaderHeight(statusBarHeight);
+	@Override
+	protected void setUpViews() {
+		mFAB = (FloatingActionButton) findViewById(R.id.fab);
+
+		mFAB.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, AddActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+				startActivityForResult(intent, REQUEST_ADD);
+			}
+		});
 	}
 
 	private void setUpDrawer() {
