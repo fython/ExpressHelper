@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
-		<item name="colorPrimary">@android:color/holo_blue_bright</item>
-		<item name="colorPrimaryDark">@android:color/holo_blue_light</item>
+		<item name="colorPrimary">@color/pink_500</item>
+		<item name="colorPrimaryDark">@color/pink_800</item>
 	</style>
+
+	<style name="AppTheme.NoActionBar" parent="@style/AppTheme">
+		<item name="windowActionBar">false</item>
+	</style>
+
 </resources>

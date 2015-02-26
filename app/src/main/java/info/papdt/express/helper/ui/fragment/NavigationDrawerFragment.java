@@ -21,8 +21,10 @@ public class NavigationDrawerFragment extends Fragment {
 	private NavigationDrawerCallbacks mCallbacks;
 
 	private ListView mDrawerListView;
+	private View statusHeaderView;
 
 	private int mCurrentSelectedPosition = 0;
+	private int statusHeaderHeight = 0;
 
 	public NavigationDrawerFragment() {
 	}
@@ -49,6 +51,8 @@ public class NavigationDrawerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_drawer,container, false);
+		statusHeaderView = v.findViewById(R.id.statusHeaderView);
+		statusHeaderView.getLayoutParams().height = statusHeaderHeight;
 		mDrawerListView = (ListView) v.findViewById(R.id.drawer_list);
 		mDrawerListView
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -103,6 +107,13 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private ActionBar getActionBar() {
 		return ((ActionBarActivity) getActivity()).getSupportActionBar();
+	}
+
+	public void setHeaderHeight(int height) {
+		statusHeaderHeight = height;
+		if (statusHeaderView != null) {
+			statusHeaderView.getLayoutParams().height = height;
+		}
 	}
 
 	public static interface NavigationDrawerCallbacks {

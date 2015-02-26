@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="AppTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+		<item name="colorPrimary">@color/pink_500</item>
+		<item name="colorPrimaryDark">@color/pink_800</item>
+
+		<item name="android:windowTranslucentStatus">true</item>
+	</style>
+
+</resources>
