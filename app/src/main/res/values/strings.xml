@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExpressHelper</string>
+    <string name="navigation_drawer_open">Open Drawer</string>
+	<string name="navigation_drawer_close">Close Drawer</string>
+	<string name="title_section_1">Home</string>
+	<string name="title_section_2">Favorite</string>
+	<string name="title_section_3">Sort by name</string>
+	
+</resources>
