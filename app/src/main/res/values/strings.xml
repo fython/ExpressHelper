@@ -11,5 +11,11 @@
 	<string name="title_add_express">Add express track</string>
 	<string name="hint_et_company">Express company name</string>
 	<string name="hint_et_number">Express No.</string>
+	<string name="toast_company_name_empty">Company name can\'t be empty.</string>
+	<string name="toast_number_empty">Please enter your express number.</string>
+	<string name="toast_company_not_exist">This company name isn\'t exist or unsupported.</string>
+	<string name="toast_network_error">Network error! Check your connection and try again.</string>
+	<string name="toast_client_error">Client error! Please contact the author.</string>
+	<string name="toast_unknown_error">Unknown error!</string>
 	
 </resources>

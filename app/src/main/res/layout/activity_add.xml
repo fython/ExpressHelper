@@ -16,6 +16,7 @@
 			<ImageView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:id="@+id/background_title"
 				android:src="@drawable/background_title"
 				android:scaleType="centerCrop"/>
 
@@ -24,12 +25,21 @@
 				android:layout_height="wrap_content"
 				android:textAppearance="?android:attr/textAppearanceLarge"
 				android:text="@string/title_add_express"
-				android:id="@+id/textView"
+				android:id="@+id/tv_title"
 				android:layout_gravity="left|bottom"
 				android:paddingLeft="24dp"
 				android:paddingBottom="16dp"
 				android:textColor="@android:color/white"
 				android:textSize="28sp"/>
+
+			<ProgressBar
+				style="?android:attr/progressBarStyleHorizontal"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/progressBar"
+				android:layout_gravity="bottom"
+				android:visibility="invisible"
+				android:indeterminate="true"/>
 
 		</FrameLayout>
 
@@ -48,6 +58,8 @@
 				android:layout_height="wrap_content"
 				android:id="@+id/et_company"
 				android:hint="@string/hint_et_company"
+				android:singleLine="true"
+				android:maxLength="10"
 				app:floatingLabel="highlight"
 				app:iconLeft="@drawable/ic_local_shipping_black_24dp"
 				app:iconPadding="0dp"/>
@@ -57,7 +69,9 @@
 				android:layout_height="wrap_content"
 				android:id="@+id/et_number"
 				android:hint="@string/hint_et_number"
+				android:singleLine="true"
 				android:layout_marginTop="4dp"
+				android:inputType="textEmailAddress"
 				app:floatingLabel="highlight"
 				app:iconLeft="@drawable/ic_assignment_black_24dp"
 				app:iconPadding="0dp"/>

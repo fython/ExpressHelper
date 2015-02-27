@@ -1,17 +1,13 @@
 package info.papdt.express.helper.ui;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,23 +18,26 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.melnykov.fab.FloatingActionButton;
 
+import java.io.IOException;
+
 import info.papdt.express.helper.R;
-import info.papdt.express.helper.support.Utility;
+import info.papdt.express.helper.dao.ExpressDatabase;
+import info.papdt.express.helper.ui.fragment.HomeFragment;
 import info.papdt.express.helper.ui.fragment.NavigationDrawerFragment;
 
 public class MainActivity extends AbsActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+	public ExpressDatabase mExpressDB;
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 	private FloatingActionButton mFAB;
 
-	private CharSequence mTitle;
-
 	private ActionBarHelper mActionBar;
 
-	public static final int REQUEST_ADD = 0;
+	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,10 @@ public class MainActivity extends AbsActivity implements
 		mNavigationDrawerFragment.setHeaderHeight(statusBarHeight);
 		mActionBar = new ActionBarHelper();
 		mActionBar.init();
+
+		/** Init Database */
+		mExpressDB = new ExpressDatabase(getApplicationContext());
+		mExpressDB.init();
 
 		getFragmentManager()
 				.beginTransaction()
@@ -113,12 +116,41 @@ public class MainActivity extends AbsActivity implements
 	}
 
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		switch (requestCode) {
+			case REQUEST_ADD:
+				if (resultCode == RESULT_ADD_FINISH) {
+					String jsonStr = intent.getStringExtra("result");
+					mExpressDB.addExpress(jsonStr);
+				}
+				break;
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		try {
+			mExpressDB.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		FragmentManager fragmentManager = getFragmentManager();
+		Fragment fragment;
+		switch (position) {
+			case 0:
+				fragment = HomeFragment.newInstance();
+			default:
+				fragment = PlaceholderFragment.newInstance();
+		}
 		fragmentManager
 				.beginTransaction()
-				.replace(R.id.container,
-						PlaceholderFragment.newInstance(position + 1)).commit();
+				.replace(R.id.container, fragment)
+				.commit();
 		try {
 			mDrawerLayout.closeDrawer(Gravity.LEFT);
 		} catch (NullPointerException e) {
@@ -126,29 +158,10 @@ public class MainActivity extends AbsActivity implements
 		}
 	}
 
-	public void onSectionAttached(int number) {
-		switch (number) {
-		case 1:
-			mTitle = getString(R.string.title_section_1);
-			break;
-		case 2:
-			mTitle = getString(R.string.title_section_2);
-			break;
-		case 3:
-			mTitle = getString(R.string.title_section_3);
-			break;
-		}
-	}
-
-	public void restoreActionBar() {
-		mActionBar.setTitle(mTitle);
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// getMenuInflater().inflate(R.menu.main, menu);
 		if (!isDrawerOpen()) {
-			restoreActionBar();
 			return true;
 		}
 		return super.onCreateOptionsMenu(menu);
@@ -157,8 +170,6 @@ public class MainActivity extends AbsActivity implements
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-
-		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
 
@@ -181,13 +192,8 @@ public class MainActivity extends AbsActivity implements
 
 	public static class PlaceholderFragment extends Fragment {
 
-		private static final String ARG_SECTION_NUMBER = "section_number";
-
-		public static PlaceholderFragment newInstance(int sectionNumber) {
+		public static PlaceholderFragment newInstance() {
 			PlaceholderFragment fragment = new PlaceholderFragment();
-			Bundle args = new Bundle();
-			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-			fragment.setArguments(args);
 			return fragment;
 		}
 
@@ -197,17 +203,10 @@ public class MainActivity extends AbsActivity implements
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_home, container,
-					false);
+			View rootView = inflater.inflate(R.layout.fragment_placeholder, container, false);
 			return rootView;
 		}
 
-		@Override
-		public void onAttach(Activity activity) {
-			super.onAttach(activity);
-			((MainActivity) activity).onSectionAttached(getArguments().getInt(
-					ARG_SECTION_NUMBER));
-		}
 	}
 
 	private class MyDrawerListener implements DrawerLayout.DrawerListener {
@@ -257,9 +256,6 @@ public class MainActivity extends AbsActivity implements
 			mActionBar.setTitle(mDrawerTitle);
 		}
 
-		public void setTitle(CharSequence title) {
-			mTitle = title;
-		}
 	}
 
 }
