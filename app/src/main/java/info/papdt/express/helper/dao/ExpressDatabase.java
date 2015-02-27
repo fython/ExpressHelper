@@ -65,6 +65,7 @@ public class ExpressDatabase {
 	}
 
 	public void init(){
+		mExpressArray = new ArrayList<>();
 		String jsonData;
 		try {
 			jsonData = Utility.readFile(context, "data.json");
@@ -108,25 +109,18 @@ public class ExpressDatabase {
 		}
 	}
 
-	public void save() throws IOException{
-		StringBuffer str = new StringBuffer();
-		str.append("{\"data\":[");
+	public void save() throws IOException, JSONException{
+		JSONObject obj = new JSONObject();
+		JSONArray array = new JSONArray();
 		for (int i = 0; i < mExpressArray.size(); i++){
-			str.append("{\"companyName\":\"");
-			str.append(mExpressArray.get(i).getCompanyCode());
-			str.append("\",");
-
-			str.append("\"date\":\"");
-			str.append(mExpressArray.get(i).getMailNumber());
-			str.append("\",");
-
-			str.append("\"cache\":\"");
-			str.append(mExpressArray.get(i).getData());
-			str.append("\"}");
-			if (i < mExpressArray.size() -1) str.append(",");
+			JSONObject obj0 = new JSONObject();
+			obj0.put("companyCode", mExpressArray.get(i).getCompanyCode());
+			obj0.put("mailNumber", mExpressArray.get(i).getMailNumber());
+			obj0.put("cache", mExpressArray.get(i).getData());
+			array.put(obj0);
 		}
-		str.append("]}");
-		Utility.saveFile(context, "data.json", str.toString());
+		obj.put("data", array);
+		Utility.saveFile(context, "data.json", obj.toString());
 	}
 
 }

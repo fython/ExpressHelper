@@ -4,7 +4,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +20,8 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import com.melnykov.fab.FloatingActionButton;
+
+import org.json.JSONException;
 
 import java.io.IOException;
 
@@ -37,6 +42,8 @@ public class MainActivity extends AbsActivity implements
 
 	private ActionBarHelper mActionBar;
 
+	private HomeFragment fragmentHome;
+
 	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100;
 
 	@Override
@@ -52,7 +59,7 @@ public class MainActivity extends AbsActivity implements
 
 		/** Init Database */
 		mExpressDB = new ExpressDatabase(getApplicationContext());
-		mExpressDB.init();
+		refreshDatabase();
 
 		getFragmentManager()
 				.beginTransaction()
@@ -60,6 +67,10 @@ public class MainActivity extends AbsActivity implements
 				.commit();
 
 		setUpDrawer();
+	}
+
+	public void refreshDatabase() {
+		mExpressDB.init();
 	}
 
 	@Override
@@ -74,6 +85,10 @@ public class MainActivity extends AbsActivity implements
 				startActivityForResult(intent, REQUEST_ADD);
 			}
 		});
+
+		if (Build.VERSION.SDK_INT >= 21) {
+			mToolbar.setElevation(11.0f);
+		}
 	}
 
 	private void setUpDrawer() {
@@ -122,6 +137,7 @@ public class MainActivity extends AbsActivity implements
 				if (resultCode == RESULT_ADD_FINISH) {
 					String jsonStr = intent.getStringExtra("result");
 					mExpressDB.addExpress(jsonStr);
+					fragmentHome.mHandler.sendEmptyMessage(HomeFragment.FLAG_REFRESH_LIST);
 				}
 				break;
 		}
@@ -134,6 +150,8 @@ public class MainActivity extends AbsActivity implements
 			mExpressDB.save();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -143,7 +161,11 @@ public class MainActivity extends AbsActivity implements
 		Fragment fragment;
 		switch (position) {
 			case 0:
-				fragment = HomeFragment.newInstance();
+				if (fragmentHome == null) {
+					fragmentHome = HomeFragment.newInstance();
+				}
+				fragment = fragmentHome;
+				break;
 			default:
 				fragment = PlaceholderFragment.newInstance();
 		}

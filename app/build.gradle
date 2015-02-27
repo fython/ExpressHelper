@@ -32,4 +32,5 @@ dependencies {
     compile 'com.android.support:support-v13:21.0.3'
     compile 'com.melnykov:floatingactionbutton:1.1.0'
     compile 'com.rengwuxian.materialedittext:library:1.8.2'
+    compile 'de.hdodenhof:circleimageview:1.2.2'
 }
