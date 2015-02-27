@@ -1,12 +1,12 @@
 package info.papdt.express.helper.ui.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
+import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 
@@ -47,7 +48,10 @@ public class HomeFragment extends Fragment {
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+				Intent intent = new Intent(getActivity(), DetailsActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+				intent.putExtra("data", mDB.getExpress(position).toJSONObject().toString());
+				startActivity(intent);
 			}
 		});
 		mListView.setOnLongClickListener(new View.OnLongClickListener() {

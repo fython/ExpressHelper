@@ -1,5 +1,8 @@
 package info.papdt.express.helper.support;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Express {
 
 	private String companyCode, mailNumber;
@@ -32,6 +35,18 @@ public class Express {
 
 	public void setMailNumber(String mailNumber){
 		this.mailNumber = mailNumber;
+	}
+
+	public JSONObject toJSONObject() {
+		JSONObject obj0 = new JSONObject();
+		try {
+			obj0.put("companyCode", getCompanyCode());
+			obj0.put("mailNumber", getMailNumber());
+			obj0.put("cache", getData());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return obj0;
 	}
 
 }

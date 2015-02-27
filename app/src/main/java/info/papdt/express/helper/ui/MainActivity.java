@@ -85,10 +85,6 @@ public class MainActivity extends AbsActivity implements
 				startActivityForResult(intent, REQUEST_ADD);
 			}
 		});
-
-		if (Build.VERSION.SDK_INT >= 21) {
-			mToolbar.setElevation(11.0f);
-		}
 	}
 
 	private void setUpDrawer() {
@@ -137,6 +133,13 @@ public class MainActivity extends AbsActivity implements
 				if (resultCode == RESULT_ADD_FINISH) {
 					String jsonStr = intent.getStringExtra("result");
 					mExpressDB.addExpress(jsonStr);
+					try {
+						mExpressDB.save();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 					fragmentHome.mHandler.sendEmptyMessage(HomeFragment.FLAG_REFRESH_LIST);
 				}
 				break;

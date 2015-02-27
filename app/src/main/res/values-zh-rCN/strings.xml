@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">水表助手</string>
+    <string name="navigation_drawer_open">展开抽屉</string>
+	<string name="navigation_drawer_close">关闭抽屉</string>
+	<string name="title_section_1">主页</string>
+	<string name="title_section_3">名字排序</string>
+
+	<string name="title_add_express">新增物流追踪</string>
+	<string name="hint_et_company">物流公司名称</string>
+	<string name="hint_et_number">物流单号</string>
+	<string name="toast_company_name_empty">物流公司名称不可以是空的。</string>
+	<string name="toast_number_empty">请输入你的物流单号。</string>
+	<string name="toast_company_not_exist">这家物流公司不存在或不支持。你可以试试中文简称。</string>
+	<string name="toast_network_error">网络错误！请检查你的连接后重试。</string>
+	<string name="toast_unknown_error">未知错误！</string>
+
+	<string name="title_express_details">详情</string>
+	<string name="item_status">状态</string>
+	<string name="item_companyname">公司名称</string>
+	<string name="item_mailno">物流单号</string>
+	<string name="item_errorcode">错误代码</string>
+	<string name="item_errormessage">错误信息</string>
+
+	<string-array name="status">
+		<item>失败</item>
+		<item>正常</item>
+		<item>在路上</item>
+		<item>已签收</item>
+		<item>退回</item>
+		<item>其它问题</item>
+	</string-array>
+
+	<string-array name="errCode">
+		<item>No error</item>
+		<item>No data</item>
+		<item>API code error</item>
+		<item>Server error</item>
+		<item>Internal error</item>
+		<item>Command error</item>
+		<item>Wrong number</item>
+		<item>Company problem</item>
+		<item>null</item>
+		<item>null</item>
+		<item>Unknow error</item>
+		<item>null</item>
+		<item>null</item>
+		<item>null</item>
+		<item>null</item>
+		<item>null</item>
+		<item>null</item>
+		<item>null</item>
+		<item>null</item>
+		<item>null</item>
+		<item>API error</item>
+		<item>API blocked</item>
+		<item>API used up</item>
+	</string-array>
+	<string name="title_section_2">特别关注</string>
+	<string name="toast_client_error">客户端错误! 请联系作者。</string>
+
+</resources>

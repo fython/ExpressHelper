@@ -30,6 +30,15 @@
 		    </intent-filter>
 	    </activity>
 
+	    <activity
+		    android:name=".ui.DetailsActivity"
+		    android:label="@string/title_express_details"
+		    android:theme="@style/AppTheme.NoActionBar">
+		    <intent-filter>
+			    <action android:name="android.intent.action.MAIN"/>
+		    </intent-filter>
+	    </activity>
+
     </application>
 
 	<uses-permission android:name="android.permission.INTERNET"/>

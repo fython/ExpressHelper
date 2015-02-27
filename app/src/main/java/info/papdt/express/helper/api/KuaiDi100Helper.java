@@ -53,7 +53,9 @@ public class KuaiDi100Helper {
 				JSONObject person2 = (JSONObject) jsonParser2.nextValue();
 				map.put("time", person2.getString("time"));
 				map.put("context", person2.getString("context"));
-				result.data.add(map);
+				if (!person2.getString("context").contains("官网")) {
+					result.data.add(map);
+				}
 			}
 
 		} catch (JSONException e) {

@@ -26,6 +26,14 @@
 			    android:src="@color/pink_500"
 				android:layout_gravity="center"/>
 
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/center_text"
+				android:textColor="@android:color/white"
+				android:layout_gravity="center"
+				android:textSize="32dp"/>
+
 		</FrameLayout>
 
 		<LinearLayout
@@ -40,7 +48,7 @@
 				android:textAppearance="?android:attr/textAppearanceLarge"
 				android:text="Large Text"
 				android:id="@+id/tv_title"
-				android:textSize="18sp"/>
+				android:textSize="16sp"/>
 
 			<TextView
 				android:layout_width="wrap_content"
@@ -48,8 +56,9 @@
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:text="Medium Text"
 				android:id="@+id/tv_desp"
-				android:layout_marginTop="5dp"
-				android:textSize="16sp"/>
+				android:layout_marginTop="2dp"
+				android:layout_marginRight="4dp"
+				android:textSize="14sp"/>
 
 			<TextView
 				android:layout_width="wrap_content"
