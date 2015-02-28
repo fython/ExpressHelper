@@ -29,3 +29,7 @@ unused.txt
 /PagerSlidingTabStrip/gen
 /.gradle
 /.idea/libraries
+local.properties
+*.iml
+.idea/
+.gradle/
