@@ -27,7 +27,8 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 
 	private Settings mSets;
 
-	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider;
+	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider,
+		pref_weibo;
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
@@ -39,6 +40,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		getActivity().setTitle(R.string.title_settings);
 
 		pref_version = findPreference("application_version");
+		pref_weibo = findPreference("sina_weibo");
 		pref_os_license = findPreference("open_source_license");
 		pref_api_provider = findPreference("api_provider");
 		pref_donate = findPreference("donate");
@@ -52,6 +54,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		}
 		pref_version.setSummary(version);
 
+		pref_weibo.setOnPreferenceClickListener(this);
 		pref_os_license.setOnPreferenceClickListener(this);
 		pref_api_provider.setOnPreferenceClickListener(this);
 		pref_donate.setOnPreferenceClickListener(this);
@@ -59,6 +62,10 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 
 	@Override
 	public boolean onPreferenceClick(Preference p) {
+		if (p == pref_weibo) {
+			openWebsite(getString(R.string.item_weibo_author_url));
+			return true;
+		}
 		if (p == pref_os_license) {
 			SettingsActivity.launchActivity(getActivity(), SettingsActivity.FLAG_LICENSE);
 			return true;

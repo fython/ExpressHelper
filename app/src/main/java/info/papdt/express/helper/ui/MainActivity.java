@@ -151,7 +151,8 @@ public class MainActivity extends AbsActivity implements
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					fragmentHome.mHandler.sendEmptyMessage(HomeFragment.FLAG_REFRESH_LIST);
+					fragmentHome.mDB = mExpressDB;
+					fragmentHome.setUpAdapter();
 				}
 				break;
 		}

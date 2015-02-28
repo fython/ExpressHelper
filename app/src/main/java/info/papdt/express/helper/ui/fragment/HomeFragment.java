@@ -14,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -26,7 +28,7 @@ import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 
 public class HomeFragment extends Fragment {
 
-	private ExpressDatabase mDB;
+	public ExpressDatabase mDB;
 
 	private SwipeRefreshLayout refreshLayout;
 	private ListView mListView;
@@ -66,15 +68,7 @@ public class HomeFragment extends Fragment {
 						mAdapter.getItem(position).getCompanyCode(),
 						mAdapter.getItem(position).getMailNumber()
 				);
-				mDB.deleteExpress(realPosition);
-				try {
-					mDB.save();
-				} catch (JSONException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				mAdapter.notifyDataSetChanged();
+				showDeleteDialog(realPosition);
 				return true;
 			}
 		});
@@ -93,6 +87,30 @@ public class HomeFragment extends Fragment {
 		return rootView;
 	}
 
+	private void showDeleteDialog(final int realPosition) {
+		new MaterialDialog.Builder(getActivity())
+				.title(R.string.dialog_delete_title)
+				.content(R.string.dialog_delete_msg)
+				.positiveText(android.R.string.ok)
+				.negativeText(android.R.string.cancel)
+				.callback(new MaterialDialog.ButtonCallback() {
+					@Override
+					public void onPositive(MaterialDialog dialog) {
+						super.onPositive(dialog);
+							mDB.deleteExpress(realPosition);
+						try {
+							mDB.save();
+						} catch (JSONException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						mAdapter.notifyDataSetChanged();
+					}
+				})
+				.show();
+	}
+
 	public Handler mHandler = new Handler() {
 
 		@Override
@@ -109,7 +127,7 @@ public class HomeFragment extends Fragment {
 
 	};
 
-	private void setUpAdapter() {
+	public void setUpAdapter() {
 		mAdapter = new HomeCardAdapter(getActivity().getApplicationContext(), mDB);
 		mListView.setAdapter(mAdapter);
 	}

@@ -67,5 +67,11 @@
 	<string name="item_api_title">物流信息接口提供商</string>
 	<string name="donate_content">"如果这个应用对你有帮助而且你乐意支持我们的工作，你可以透过支付宝向我们捐助一笔小钱。\n你可以扫上面的二维码，或者通过这个地址转账：316643843\@qq.com\n（PS: 不管你捐不捐助，应用程序的功能是不会变化的。）"</string>
 	<string name="item_donate">捐赠</string>
+	<string name="item_application">水表助手 by 纸飞机开发团队</string>
+	<string name="item_weibo">新浪微博</string>
+	<string name="item_weibo_author">\@某烧饼</string>
+	<string name="dialog_delete_title">确认删除？</string>
+	<string name="dialog_delete_msg">这个操作将不可恢复。</string>
+	<string name="details_has_copied">详情信息已经复制到剪贴板。</string>
 
 </resources>

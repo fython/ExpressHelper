@@ -3,10 +3,12 @@
 
 	<PreferenceCategory android:title="@string/category_about">
 
-		<Preference android:key="application_version" android:title="@string/app_name"/>
+		<Preference android:key="application_version" android:title="@string/item_application"/>
+		<Preference android:key="sina_weibo" android:title="@string/item_weibo"
+		            android:summary="@string/item_weibo_author"/>
 		<Preference android:key="open_source_license" android:title="@string/item_open_source_license"/>
 		<Preference android:key="api_provider" android:title="@string/item_api_title"
-			android:summary="@string/item_api_desc"/>
+		            android:summary="@string/item_api_desc"/>
 		<Preference android:key="donate" android:title="@string/item_donate"/>
 
 	</PreferenceCategory>
