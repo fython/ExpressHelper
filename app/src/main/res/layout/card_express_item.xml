@@ -7,7 +7,7 @@
                                     android:foreground="?android:attr/selectableItemBackground"
                                     app:cardPreventCornerOverlap="false"
                                     app:cardCornerRadius="2dp"
-                                    app:cardElevation="5dp">
+                                    app:cardElevation="3dp">
 
 	<LinearLayout
 		android:layout_width="match_parent"

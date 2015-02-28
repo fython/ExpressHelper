@@ -9,9 +9,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
+import info.papdt.express.helper.api.KuaiDi100Helper;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
+import info.papdt.express.helper.support.HttpUtils;
 import info.papdt.express.helper.support.Utility;
 
 public class ExpressDatabase {
@@ -71,7 +74,7 @@ public class ExpressDatabase {
 		for (int i = 0; i < size(); i++) {
 			Express exp = getExpress(i);
 			ExpressResult cache = ExpressResult.buildFromJSON(exp.getData());
-			if (cache.status == 4) {
+			if (cache.status == 3) {
 				array_ok.add(exp);
 			} else {
 				array_ur.add(exp);
@@ -143,15 +146,30 @@ public class ExpressDatabase {
 	public void save() throws IOException, JSONException{
 		JSONObject obj = new JSONObject();
 		JSONArray array = new JSONArray();
-		for (int i = 0; i < mExpressArray.size(); i++){
-			JSONObject obj0 = new JSONObject();
-			obj0.put("companyCode", mExpressArray.get(i).getCompanyCode());
-			obj0.put("mailNumber", mExpressArray.get(i).getMailNumber());
-			obj0.put("cache", mExpressArray.get(i).getData());
-			array.put(obj0);
+		for (Express nowExp : mExpressArray) {
+			array.put(nowExp.toJSONObject());
 		}
 		obj.put("data", array);
 		Utility.saveFile(context, "data.json", obj.toString());
+	}
+
+	public void pullNewDataFromNetwork() {
+		for (Express nowExp : mExpressArray) {
+			String result = getDataFromNetwork(nowExp.getCompanyCode(), nowExp.getMailNumber());
+			nowExp.setData(result);
+		}
+	}
+
+	public String getDataFromNetwork(String companyCode, String mailNumber) {
+		String[] result = new String[1];
+
+		int resultCode = HttpUtils.get(KuaiDi100Helper.getRequestUrl(null, null, companyCode, mailNumber, "utf8"), result);
+		switch (resultCode) {
+			case HttpUtils.CODE_OKAY:
+				return result[0];
+			default:
+				return null;
+		}
 	}
 
 }

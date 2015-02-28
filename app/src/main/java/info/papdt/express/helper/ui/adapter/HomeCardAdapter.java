@@ -21,24 +21,46 @@ public class HomeCardAdapter extends BaseAdapter {
 
 	private LayoutInflater mInflater;
 	private ExpressDatabase db;
+	private int type;
 
 	private int[] defaultColors;
 
+	public static final int TYPE_ALL = 0, TYPE_UNRECEIVED = 1, TYPE_RECEIVED = 2;
+
 	public HomeCardAdapter(Context context, ExpressDatabase db) {
+		this(context, db, TYPE_ALL);
+	}
+
+	public HomeCardAdapter(Context context, ExpressDatabase db, int type) {
 		this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.mInflater = mInflater.cloneInContext(new ContextThemeWrapper(context, R.style.AppTheme_NoActionBar));
 		this.db = db;
 		this.defaultColors = context.getResources().getIntArray(R.array.statusColor);
+		this.type = type;
 	}
 
 	@Override
 	public int getCount() {
-		return db.size();
+		if (type == TYPE_ALL) {
+			return db.size();
+		} else if (type == TYPE_UNRECEIVED) {
+			return db.urSize();
+		} else if (type == TYPE_RECEIVED) {
+			return db.okSize();
+		}
+		return -1;
 	}
 
 	@Override
 	public Express getItem(int i) {
-		return db.getExpress(i);
+		if (type == TYPE_ALL) {
+			return db.getExpress(i);
+		} else if (type == TYPE_UNRECEIVED) {
+			return db.getUnreceivedArray().get(i);
+		} else if (type == TYPE_RECEIVED) {
+			return db.getReceivedArray().get(i);
+		}
+		return null;
 	}
 
 	@Override
@@ -65,12 +87,14 @@ public class HomeCardAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		ExpressResult cache = ExpressResult.buildFromJSON(db.getExpress(i).getData());
+		Express nowItem = getItem(i);
+
+		ExpressResult cache = ExpressResult.buildFromJSON(nowItem.getData());
 
 		ColorDrawable drawable = new ColorDrawable(defaultColors[cache.status]);
 		holder.iv_round.setImageDrawable(drawable);
 
-		holder.tv_title.setText(db.getExpress(i).getMailNumber());
+		holder.tv_title.setText(nowItem.getMailNumber());
 
 		String desp, time;
 		try {

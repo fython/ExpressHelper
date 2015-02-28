@@ -29,6 +29,8 @@ import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.ui.fragment.HomeFragment;
 import info.papdt.express.helper.ui.fragment.NavigationDrawerFragment;
+import info.papdt.express.helper.ui.fragment.ReceivedListFragment;
+import info.papdt.express.helper.ui.fragment.UnreceivedListFragment;
 
 public class MainActivity extends AbsActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -43,6 +45,8 @@ public class MainActivity extends AbsActivity implements
 	private ActionBarHelper mActionBar;
 
 	private HomeFragment fragmentHome;
+	private ReceivedListFragment fragmentOK;
+	private UnreceivedListFragment fragmentUR;
 
 	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100;
 
@@ -59,7 +63,7 @@ public class MainActivity extends AbsActivity implements
 
 		/** Init Database */
 		mExpressDB = new ExpressDatabase(getApplicationContext());
-		refreshDatabase();
+		refreshDatabase(false);
 
 		getFragmentManager()
 				.beginTransaction()
@@ -69,8 +73,18 @@ public class MainActivity extends AbsActivity implements
 		setUpDrawer();
 	}
 
-	public void refreshDatabase() {
+	public void refreshDatabase(boolean pullNewData) {
 		mExpressDB.init();
+		if (pullNewData) {
+			mExpressDB.pullNewDataFromNetwork();
+			try {
+				mExpressDB.save();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -178,15 +192,21 @@ public class MainActivity extends AbsActivity implements
 						.commit();
 				return true;
 			case 1:
+				if (fragmentUR == null) {
+					fragmentUR = UnreceivedListFragment.newInstance();
+				}
 				fragmentManager
 						.beginTransaction()
-						.replace(R.id.container, PlaceholderFragment.newInstance())
+						.replace(R.id.container, fragmentUR)
 						.commit();
 				return true;
 			case 2:
+				if (fragmentOK == null) {
+					fragmentOK = ReceivedListFragment.newInstance();
+				}
 				fragmentManager
 						.beginTransaction()
-						.replace(R.id.container, PlaceholderFragment.newInstance())
+						.replace(R.id.container, fragmentOK)
 						.commit();
 				return true;
 			case 3:

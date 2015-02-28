@@ -23,7 +23,7 @@ import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 
-public class HomeFragment extends Fragment {
+public class UnreceivedListFragment extends Fragment {
 
 	private ExpressDatabase mDB;
 
@@ -35,12 +35,12 @@ public class HomeFragment extends Fragment {
 
 	public static final int FLAG_REFRESH_LIST = 0;
 
-	public static HomeFragment newInstance() {
-		HomeFragment fragment = new HomeFragment();
+	public static UnreceivedListFragment newInstance() {
+		UnreceivedListFragment fragment = new UnreceivedListFragment();
 		return fragment;
 	}
 
-	public HomeFragment() {
+	public UnreceivedListFragment() {
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(getActivity(), DetailsActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-				intent.putExtra("data", mDB.getExpress(position).toJSONObject().toString());
+				intent.putExtra("data", mAdapter.getItem(position).toJSONObject().toString());
 				startActivity(intent);
 			}
 		});
@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment {
 	};
 
 	private void setUpAdapter() {
-		mAdapter = new HomeCardAdapter(getActivity().getApplicationContext(), mDB);
+		mAdapter = new HomeCardAdapter(getActivity().getApplicationContext(), mDB, HomeCardAdapter.TYPE_UNRECEIVED);
 		mListView.setAdapter(mAdapter);
 	}
 
