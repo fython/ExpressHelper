@@ -47,6 +47,7 @@ public class MainActivity extends AbsActivity implements
 	private HomeFragment fragmentHome;
 	private ReceivedListFragment fragmentOK;
 	private UnreceivedListFragment fragmentUR;
+	private int mCurrent;
 
 	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100;
 
@@ -67,6 +68,7 @@ public class MainActivity extends AbsActivity implements
 		refreshDatabase(false);
 
 		setUpDrawer();
+		mCurrent = 0;
 	}
 
 	public void refreshDatabase(boolean pullNewData) {
@@ -86,7 +88,6 @@ public class MainActivity extends AbsActivity implements
 	@Override
 	protected void setUpViews() {
 		mFAB = (FloatingActionButton) findViewById(R.id.fab);
-
 		mFAB.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -170,6 +171,7 @@ public class MainActivity extends AbsActivity implements
 
 	@Override
 	public boolean onNavigationDrawerItemSelected(int position) {
+		mCurrent = position;
 		try {
 			mDrawerLayout.closeDrawer(Gravity.LEFT);
 		} catch (NullPointerException e) {
@@ -247,6 +249,18 @@ public class MainActivity extends AbsActivity implements
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	@Override
+	public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+            mDrawerLayout.closeDrawer(Gravity.LEFT);
+        }
+		else if (mCurrent != 0) {
+			onNavigationDrawerItemSelected(0);
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	public static class PlaceholderFragment extends Fragment {
