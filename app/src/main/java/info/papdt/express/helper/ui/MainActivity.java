@@ -159,27 +159,45 @@ public class MainActivity extends AbsActivity implements
 	}
 
 	@Override
-	public void onNavigationDrawerItemSelected(int position) {
+	public boolean onNavigationDrawerItemSelected(int position) {
+		try {
+			mDrawerLayout.closeDrawer(Gravity.LEFT);
+		} catch (NullPointerException e) {
+
+		}
+
 		FragmentManager fragmentManager = getFragmentManager();
-		Fragment fragment;
 		switch (position) {
 			case 0:
 				if (fragmentHome == null) {
 					fragmentHome = HomeFragment.newInstance();
 				}
-				fragment = fragmentHome;
-				break;
+				fragmentManager
+						.beginTransaction()
+						.replace(R.id.container, fragmentHome)
+						.commit();
+				return true;
+			case 1:
+				fragmentManager
+						.beginTransaction()
+						.replace(R.id.container, PlaceholderFragment.newInstance())
+						.commit();
+				return true;
+			case 2:
+				fragmentManager
+						.beginTransaction()
+						.replace(R.id.container, PlaceholderFragment.newInstance())
+						.commit();
+				return true;
+			case 3:
+				SettingsActivity.launchActivity(this, SettingsActivity.FLAG_MAIN);
+				return false;
 			default:
-				fragment = PlaceholderFragment.newInstance();
-		}
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container, fragment)
-				.commit();
-		try {
-			mDrawerLayout.closeDrawer(Gravity.LEFT);
-		} catch (NullPointerException e) {
-
+				fragmentManager
+						.beginTransaction()
+						.replace(R.id.container, PlaceholderFragment.newInstance())
+						.commit();
+				return true;
 		}
 	}
 

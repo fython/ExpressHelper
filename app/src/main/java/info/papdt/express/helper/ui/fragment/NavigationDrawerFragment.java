@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.ui.adapter.DrawerListItemAdapter;
 
 public class NavigationDrawerFragment extends Fragment {
 
@@ -22,6 +24,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private ListView mDrawerListView;
 	private View statusHeaderView;
+	private DrawerListItemAdapter mAdapter;
 
 	private int mCurrentSelectedPosition = 0;
 	private int statusHeaderHeight = 0;
@@ -51,8 +54,10 @@ public class NavigationDrawerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_drawer,container, false);
+
 		statusHeaderView = v.findViewById(R.id.statusHeaderView);
 		statusHeaderView.getLayoutParams().height = statusHeaderHeight;
+
 		mDrawerListView = (ListView) v.findViewById(R.id.drawer_list);
 		mDrawerListView
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -62,13 +67,29 @@ public class NavigationDrawerFragment extends Fragment {
 						selectItem(position);
 					}
 				});
-		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
-				.getThemedContext(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, new String[] {
+
+		ArrayList<DrawerListItemAdapter.Item> data = new ArrayList<>();
+
+		data.add(new DrawerListItemAdapter.Item(
 						getString(R.string.title_section_1),
+						R.drawable.ic_home_white_24dp)
+		);
+		data.add(new DrawerListItemAdapter.Item(
 						getString(R.string.title_section_2),
-						getString(R.string.title_section_3), }));
+						R.drawable.ic_assignment_returned_white_24dp)
+		);
+		data.add(new DrawerListItemAdapter.Item(
+						getString(R.string.title_section_3),
+						R.drawable.ic_assignment_turned_in_white_24dp)
+		);
+		data.add(new DrawerListItemAdapter.Item(
+						getString(R.string.title_settings),
+						R.drawable.ic_settings_white_24dp)
+		);
+
+		mAdapter = new DrawerListItemAdapter(getActivity().getApplicationContext(),
+				data, R.color.drawer_list_item_normal, R.color.drawer_list_item_highlight);
+		mDrawerListView.setAdapter(mAdapter);
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return v;
 	}
@@ -79,7 +100,13 @@ public class NavigationDrawerFragment extends Fragment {
 			mDrawerListView.setItemChecked(position, true);
 		}
 		if (mCallbacks != null) {
-			mCallbacks.onNavigationDrawerItemSelected(position);
+			if (mCallbacks.onNavigationDrawerItemSelected(position)) {
+				try {
+					mAdapter.setSelectedPosition(position);
+				} catch (Exception e) {
+
+				}
+			}
 		}
 	}
 
@@ -117,7 +144,7 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	public static interface NavigationDrawerCallbacks {
-		void onNavigationDrawerItemSelected(int position);
+		boolean onNavigationDrawerItemSelected(int position);
 	}
 
 }

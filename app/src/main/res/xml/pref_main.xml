@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="@string/category_about">
+
+		<Preference android:key="application_version" android:title="@string/app_name"/>
+		<Preference android:key="open_source_license" android:title="@string/item_open_source_license"/>
+		<Preference android:key="api_provider" android:title="@string/item_api_title"
+			android:summary="@string/item_api_desc"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

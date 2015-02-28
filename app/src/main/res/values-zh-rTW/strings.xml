@@ -5,7 +5,7 @@
     <string name="navigation_drawer_open">展開抽屜</string>
 	<string name="navigation_drawer_close">關閉抽屜</string>
 	<string name="title_section_1">主頁</string>
-	<string name="title_section_3">按名稱序列</string>
+	<string name="title_section_3">已簽收</string>
 
 	<string name="title_add_express">新增物流跟蹤</string>
 	<string name="hint_et_company">物流公司名稱</string>
@@ -57,7 +57,12 @@
 		<item>API blocked</item>
 		<item>API used up</item>
 	</string-array>
-	<string name="title_section_2">特別關注</string>
+	<string name="title_section_2">未簽收</string>
 	<string name="toast_client_error">客戶端錯誤! 請聯繫作者。</string>
+	<string name="title_settings">設置</string>
+	<string name="category_about">關於</string>
+	<string name="item_open_source_license">開放式源代碼許可</string>
+	<string name="item_api_desc">愛查快遞</string>
+	<string name="item_api_title">物流訊息接口供應商</string>
 
 </resources>

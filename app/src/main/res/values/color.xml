@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+	<color name="drawer_list_item_highlight">#ffffffff</color>
+	<color name="drawer_list_item_normal">#d0ffffff</color>
+
 	<color name="red_500">#F44336</color>
 
 	<color name="pink_300">#F06292</color>

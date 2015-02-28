@@ -4,8 +4,10 @@
     <string name="app_name">水表助手</string>
     <string name="navigation_drawer_open">展开抽屉</string>
 	<string name="navigation_drawer_close">关闭抽屉</string>
-	<string name="title_section_1">主页</string>
-	<string name="title_section_3">名字排序</string>
+	<string name="title_section_1">全部</string>
+	<string name="title_section_3">已签收</string>
+
+	<string name="title_settings">设置</string>
 
 	<string name="title_add_express">新增物流追踪</string>
 	<string name="hint_et_company">物流公司名称</string>
@@ -57,7 +59,11 @@
 		<item>API blocked</item>
 		<item>API used up</item>
 	</string-array>
-	<string name="title_section_2">特别关注</string>
+	<string name="title_section_2">未签收</string>
 	<string name="toast_client_error">客户端错误! 请联系作者。</string>
+	<string name="category_about">关于</string>
+	<string name="item_open_source_license">开源项目许可证</string>
+	<string name="item_api_desc">爱查快递</string>
+	<string name="item_api_title">物流信息接口提供商</string>
 
 </resources>
