@@ -1,10 +1,15 @@
 package info.papdt.express.helper.ui.fragment.settings;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.view.View;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
@@ -22,7 +27,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 
 	private Settings mSets;
 
-	private Preference pref_version, pref_os_license, pref_api_provider;
+	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider;
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
@@ -36,6 +41,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_version = findPreference("application_version");
 		pref_os_license = findPreference("open_source_license");
 		pref_api_provider = findPreference("api_provider");
+		pref_donate = findPreference("donate");
 
 		String version = "Unknown";
 		try {
@@ -48,6 +54,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 
 		pref_os_license.setOnPreferenceClickListener(this);
 		pref_api_provider.setOnPreferenceClickListener(this);
+		pref_donate.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -57,8 +64,11 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			return true;
 		}
 		if (p == pref_api_provider) {
-			Uri uri = Uri.parse(getString(R.string.api_provider_home));
-			startActivity(new Intent(Intent.ACTION_VIEW, uri));
+			openWebsite(getString(R.string.api_provider_home));
+			return true;
+		}
+		if (p == pref_donate) {
+			showDonateDialog();
 			return true;
 		}
 		return false;
@@ -68,5 +78,22 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		Uri uri = Uri.parse(url);
 		startActivity(new Intent(Intent.ACTION_VIEW, uri));
 	}
+
+	private void showDonateDialog() {
+		View v = View.inflate(
+				new ContextThemeWrapper(
+						getActivity().getApplicationContext(),
+						R.style.Theme_AppCompat_Light_Dialog
+				),
+				R.layout.dialog_donate,
+				null
+		);
+		new AlertDialog.Builder(getActivity(), R.style.Theme_AppCompat_Light_Dialog)
+				.setTitle(R.string.item_donate)
+				.setView(v)
+				.setNegativeButton(android.R.string.ok, null)
+				.show();
+	}
+
 
 }

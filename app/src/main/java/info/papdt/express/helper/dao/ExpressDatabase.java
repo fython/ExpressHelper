@@ -16,7 +16,7 @@ import info.papdt.express.helper.support.Utility;
 
 public class ExpressDatabase {
 
-	private ArrayList<Express> mExpressArray;
+	private ArrayList<Express> mExpressArray, array_ur, array_ok;
 	private Context context;
 
 	private final static String TAG = "ExpressDatabase";
@@ -47,6 +47,36 @@ public class ExpressDatabase {
 
 	public int size() {
 		return mExpressArray.size();
+	}
+
+	public ArrayList<Express> getUnreceivedArray() {
+		return array_ur;
+	}
+
+	public ArrayList<Express> getReceivedArray() {
+		return array_ok;
+	}
+
+	public int urSize() {
+		return array_ur.size();
+	}
+
+	public int okSize() {
+		return array_ok.size();
+	}
+
+	public void calcExpress() {
+		array_ok = new ArrayList<>();
+		array_ur = new ArrayList<>();
+		for (int i = 0; i < size(); i++) {
+			Express exp = getExpress(i);
+			ExpressResult cache = ExpressResult.buildFromJSON(exp.getData());
+			if (cache.status == 4) {
+				array_ok.add(exp);
+			} else {
+				array_ur.add(exp);
+			}
+		}
 	}
 
 	public int findExpress(String companyCode, String mailNumber){
@@ -107,6 +137,7 @@ public class ExpressDatabase {
 				e.printStackTrace();
 			}
 		}
+		calcExpress();
 	}
 
 	public void save() throws IOException, JSONException{

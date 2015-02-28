@@ -66,5 +66,7 @@
 	<string name="item_api_title">Express Information API Provider</string>
 	<string name="item_api_desc">AiChaKuaiDi</string>
 	<string name="api_provider_home">http:\/\/www.ickd.cn\/</string>
+	<string name="item_donate">Donate</string>
+	<string name="donate_content">"If this application is useful for you, and you\'re willing to support us, you could donate us through Alipay.\nOur Alipay account: 316643843\@qq.com\nAlso you can use that QR Code."</string>
 
 </resources>

@@ -64,5 +64,7 @@
 	<string name="item_open_source_license">開放式源代碼許可</string>
 	<string name="item_api_desc">愛查快遞</string>
 	<string name="item_api_title">物流訊息接口供應商</string>
+	<string name="donate_content">"如果這個應用程式對你有幫助並且你樂意支援我們，你可以通過阿里巴巴支付寶向我們捐助一筆小費。\n你可以掃描以上二維碼，或通過這個電郵地址轉賬：316643843\@qq.com"</string>
+	<string name="item_donate">捐贈</string>
 
 </resources>
