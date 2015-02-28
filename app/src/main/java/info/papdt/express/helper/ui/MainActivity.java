@@ -56,7 +56,8 @@ public class MainActivity extends AbsActivity implements
 		setContentView(R.layout.activity_main);
 
 		/** Init Navigation Drawer */
-		mNavigationDrawerFragment = new NavigationDrawerFragment();
+		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
+				.findFragmentById(R.id.navigation_drawer);
 		mNavigationDrawerFragment.setHeaderHeight(statusBarHeight);
 		mActionBar = new ActionBarHelper();
 		mActionBar.init();
@@ -64,11 +65,6 @@ public class MainActivity extends AbsActivity implements
 		/** Init Database */
 		mExpressDB = new ExpressDatabase(getApplicationContext());
 		refreshDatabase(false);
-
-		getFragmentManager()
-				.beginTransaction()
-				.replace(R.id.navigation_drawer, mNavigationDrawerFragment)
-				.commit();
 
 		setUpDrawer();
 	}

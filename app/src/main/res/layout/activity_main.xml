@@ -45,11 +45,12 @@
 
 	</LinearLayout>
 
-    <FrameLayout
+    <fragment
         android:id="@+id/navigation_drawer"
         android:layout_width="256dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:name="info.papdt.express.helper.ui.fragment.NavigationDrawerFragment"
         tools:layout="@layout/fragment_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

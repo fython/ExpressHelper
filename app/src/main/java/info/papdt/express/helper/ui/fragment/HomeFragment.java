@@ -122,15 +122,24 @@ public class HomeFragment extends Fragment {
 
 		@Override
 		protected ExpressDatabase doInBackground(Void... params) {
-			((MainActivity) getActivity()).refreshDatabase(true);
-			return ((MainActivity) getActivity()).mExpressDB;
+			try {
+				((MainActivity) getActivity()).refreshDatabase(true);
+				return ((MainActivity) getActivity()).mExpressDB;
+			} catch (Exception e) {
+				// failed
+				return null;
+			}
 		}
 
 		@Override
 		protected void onPostExecute(ExpressDatabase db) {
 			refreshLayout.setRefreshing(false);
-			mDB = db;
-			setUpAdapter();
+			if (db != null) {
+				mDB = db;
+			}
+			if (mDB != null) {
+				setUpAdapter();
+			}
 		}
 
 	}
