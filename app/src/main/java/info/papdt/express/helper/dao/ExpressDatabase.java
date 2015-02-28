@@ -133,7 +133,11 @@ public class ExpressDatabase {
 			try {
 				newExpress = new Express(jsonArray.getJSONObject(i).getString("companyCode"),
 						jsonArray.getJSONObject(i).getString("mailNumber"));
-				newExpress.setData(jsonArray.getJSONObject(i).getString("cache"));
+				try {
+					newExpress.setData(jsonArray.getJSONObject(i).getString("cache"));
+				} catch (Exception e) {
+					newExpress.setData(null);
+				}
 				mExpressArray.add(newExpress);
 			} catch (JSONException e){
 				Log.e(TAG, "第"+i+"组数据格式出现错误");
@@ -156,7 +160,9 @@ public class ExpressDatabase {
 	public void pullNewDataFromNetwork() {
 		for (Express nowExp : mExpressArray) {
 			String result = getDataFromNetwork(nowExp.getCompanyCode(), nowExp.getMailNumber());
-			nowExp.setData(result);
+			if (result != null) {
+				nowExp.setData(result);
+			}
 		}
 	}
 

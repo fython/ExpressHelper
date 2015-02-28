@@ -63,6 +63,10 @@ public class KuaiDi100Helper {
 			result.status = 0;
 			result.message = "JSON String token error!";
 			return result;
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			result.status = 0;
+			result.message = "Unknown error!";
 		}
 		return result;
 	}

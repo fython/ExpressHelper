@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -30,8 +31,6 @@ public class HomeFragment extends Fragment {
 	private SwipeRefreshLayout refreshLayout;
 	private ListView mListView;
 	private HomeCardAdapter mAdapter;
-
-	private boolean isFirstCreate = true;
 
 	public static final int FLAG_REFRESH_LIST = 0;
 
@@ -87,12 +86,9 @@ public class HomeFragment extends Fragment {
 				mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
 			}
 		});
-		if (isFirstCreate) {
-			isFirstCreate = false;
-			mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
-		} else {
-			setUpAdapter();
-		}
+
+		mDB = ((MainActivity) getActivity()).mExpressDB;
+		setUpAdapter();
 
 		return rootView;
 	}
@@ -136,6 +132,12 @@ public class HomeFragment extends Fragment {
 			refreshLayout.setRefreshing(false);
 			if (db != null) {
 				mDB = db;
+			} else {
+				Toast.makeText(
+						getActivity().getApplicationContext(),
+						R.string.toast_network_error,
+						Toast.LENGTH_SHORT
+				).show();
 			}
 			if (mDB != null) {
 				setUpAdapter();
