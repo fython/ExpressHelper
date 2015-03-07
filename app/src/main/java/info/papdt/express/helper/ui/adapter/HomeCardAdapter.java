@@ -94,7 +94,7 @@ public class HomeCardAdapter extends BaseAdapter {
 		ColorDrawable drawable = new ColorDrawable(defaultColors[cache.status]);
 		holder.iv_round.setImageDrawable(drawable);
 
-		holder.tv_title.setText(nowItem.getMailNumber());
+		holder.tv_title.setText(nowItem.getName());
 
 		String desp, time;
 		try {

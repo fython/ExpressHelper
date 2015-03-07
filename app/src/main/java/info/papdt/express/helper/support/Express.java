@@ -5,12 +5,17 @@ import org.json.JSONObject;
 
 public class Express {
 
-	private String companyCode, mailNumber;
+	private String companyCode, mailNumber, name;
 	private String jsonData;
 
 	public Express(String companyCode, String mailNumber){
+		this(companyCode, mailNumber, mailNumber);
+	}
+
+	public Express(String companyCode, String mailNumber, String name){
 		this.companyCode = companyCode;
 		this.mailNumber = mailNumber;
+		this.name = name;
 	}
 	
 	public String getData() {
@@ -40,6 +45,7 @@ public class Express {
 	public JSONObject toJSONObject() {
 		JSONObject obj0 = new JSONObject();
 		try {
+			obj0.put("name", getName());
 			obj0.put("companyCode", getCompanyCode());
 			obj0.put("mailNumber", getMailNumber());
 			obj0.put("cache", getData());
@@ -47,6 +53,14 @@ public class Express {
 			e.printStackTrace();
 		}
 		return obj0;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

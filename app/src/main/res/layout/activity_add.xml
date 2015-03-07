@@ -56,6 +56,16 @@
 			<com.rengwuxian.materialedittext.MaterialEditText
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:id="@+id/et_name"
+				android:hint="@string/hint_et_name"
+				android:singleLine="true"
+				app:floatingLabel="highlight"
+				app:iconLeft="@drawable/ic_event_note_black_24dp"
+				app:iconPadding="0dp"/>
+
+			<com.rengwuxian.materialedittext.MaterialEditText
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
 				android:id="@+id/et_company"
 				android:hint="@string/hint_et_company"
 				android:singleLine="true"

@@ -13,6 +13,7 @@
 	<string name="details_has_copied">Detail item has copied to clipboard.</string>
 
 	<string name="title_add_express">Add express track</string>
+	<string name="hint_et_name">Title (Just enter a name as you like)</string>
 	<string name="hint_et_company">Express company name</string>
 	<string name="hint_et_number">Express No.</string>
 	<string name="toast_company_name_empty">Company name can\'t be empty.</string>

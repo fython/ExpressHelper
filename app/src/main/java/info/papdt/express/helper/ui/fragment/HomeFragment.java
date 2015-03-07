@@ -57,6 +57,7 @@ public class HomeFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(getActivity(), DetailsActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+				intent.putExtra("id", position);
 				intent.putExtra("data", mDB.getExpress(position).toJSONObject().toString());
 				startActivity(intent);
 			}

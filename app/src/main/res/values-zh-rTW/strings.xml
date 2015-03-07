@@ -8,6 +8,7 @@
 	<string name="title_section_3">已簽收</string>
 
 	<string name="title_add_express">新增物流跟蹤</string>
+	<string name="hint_et_name">標題 (可選)</string>
 	<string name="hint_et_company">物流公司名稱</string>
 	<string name="hint_et_number">物流單號</string>
 	<string name="toast_company_name_empty">物流公司名稱不可以為空。</string>

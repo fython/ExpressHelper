@@ -10,6 +10,7 @@
 	<string name="title_settings">设置</string>
 
 	<string name="title_add_express">新增物流追踪</string>
+	<string name="hint_et_name">标题 (可选)</string>
 	<string name="hint_et_company">物流公司名称</string>
 	<string name="hint_et_number">物流单号</string>
 	<string name="toast_company_name_empty">物流公司名称不可以是空的。</string>

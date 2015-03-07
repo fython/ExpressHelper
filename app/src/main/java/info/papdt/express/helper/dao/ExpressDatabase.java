@@ -29,9 +29,14 @@ public class ExpressDatabase {
 		mExpressArray = new ArrayList<>();
 	}
 
-	public void addExpress(String jsonStr) {
+	public void addExpress(String jsonStr, String name) {
 		ExpressResult res = ExpressResult.buildFromJSON(jsonStr);
-		Express exp = new Express(res.expSpellName, res.mailNo);
+		Express exp;
+		if (name != null) {
+			exp = new Express(res.expSpellName, res.mailNo, name);
+		} else {
+			exp = new Express(res.expSpellName, res.mailNo);
+		}
 		exp.setData(jsonStr);
 		this.addExpress(exp);
 	}
@@ -131,10 +136,17 @@ public class ExpressDatabase {
 		Express newExpress;
 		for (int i = 0; i < jsonArray.length(); i++){
 			try {
-				newExpress = new Express(jsonArray.getJSONObject(i).getString("companyCode"),
-						jsonArray.getJSONObject(i).getString("mailNumber"));
+				JSONObject obj = jsonArray.getJSONObject(i);
+				newExpress = new Express(obj.getString("companyCode"), obj.getString("mailNumber"));
+				String name;
 				try {
-					newExpress.setData(jsonArray.getJSONObject(i).getString("cache"));
+					name = obj.getString("name");
+				} catch (Exception e) {
+					name = newExpress.getMailNumber();
+				}
+				newExpress.setName(name);
+				try {
+					newExpress.setData(obj.getString("cache"));
 				} catch (Exception e) {
 					newExpress.setData(null);
 				}

@@ -56,8 +56,13 @@ public class UnreceivedListFragment extends Fragment {
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				int realPosition = mDB.findExpress(
+						mAdapter.getItem(position).getCompanyCode(),
+						mAdapter.getItem(position).getMailNumber()
+				);
 				Intent intent = new Intent(getActivity(), DetailsActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+				intent.putExtra("id", realPosition);
 				intent.putExtra("data", mAdapter.getItem(position).toJSONObject().toString());
 				startActivity(intent);
 			}

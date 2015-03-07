@@ -36,19 +36,21 @@ public class DetailsActivity extends AbsActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_details);
 
-		mActionBar.setDisplayHomeAsUpEnabled(true);
-
 		Intent intent = getIntent();
 		int id = intent.getIntExtra("id", 0);
 		try {
 			JSONObject obj = new JSONObject(intent.getStringExtra("data"));
 			express = new Express(obj.getString("companyCode"),
-					obj.getString("mailNumber"));
+					obj.getString("mailNumber"),
+					obj.getString("name"));
 			express.setData(obj.getString("cache"));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		cache = ExpressResult.buildFromJSON(express.getData());
+
+		mActionBar.setDisplayHomeAsUpEnabled(true);
+		mActionBar.setTitle(express.getName());
 
 		setUpListView();
 	}

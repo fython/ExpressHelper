@@ -140,7 +140,8 @@ public class MainActivity extends AbsActivity implements
 			case REQUEST_ADD:
 				if (resultCode == RESULT_ADD_FINISH) {
 					String jsonStr = intent.getStringExtra("result");
-					mExpressDB.addExpress(jsonStr);
+					String name = intent.getStringExtra("name");
+					mExpressDB.addExpress(jsonStr, name);
 					try {
 						mExpressDB.save();
 					} catch (IOException e) {

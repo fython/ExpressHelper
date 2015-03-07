@@ -21,7 +21,7 @@ public class AddActivity extends AbsActivity {
 
 	private boolean isChecking = false;
 
-	private MaterialEditText et_company, et_number;
+	private MaterialEditText et_company, et_number, et_name;
 	private ProgressBar mProgress;
 	private View btn_done;
 
@@ -42,6 +42,7 @@ public class AddActivity extends AbsActivity {
 	protected void setUpViews() {
 		et_company = (MaterialEditText) findViewById(R.id.et_company);
 		et_number = (MaterialEditText) findViewById(R.id.et_number);
+		et_name = (MaterialEditText) findViewById(R.id.et_name);
 		btn_done = findViewById(R.id.btn_done);
 		mProgress = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -74,9 +75,10 @@ public class AddActivity extends AbsActivity {
 		new PostApiTask().execute(et_company.getText().toString(), et_number.getText().toString());
 	}
 
-	private void receiveData(String result) {
+	private void receiveData(String result, String name) {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtra("result", result);
+		intent.putExtra("name", name);
 		setResult(MainActivity.RESULT_ADD_FINISH, intent);
 		finish();
 	}
@@ -154,7 +156,11 @@ public class AddActivity extends AbsActivity {
 				).show();
 				return;
 			}
-			receiveData(result);
+			String name = et_name.getText().toString();
+			if (name == null || TextUtils.isEmpty(name)) {
+				name = et_number.getText().toString();
+			}
+			receiveData(result, name);
 		}
 
 	}
