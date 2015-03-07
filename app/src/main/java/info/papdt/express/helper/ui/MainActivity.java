@@ -4,11 +4,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
@@ -17,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -172,7 +169,9 @@ public class MainActivity extends AbsActivity implements
 
 	@Override
 	public boolean onNavigationDrawerItemSelected(int position) {
-		mCurrent = position;
+        if (position != 3) {
+            mCurrent = position;
+        }
 		try {
 			mDrawerLayout.closeDrawer(Gravity.LEFT);
 		} catch (NullPointerException e) {
@@ -189,6 +188,7 @@ public class MainActivity extends AbsActivity implements
 						.beginTransaction()
 						.replace(R.id.container, fragmentHome)
 						.commit();
+                setTitle(R.string.app_name);
 				return true;
 			case 1:
 				if (fragmentUR == null) {
@@ -198,6 +198,7 @@ public class MainActivity extends AbsActivity implements
 						.beginTransaction()
 						.replace(R.id.container, fragmentUR)
 						.commit();
+                setTitle(R.string.title_section_2);
 				return true;
 			case 2:
 				if (fragmentOK == null) {
@@ -207,6 +208,7 @@ public class MainActivity extends AbsActivity implements
 						.beginTransaction()
 						.replace(R.id.container, fragmentOK)
 						.commit();
+                setTitle(R.string.title_section_3);
 				return true;
 			case 3:
 				SettingsActivity.launchActivity(this, SettingsActivity.FLAG_MAIN);
@@ -216,6 +218,7 @@ public class MainActivity extends AbsActivity implements
 						.beginTransaction()
 						.replace(R.id.container, PlaceholderFragment.newInstance())
 						.commit();
+                setTitle(R.string.app_name);
 				return true;
 		}
 	}
@@ -258,7 +261,7 @@ public class MainActivity extends AbsActivity implements
             mDrawerLayout.closeDrawer(Gravity.LEFT);
         }
 		else if (mCurrent != 0) {
-			onNavigationDrawerItemSelected(0);
+            mNavigationDrawerFragment.selectItem(0);
 		} else {
 			super.onBackPressed();
 		}
