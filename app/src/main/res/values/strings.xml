@@ -29,6 +29,8 @@
 	<string name="item_mailno">Mail No.</string>
 	<string name="item_errorcode">Error code</string>
 	<string name="item_errormessage">Error Message</string>
+	<string name="action_done">Done</string>
+	<string name="action_edit">Edit</string>
 
 	<string-array name="status">
 		<item>Failed</item>

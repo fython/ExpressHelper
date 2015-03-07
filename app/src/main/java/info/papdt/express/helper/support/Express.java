@@ -1,5 +1,7 @@
 package info.papdt.express.helper.support;
 
+import android.text.TextUtils;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,6 +62,13 @@ public class Express {
 	}
 
 	public void setName(String name) {
+		if (name == null) {
+			this.name = mailNumber;
+			return;
+		} else if (TextUtils.isEmpty(name)) {
+			this.name = mailNumber;
+			return;
+		}
 		this.name = name;
 	}
 

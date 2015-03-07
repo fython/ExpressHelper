@@ -2,11 +2,21 @@ package info.papdt.express.helper.ui;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -14,22 +24,31 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
 
 public class DetailsActivity extends AbsActivity {
 
 	private ListView mListView;
-	
+	private EditText mEditTextName;
+
+	private int eid;
 	private Express express;
 	private ExpressResult cache;
+	private ExpressDatabase edb;
 
 	private ArrayList<Map<String, String>> list;
+
+	private boolean isEditingTitle = false;
+
+	private static final int MENU_ITEM_DONE = 0x00, MENU_ITEM_EDIT = 0x01;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +56,7 @@ public class DetailsActivity extends AbsActivity {
 		setContentView(R.layout.activity_details);
 
 		Intent intent = getIntent();
-		int id = intent.getIntExtra("id", 0);
+		eid = intent.getIntExtra("id", 0);
 		try {
 			JSONObject obj = new JSONObject(intent.getStringExtra("data"));
 			express = new Express(obj.getString("companyCode"),
@@ -49,6 +68,8 @@ public class DetailsActivity extends AbsActivity {
 		}
 		cache = ExpressResult.buildFromJSON(express.getData());
 
+		edb = new ExpressDatabase(getApplicationContext());
+
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setTitle(express.getName());
 
@@ -59,6 +80,89 @@ public class DetailsActivity extends AbsActivity {
 	protected void setUpViews() {
 		mListView = (ListView) findViewById(R.id.listView);
 
+		mEditTextName = new EditText(mActionBar.getThemedContext());
+		ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL);
+		mActionBar.setCustomView(mEditTextName, lp);
+		mActionBar.setDisplayShowCustomEnabled(false);
+		mActionBar.setDisplayShowTitleEnabled(true);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
+		MenuItem item;
+		if (isEditingTitle) {
+			item = menu.add(0, MENU_ITEM_DONE, 0, R.string.action_done)
+					.setIcon(R.drawable.ic_done_white_24dp);
+			MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		} else {
+			item = menu.add(0, MENU_ITEM_EDIT, 0, R.string.action_edit)
+					.setIcon(R.drawable.ic_mode_edit_white_24dp);
+			MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == MENU_ITEM_DONE) {
+			isEditingTitle = false;
+			new Thread() {
+				@Override
+				public void run() {
+					edb.init();
+					edb.getExpress(eid).setName(mEditTextName.getText().toString().trim());
+					try {
+						edb.save();
+					} catch (IOException e) {
+						e.printStackTrace();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							mActionBar.setTitle(edb.getExpress(eid).getName());
+							setResult(MainActivity.RESULT_HAS_CHANGED);
+						}
+					});
+				}
+			}.start();
+			hideSoftKeyboard();
+			syncActionBarCustomView();
+			invalidateOptionsMenu();
+			return true;
+		} else if (id == MENU_ITEM_EDIT) {
+			isEditingTitle = true;
+			mEditTextName.setText(mActionBar.getTitle());
+			syncActionBarCustomView();
+			invalidateOptionsMenu();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (isEditingTitle) {
+			isEditingTitle = false;
+			hideSoftKeyboard();
+			syncActionBarCustomView();
+			invalidateOptionsMenu();
+		} else {
+			finish();
+		}
+	}
+
+	private void hideSoftKeyboard() {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(mEditTextName.getWindowToken(), 0);
+	}
+
+	private void syncActionBarCustomView() {
+		mActionBar.setDisplayShowCustomEnabled(isEditingTitle);
+		mActionBar.setDisplayShowTitleEnabled(!isEditingTitle);
 	}
 
 	private void setUpListView() {

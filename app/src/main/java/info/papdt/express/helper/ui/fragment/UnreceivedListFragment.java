@@ -35,7 +35,7 @@ public class UnreceivedListFragment extends Fragment {
 
 	private boolean isFirstCreate = true;
 
-	public static final int FLAG_REFRESH_LIST = 0;
+	public static final int FLAG_REFRESH_LIST = 0, FLAG_REFRESH_ADAPTER_ONLY = 1;
 
 	public static UnreceivedListFragment newInstance() {
 		UnreceivedListFragment fragment = new UnreceivedListFragment();
@@ -64,7 +64,7 @@ public class UnreceivedListFragment extends Fragment {
 				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 				intent.putExtra("id", realPosition);
 				intent.putExtra("data", mAdapter.getItem(position).toJSONObject().toString());
-				startActivity(intent);
+				getActivity().startActivityForResult(intent, MainActivity.REQUEST_DETAILS);
 			}
 		});
 		mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -106,6 +106,10 @@ public class UnreceivedListFragment extends Fragment {
 						refreshLayout.setRefreshing(true);
 					}
 					new RefreshTask().execute();
+					break;
+				case FLAG_REFRESH_ADAPTER_ONLY:
+					mDB.init();
+					setUpAdapter();
 					break;
 			}
 		}

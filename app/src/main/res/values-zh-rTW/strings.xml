@@ -23,6 +23,8 @@
 	<string name="item_mailno">物流單號</string>
 	<string name="item_errorcode">錯誤代碼</string>
 	<string name="item_errormessage">錯誤訊息</string>
+	<string name="action_done">完畢</string>
+	<string name="action_edit">編輯</string>
 
 	<string-array name="status">
 		<item>失敗</item>

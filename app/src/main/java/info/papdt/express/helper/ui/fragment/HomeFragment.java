@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class HomeFragment extends Fragment {
 	private ListView mListView;
 	private HomeCardAdapter mAdapter;
 
-	public static final int FLAG_REFRESH_LIST = 0;
+	public static final int FLAG_REFRESH_LIST = 0, FLAG_REFRESH_ADAPTER_ONLY = 1;
 
 	public static HomeFragment newInstance() {
 		HomeFragment fragment = new HomeFragment();
@@ -59,7 +60,7 @@ public class HomeFragment extends Fragment {
 				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 				intent.putExtra("id", position);
 				intent.putExtra("data", mDB.getExpress(position).toJSONObject().toString());
-				startActivity(intent);
+				getActivity().startActivityForResult(intent, MainActivity.REQUEST_DETAILS);
 			}
 		});
 		mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -122,6 +123,10 @@ public class HomeFragment extends Fragment {
 						refreshLayout.setRefreshing(true);
 					}
 					new RefreshTask().execute();
+					break;
+				case FLAG_REFRESH_ADAPTER_ONLY:
+					mDB.init();
+					setUpAdapter();
 					break;
 			}
 		}

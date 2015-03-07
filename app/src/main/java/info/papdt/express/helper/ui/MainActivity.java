@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,7 +47,8 @@ public class MainActivity extends AbsActivity implements
 	private UnreceivedListFragment fragmentUR;
 	private int mCurrent;
 
-	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100;
+	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100,
+			REQUEST_DETAILS = 101, RESULT_HAS_CHANGED = 101;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +153,25 @@ public class MainActivity extends AbsActivity implements
 					}
 					fragmentHome.mDB = mExpressDB;
 					fragmentHome.setUpAdapter();
+				}
+				break;
+			case REQUEST_DETAILS:
+				if (resultCode == RESULT_HAS_CHANGED) {
+					try {
+						fragmentHome.mHandler.sendEmptyMessage(HomeFragment.FLAG_REFRESH_ADAPTER_ONLY);
+					} catch (Exception e) {
+
+					}
+					try {
+						fragmentOK.mHandler.sendEmptyMessage(ReceivedListFragment.FLAG_REFRESH_ADAPTER_ONLY);
+					} catch (Exception e) {
+
+					}
+					try {
+						fragmentUR.mHandler.sendEmptyMessage(UnreceivedListFragment.FLAG_REFRESH_ADAPTER_ONLY);
+					} catch (Exception e) {
+
+					}
 				}
 				break;
 		}

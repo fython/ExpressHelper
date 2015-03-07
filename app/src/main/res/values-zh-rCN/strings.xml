@@ -25,6 +25,8 @@
 	<string name="item_mailno">物流单号</string>
 	<string name="item_errorcode">错误代码</string>
 	<string name="item_errormessage">错误信息</string>
+	<string name="action_done">完成</string>
+	<string name="action_edit">编辑</string>
 
 	<string-array name="status">
 		<item>失败</item>

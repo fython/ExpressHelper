@@ -62,7 +62,7 @@ public abstract class AbsActivity extends ActionBarActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
-			super.onBackPressed();
+			this.onBackPressed();
 			return true;
 		}
 
