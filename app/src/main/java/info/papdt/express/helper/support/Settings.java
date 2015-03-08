@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 public class Settings {
 
 	public static final String XML_NAME = "settings";
+	public static final String KEY_USE_CARD_LIST = "use_card_list";
 
 	private static Settings sInstance;
 	

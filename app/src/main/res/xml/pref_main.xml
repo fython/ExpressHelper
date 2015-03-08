@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+	<PreferenceCategory android:title="@string/category_ui">
+
+		<SwitchPreference android:key="use_card_list" android:title="@string/item_list_use_card_style"/>
+
+	</PreferenceCategory>
+
 	<PreferenceCategory android:title="@string/category_about">
 
 		<Preference android:key="application_version" android:title="@string/item_application"/>
 		<Preference android:key="sina_weibo" android:title="@string/item_weibo"
 		            android:summary="@string/item_weibo_author"/>
+		<Preference android:key="github_repo" android:title="@string/item_github"
+		            android:summary="@string/item_github_url"/>
 		<Preference android:key="open_source_license" android:title="@string/item_open_source_license"/>
 		<Preference android:key="api_provider" android:title="@string/item_api_title"
 		            android:summary="@string/item_api_desc"/>

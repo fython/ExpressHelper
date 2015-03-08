@@ -79,5 +79,10 @@
 	<string name="item_weibo">Sina weibo</string>
 	<string name="item_weibo_author">\@某烧饼</string>
 	<string name="item_weibo_author_url">"http://weibo.com/fython"</string>
+	<string name="item_github">Github repo</string>
+	<string name="item_github_url">"https://github.com/PaperAirplane-Dev-Team/ExpressHelper"</string>
+	<string name="category_ui">UI</string>
+	<string name="item_list_use_card_style">Use card style list</string>
+	<string name="toast_you_need_restart">Options will apply after restarting app.</string>
 
 </resources>

@@ -16,12 +16,14 @@ import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
+import info.papdt.express.helper.support.Settings;
 
 public class HomeCardAdapter extends BaseAdapter {
 
 	private LayoutInflater mInflater;
 	private ExpressDatabase db;
 	private int type;
+	private boolean useCardStyle;
 
 	private int[] defaultColors;
 
@@ -37,6 +39,7 @@ public class HomeCardAdapter extends BaseAdapter {
 		this.db = db;
 		this.defaultColors = context.getResources().getIntArray(R.array.statusColor);
 		this.type = type;
+		this.useCardStyle = Settings.getInstance(context).getBoolean(Settings.KEY_USE_CARD_LIST, true);
 	}
 
 	@Override
@@ -72,7 +75,11 @@ public class HomeCardAdapter extends BaseAdapter {
 	public View getView(int i, View view, ViewGroup viewGroup) {
 		ViewHolder holder;
 		if (view == null) {
-			view = mInflater.inflate(R.layout.card_express_item, viewGroup, false);
+			view = mInflater.inflate(
+					useCardStyle ? R.layout.card_express_item : R.layout.card_express_item_no_card,
+					viewGroup,
+					false
+			);
 
 			holder = new ViewHolder();
 

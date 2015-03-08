@@ -23,6 +23,76 @@
 			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 			app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="8dp"
+			android:background="?attr/colorPrimary">
+
+			<FrameLayout
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent">
+
+				<de.hdodenhof.circleimageview.CircleImageView
+					android:id="@+id/iv_round"
+					android:layout_width="64dp"
+					android:layout_height="64dp"
+					android:layout_marginTop="16dp"
+					android:layout_marginBottom="16dp"
+					android:layout_marginLeft="24dp"
+					android:layout_marginRight="24dp"
+					android:src="@color/pink_500"
+					android:layout_gravity="center"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/center_text"
+					android:textColor="@android:color/white"
+					android:layout_gravity="center"
+					android:textSize="32dp"/>
+
+			</FrameLayout>
+
+			<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:gravity="center_vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="?android:attr/textAppearanceLargeInverse"
+					android:text="Large Text"
+					android:id="@+id/tv_express_company"
+					android:textSize="16sp"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="?android:attr/textAppearanceMediumInverse"
+					android:text="Medium Text"
+					android:id="@+id/tv_mail_no"
+					android:layout_marginTop="2dp"
+					android:layout_marginRight="4dp"
+					android:textSize="14sp"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="?android:attr/textAppearanceMediumInverse"
+					android:text="Medium Text"
+					android:id="@+id/tv_status"
+					android:layout_marginRight="8dp"
+					android:layout_marginTop="2dp"
+					android:textSize="14sp"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
 		<ListView
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"

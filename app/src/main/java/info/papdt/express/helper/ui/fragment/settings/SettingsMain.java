@@ -7,15 +7,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.widget.Toast;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.SettingsActivity;
 
-public class SettingsMain extends PreferenceFragment implements Preference.OnPreferenceClickListener {
+public class SettingsMain extends PreferenceFragment implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
 	public static SettingsMain newInstance() {
 		return new SettingsMain();
@@ -28,7 +30,8 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 	private Settings mSets;
 
 	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider,
-		pref_weibo;
+		pref_weibo, pref_github;
+	private SwitchPreference pref_card_list;
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
@@ -44,6 +47,8 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_os_license = findPreference("open_source_license");
 		pref_api_provider = findPreference("api_provider");
 		pref_donate = findPreference("donate");
+		pref_card_list = (SwitchPreference) findPreference("use_card_list");
+		pref_github = findPreference("github_repo");
 
 		String version = "Unknown";
 		try {
@@ -53,11 +58,14 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			// Keep the default value
 		}
 		pref_version.setSummary(version);
+		pref_card_list.setChecked(mSets.getBoolean(Settings.KEY_USE_CARD_LIST, true));
 
 		pref_weibo.setOnPreferenceClickListener(this);
 		pref_os_license.setOnPreferenceClickListener(this);
 		pref_api_provider.setOnPreferenceClickListener(this);
 		pref_donate.setOnPreferenceClickListener(this);
+		pref_github.setOnPreferenceClickListener(this);
+		pref_card_list.setOnPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -76,6 +84,10 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		}
 		if (p == pref_donate) {
 			showDonateDialog();
+			return true;
+		}
+		if (p == pref_github) {
+			openWebsite(getString(R.string.item_github_url));
 			return true;
 		}
 		return false;
@@ -102,5 +114,25 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 				.show();
 	}
 
+
+	@Override
+	public boolean onPreferenceChange(Preference pref, Object newValue) {
+		if (pref == pref_card_list) {
+			Boolean b = (Boolean) newValue;
+			mSets.putBoolean(Settings.KEY_USE_CARD_LIST, b);
+			pref_card_list.setChecked(b);
+			showRestartTips();
+			return true;
+		}
+		return false;
+	}
+
+	private void showRestartTips() {
+		Toast.makeText(
+				getActivity().getApplicationContext(),
+				R.string.toast_you_need_restart,
+				Toast.LENGTH_SHORT
+		).show();
+	}
 
 }

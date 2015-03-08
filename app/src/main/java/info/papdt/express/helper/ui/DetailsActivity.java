@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.MenuCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -19,16 +20,19 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.support.Express;
@@ -38,6 +42,8 @@ public class DetailsActivity extends AbsActivity {
 
 	private ListView mListView;
 	private EditText mEditTextName;
+	private TextView tv_company, tv_mail_no, tv_status, tv_round_center;
+	private CircleImageView iv_round;
 
 	private int eid;
 	private Express express;
@@ -73,12 +79,18 @@ public class DetailsActivity extends AbsActivity {
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setTitle(express.getName());
 
+		setUpHeaderView();
 		setUpListView();
 	}
 
 	@Override
 	protected void setUpViews() {
 		mListView = (ListView) findViewById(R.id.listView);
+		tv_company = (TextView) findViewById(R.id.tv_express_company);
+		tv_mail_no = (TextView) findViewById(R.id.tv_mail_no);
+		tv_status = (TextView) findViewById(R.id.tv_status);
+		tv_round_center = (TextView) findViewById(R.id.center_text);
+		iv_round = (CircleImageView) findViewById(R.id.iv_round);
 
 		mEditTextName = new EditText(mActionBar.getThemedContext());
 		ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL);
@@ -165,15 +177,23 @@ public class DetailsActivity extends AbsActivity {
 		mActionBar.setDisplayShowTitleEnabled(!isEditingTitle);
 	}
 
+	private void setUpHeaderView() {
+		tv_status.setText(getResources().getStringArray(R.array.status)[cache.status]);
+		tv_company.setText(cache.expTextName);
+		tv_round_center.setText(cache.expTextName.substring(0, 1));
+		tv_mail_no.setText(cache.mailNo);
+
+		ColorDrawable drawable = new ColorDrawable(getResources().getIntArray(R.array.statusColor) [cache.status]);
+		iv_round.setImageDrawable(drawable);
+	}
+
 	private void setUpListView() {
 		list = new ArrayList<>();
-		list.add(produce(getString(R.string.item_status), getResources().getStringArray(R.array.status)[cache.status]));
+
 		if (cache.errCode != 0){
 			list.add(produce(getString(R.string.item_errorcode), getResources().getStringArray(R.array.errCode)[cache.errCode]));
 			list.add(produce(getString(R.string.item_errormessage), cache.message));
 		}
-		list.add(produce(getString(R.string.item_companyname), cache.expTextName));
-		list.add(produce(getString(R.string.item_mailno), cache.mailNo));
 
 		for (int i = cache.data.size() - 1; i >= 0; i--){
 			list.add(produce(
