@@ -11,12 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.support.Utility;
 
 public abstract class AbsActivity extends ActionBarActivity {
 
 	protected Toolbar mToolbar;
 	protected ActionBar mActionBar;
+	protected Settings mSets;
 
 	protected int statusBarHeight = 0;
 
@@ -31,6 +33,9 @@ public abstract class AbsActivity extends ActionBarActivity {
 		if (Build.VERSION.SDK_INT >= 21) {
 			getWindow().setStatusBarColor(Color.TRANSPARENT);
 		}
+
+		/** Initialize Settings */
+		mSets = Settings.getInstance(getApplicationContext());
 
 		super.onCreate(savedInstanceState);
 	}

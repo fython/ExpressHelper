@@ -84,5 +84,23 @@
 	<string name="category_ui">UI</string>
 	<string name="item_list_use_card_style">Use card style list</string>
 	<string name="toast_you_need_restart">Options will apply after restarting app.</string>
+	<string name="category_api">API</string>
+	<string name="item_token_choose">API Token Choose</string>
+	<string-array name="item_token_list">
+		<item>Default (5000 times per day, thx Weibo\@稀饭_Fighting)</item>
+		<item>Secondary (2000 times per day)</item>
+		<item>Custom (If you often use this app, we recommend you choose this)</item>
+	</string-array>
+	<string-array name="item_token_list_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string name="item_token_custom">Custom Token</string>
+	<string name="item_token_custom_desc">If our token is use out today, you could use your own token.</string>
+	<string name="dialog_token_custom_title">Enter your own token</string>
+	<string name="dialog_token_custom_secret">App secret</string>
+	<string name="dialog_token_custom_id">App id</string>
+	<string name="dialog_token_custom_how_to_get_it">How to get it?</string>
 
 </resources>

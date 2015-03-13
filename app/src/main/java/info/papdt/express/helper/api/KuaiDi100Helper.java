@@ -7,16 +7,16 @@ import java.util.*;
 
 public class KuaiDi100Helper {
 	
-	private static String myid = "104262",
-	mysecret = "2ac58b166085aefdc9c93a3a69010e87";
+	public static String myid = "104262", mysecret = "2ac58b166085aefdc9c93a3a69010e87";
+	public static String xfid = "109066", xfsecret = "b1726be0ec9c6a1abe60e3d71ef72603";
 
 	private static final String TAG = "KuaiDi100Helper";
 
 	public static String getRequestUrl(String id, String secret, String com,
 									  String number, String encode) {
 		StringBuffer resultUrl = new StringBuffer();
-		resultUrl.append("http://api.ickd.cn/?id=" + (id != null ? id : myid));
-		resultUrl.append("&secret=" + (secret != null ? secret : mysecret));
+		resultUrl.append("http://api.ickd.cn/?id=" + (id != null ? id : xfid));
+		resultUrl.append("&secret=" + (secret != null ? secret : xfsecret));
 		resultUrl.append("&com=" + com);
 		resultUrl.append("&nu=" + number);
 		resultUrl.append("&encode=" + (encode != null ? encode : "gbk")

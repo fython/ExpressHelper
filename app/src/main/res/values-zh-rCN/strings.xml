@@ -83,5 +83,23 @@
 	<string name="category_ui">界面</string>
 	<string name="item_list_use_card_style">使用卡片式列表</string>
 	<string name="toast_you_need_restart">设置将在重启应用后生效。</string>
+	<string name="category_api">API</string>
+	<string name="item_token_choose">API密钥选择</string>
+	<string-array name="item_token_list">
+		<item>默认 (每日5000次查询, 感谢微博网友\@稀饭_Fighting 提供)</item>
+		<item>备用 (原API Token, 每日2000次查询)</item>
+		<item>自定义 (如果你经常使用这个应用, 建议你选择这个)</item>
+	</string-array>
+	<string-array name="item_token_list_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string name="item_token_custom">自定义密钥</string>
+	<string name="item_token_custom_desc">如果我们的密钥单日内查询次数用完了, 你可以自定义输入你自己的密钥.</string>
+	<string name="dialog_token_custom_title">输入你的Secret和ID</string>
+	<string name="dialog_token_custom_secret">应用Secret</string>
+	<string name="dialog_token_custom_id">应用ID</string>
+	<string name="dialog_token_custom_how_to_get_it">如何申请?</string>
 
 </resources>

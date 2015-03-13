@@ -13,6 +13,10 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.prefs.MaterialListPreference;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.SettingsActivity;
@@ -30,8 +34,12 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 	private Settings mSets;
 
 	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider,
-		pref_weibo, pref_github;
+		pref_weibo, pref_github, pref_token_custom;
 	private SwitchPreference pref_card_list;
+	private MaterialListPreference pref_token_choose;
+
+	private MaterialDialog dialog_custom_token;
+	private MaterialEditText et_secret, et_id;
 
 	@Override
 	public void onCreate(Bundle savedInstance) {
@@ -49,6 +57,8 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_donate = findPreference("donate");
 		pref_card_list = (SwitchPreference) findPreference("use_card_list");
 		pref_github = findPreference("github_repo");
+		pref_token_choose = (MaterialListPreference) findPreference("api_token_choose");
+		pref_token_custom = findPreference("api_token_custom");
 
 		String version = "Unknown";
 		try {
@@ -59,6 +69,12 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		}
 		pref_version.setSummary(version);
 		pref_card_list.setChecked(mSets.getBoolean(Settings.KEY_USE_CARD_LIST, true));
+		pref_token_custom.setDefaultValue(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0));
+		pref_token_custom.setEnabled(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0) == 2);
+		pref_token_choose.setSummary(
+				getResources().getStringArray(R.array.item_token_list)
+				[mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0)]
+		);
 
 		pref_weibo.setOnPreferenceClickListener(this);
 		pref_os_license.setOnPreferenceClickListener(this);
@@ -66,6 +82,8 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_donate.setOnPreferenceClickListener(this);
 		pref_github.setOnPreferenceClickListener(this);
 		pref_card_list.setOnPreferenceChangeListener(this);
+		pref_token_custom.setOnPreferenceClickListener(this);
+		pref_token_choose.setOnPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -88,6 +106,10 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		}
 		if (p == pref_github) {
 			openWebsite(getString(R.string.item_github_url));
+			return true;
+		}
+		if (p == pref_token_custom) {
+			showCustomTokenDialog();
 			return true;
 		}
 		return false;
@@ -114,6 +136,44 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 				.show();
 	}
 
+	private void showCustomTokenDialog() {
+		if (dialog_custom_token == null) {
+			dialog_custom_token = new MaterialDialog.Builder(getActivity())
+					.title(R.string.dialog_token_custom_title)
+					.customView(R.layout.dialog_custom_token, false)
+					.positiveText(android.R.string.ok)
+					.negativeText(android.R.string.cancel)
+					.neutralText(R.string.dialog_token_custom_how_to_get_it)
+					.callback(new MaterialDialog.ButtonCallback() {
+						@Override
+						public void onNegative(MaterialDialog dialog) {
+							super.onNegative(dialog);
+						}
+
+						@Override
+						public void onPositive(MaterialDialog dialog) {
+							super.onPositive(dialog);
+							mSets.putString(Settings.KEY_CUSTOM_SECRET, et_secret.getText().toString().trim());
+							mSets.putString(Settings.KEY_CUSTOM_ID, et_id.getText().toString().trim());
+						}
+
+						@Override
+						public void onNeutral(MaterialDialog dialog) {
+							super.onNeutral(dialog);
+							openWebsite("http://feng.moe/?p=111");
+						}
+					})
+					.build();
+
+			et_secret = (MaterialEditText) dialog_custom_token.getCustomView().findViewById(R.id.et_secret);
+			et_id = (MaterialEditText) dialog_custom_token.getCustomView().findViewById(R.id.et_app_id);
+		}
+
+		et_secret.setText(mSets.getString(Settings.KEY_CUSTOM_SECRET, ""));
+		et_id.setText(mSets.getString(Settings.KEY_CUSTOM_ID, ""));
+
+		dialog_custom_token.show();
+	}
 
 	@Override
 	public boolean onPreferenceChange(Preference pref, Object newValue) {
@@ -122,6 +182,13 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			mSets.putBoolean(Settings.KEY_USE_CARD_LIST, b);
 			pref_card_list.setChecked(b);
 			showRestartTips();
+			return true;
+		}
+		if (pref == pref_token_choose) {
+			int value = Integer.parseInt((String) newValue);
+			mSets.putInt(Settings.KEY_TOKEN_CHOOSE, value);
+			pref_token_custom.setEnabled(value == 2);
+			pref_token_choose.setSummary(getResources().getStringArray(R.array.item_token_list)[value]);
 			return true;
 		}
 		return false;

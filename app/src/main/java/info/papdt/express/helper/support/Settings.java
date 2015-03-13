@@ -6,7 +6,8 @@ import android.content.SharedPreferences;
 public class Settings {
 
 	public static final String XML_NAME = "settings";
-	public static final String KEY_USE_CARD_LIST = "use_card_list";
+	public static final String KEY_USE_CARD_LIST = "use_card_list", KEY_TOKEN_CHOOSE = "token_choose",
+			KEY_CUSTOM_SECRET = "token_secret", KEY_CUSTOM_ID = "token_custom_id";
 
 	private static Settings sInstance;
 	
@@ -39,6 +40,16 @@ public class Settings {
 	
 	public int getInt(String key, int defValue) {
 		return mPrefs.getInt(key, defValue);
+	}
+
+
+	public Settings putString(String key, String value) {
+		mPrefs.edit().putString(key, value).commit();
+		return this;
+	}
+
+	public String getString(String key, String defValue) {
+		return mPrefs.getString(key, defValue);
 	}
 	
 }

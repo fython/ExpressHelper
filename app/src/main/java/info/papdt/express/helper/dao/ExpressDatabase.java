@@ -15,17 +15,20 @@ import info.papdt.express.helper.api.KuaiDi100Helper;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
 import info.papdt.express.helper.support.HttpUtils;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.support.Utility;
 
 public class ExpressDatabase {
 
 	private ArrayList<Express> mExpressArray, array_ur, array_ok;
 	private Context context;
+	private Settings mSets;
 
 	private final static String TAG = "ExpressDatabase";
 
 	public ExpressDatabase(Context context) {
 		this.context = context;
+		this.mSets = Settings.getInstance(context);
 		mExpressArray = new ArrayList<>();
 	}
 
@@ -181,7 +184,24 @@ public class ExpressDatabase {
 	public String getDataFromNetwork(String companyCode, String mailNumber) {
 		String[] result = new String[1];
 
-		int resultCode = HttpUtils.get(KuaiDi100Helper.getRequestUrl(null, null, companyCode, mailNumber, "utf8"), result);
+		String secret, app_id;
+		switch (mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0)) {
+			case 1:
+				secret = KuaiDi100Helper.mysecret;
+				app_id = KuaiDi100Helper.myid;
+				break;
+			case 2:
+				secret = mSets.getString(Settings.KEY_CUSTOM_SECRET, "error");
+				app_id = mSets.getString(Settings.KEY_CUSTOM_ID, "error");
+				break;
+			case 0:
+			default:
+				secret = KuaiDi100Helper.xfsecret;
+				app_id = KuaiDi100Helper.xfid;
+				break;
+		}
+
+		int resultCode = HttpUtils.get(KuaiDi100Helper.getRequestUrl(app_id, secret, companyCode, mailNumber, "utf8"), result);
 		switch (resultCode) {
 			case HttpUtils.CODE_OKAY:
 				return result[0];
