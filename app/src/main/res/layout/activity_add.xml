@@ -63,16 +63,26 @@
 				app:iconLeft="@drawable/ic_event_note_black_24dp"
 				app:iconPadding="0dp"/>
 
-			<com.rengwuxian.materialedittext.MaterialEditText
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/et_company"
-				android:hint="@string/hint_et_company"
-				android:singleLine="true"
-				android:maxLength="10"
-				app:floatingLabel="highlight"
-				app:iconLeft="@drawable/ic_local_shipping_black_24dp"
-				app:iconPadding="0dp"/>
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:paddingLeft="12dp"
+					android:paddingTop="8dp" >
+					
+					<ImageView
+						android:src="@drawable/ic_local_shipping_black_24dp"
+						android:scaleType="centerInside"
+						android:layout_width="24dp"  
+						android:layout_height="24dp" />
+
+					<Spinner
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:id="@+id/spinner_company"
+						android:prompt="@string/hint_et_company"/>
+					
+				</LinearLayout>
 
 			<com.rengwuxian.materialedittext.MaterialEditText
 				android:layout_width="match_parent"

@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -18,14 +22,17 @@ import info.papdt.express.helper.api.KuaiDi100Helper;
 import info.papdt.express.helper.support.HttpUtils;
 import info.papdt.express.helper.support.Settings;
 
-public class AddActivity extends AbsActivity {
+public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 
 	private boolean isChecking = false;
 
-	private MaterialEditText et_company, et_number, et_name;
+	private MaterialEditText mEditTextSerial, mEditTextName;
+	private Spinner mSpinnerCompany;
 	private ProgressBar mProgress;
-	private View btn_done;
-
+	private View mButtonDone;
+	private ArrayAdapter<String> mCompanyAdapter;
+	private int mNow = 0;
+	
 	public static final String TAG = "AddActivity";
 	
 	//918108247993
@@ -41,13 +48,21 @@ public class AddActivity extends AbsActivity {
 
 	@Override
 	protected void setUpViews() {
-		et_company = (MaterialEditText) findViewById(R.id.et_company);
-		et_number = (MaterialEditText) findViewById(R.id.et_number);
-		et_name = (MaterialEditText) findViewById(R.id.et_name);
-		btn_done = findViewById(R.id.btn_done);
+		mEditTextSerial = (MaterialEditText) findViewById(R.id.et_number);
+		mSpinnerCompany = (Spinner) findViewById(R.id.spinner_company);
+		mEditTextName = (MaterialEditText) findViewById(R.id.et_name);
+		mButtonDone = findViewById(R.id.btn_done);
 		mProgress = (ProgressBar) findViewById(R.id.progressBar);
-
-		btn_done.setOnClickListener(new View.OnClickListener() {
+		mCompanyAdapter = new ArrayAdapter<String>( 
+			this,
+			android.R.layout.simple_spinner_item,
+			KuaiDi100Helper.CompanyInfo.names);
+		mCompanyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mSpinnerCompany.setAdapter(mCompanyAdapter);
+		mSpinnerCompany.setOnItemSelectedListener(this);
+		mSpinnerCompany.setSelection(0,true);
+		mSpinnerCompany.setPrompt(getString(R.string.hint_et_company));
+		mButtonDone.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (isChecking) return;
@@ -57,15 +72,9 @@ public class AddActivity extends AbsActivity {
 	}
 
 	private void postData() {
-		if (TextUtils.isEmpty(et_company.getText())) {
-			Toast.makeText(
-					getApplicationContext(),
-					R.string.toast_company_name_empty,
-					Toast.LENGTH_SHORT
-			).show();
-			return;
-		}
-		if (TextUtils.isEmpty(et_number.getText())) {
+		
+		
+		if (TextUtils.isEmpty(mEditTextSerial.getText())) {
 			Toast.makeText(
 					getApplicationContext(),
 					R.string.toast_number_empty,
@@ -73,9 +82,18 @@ public class AddActivity extends AbsActivity {
 			).show();
 			return;
 		}
-		new PostApiTask().execute(et_company.getText().toString(), et_number.getText().toString());
+		new PostApiTask().execute(KuaiDi100Helper.CompanyInfo.info.get(KuaiDi100Helper.CompanyInfo.names[mNow]), mEditTextSerial.getText().toString());
 	}
 
+	public void onItemSelected(AdapterView<?> parent, View view, 
+            int pos, long id) {
+        mNow = pos;
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        
+    }
+	
 	private void receiveData(String result, String name) {
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtra("result", result);
@@ -99,20 +117,8 @@ public class AddActivity extends AbsActivity {
 		@Override
 		protected String doInBackground(String... src) {
 			String[] result = new String[1];
-			String companyCode = null;
-			String companyName = src[0];
+			String companyCode = src[0];
 			String mailNumber = src[1];
-
-			for (int i = 0; i < KuaiDi100Helper.CompanyInfo.info.size(); i++){
-				if (companyName.toLowerCase(Locale.getDefault()).contains(KuaiDi100Helper.CompanyInfo.info.get(i).get("name"))){
-					companyCode = KuaiDi100Helper.CompanyInfo.info.get(i).get("code");
-					Log.i(TAG, "Found " + companyName + " and the code of company is " + companyCode);
-					break;
-				}
-			}
-			if (companyCode == null){
-				return FLAG_COMPANY_NOT_EXIST;
-			}
 
 			String secret, app_id;
 			switch (mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0)) {
@@ -174,9 +180,9 @@ public class AddActivity extends AbsActivity {
 				).show();
 				return;
 			}
-			String name = et_name.getText().toString();
+			String name = mEditTextName.getText().toString();
 			if (name == null || TextUtils.isEmpty(name)) {
-				name = et_number.getText().toString();
+				name = mEditTextSerial.getText().toString();
 			}
 			receiveData(result, name);
 		}
