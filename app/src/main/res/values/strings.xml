@@ -5,29 +5,29 @@
     <string name="navigation_drawer_open">Open Drawer</string>
 	<string name="navigation_drawer_close">Close Drawer</string>
 	<string name="title_section_1">All</string>
-	<string name="title_section_2">Unreceived</string>
-	<string name="title_section_3">Received</string>
+	<string name="title_section_2">Pending</string>
+	<string name="title_section_3">Delivered</string>
 
 	<string name="dialog_delete_title">Delete?</string>
-	<string name="dialog_delete_msg">This operation can\'t be recovered.</string>
-	<string name="details_has_copied">Detail item has copied to clipboard.</string>
+	<string name="dialog_delete_msg">This operation can\'t be reversed.</string>
+	<string name="details_has_copied">Detail\'s been copied to your clipboard.</string>
 
-	<string name="title_add_express">Add express track</string>
-	<string name="hint_et_name">Title (Just enter a name as you like)</string>
-	<string name="hint_et_company">Express company name</string>
-	<string name="hint_et_number">Express No.</string>
-	<string name="toast_company_name_empty">Company name can\'t be empty.</string>
-	<string name="toast_number_empty">Please enter your express number.</string>
-	<string name="toast_company_not_exist">This company name isn\'t exist or unsupported.</string>
-	<string name="toast_network_error">Network error! Check your connection and try again.</string>
+	<string name="title_add_express">Add Shipment</string>
+	<string name="hint_et_name">Title (Optional)</string>
+	<string name="hint_et_company">Carrier</string>
+	<string name="hint_et_number">Tracking Number</string>
+	<string name="toast_company_name_empty">Please select a carrier.</string>
+	<string name="toast_number_empty">Please enter your tracking number.</string>
+	<string name="toast_company_not_exist">Carrier doesn\'t exist or isn\'t unsupported.</string>
+	<string name="toast_network_error">Network error! Please check your internet connection and try again.</string>
 	<string name="toast_client_error">Client error! Please contact the author.</string>
 	<string name="toast_unknown_error">Unknown error!</string>
 
 	<string name="title_express_details">Details</string>
 	<string name="item_status">Status</string>
-	<string name="item_companyname">Company name</string>
-	<string name="item_mailno">Mail No.</string>
-	<string name="item_errorcode">Error code</string>
+	<string name="item_companyname">Carrier</string>
+	<string name="item_mailno">Tracking Number</string>
+	<string name="item_errorcode">Error Code</string>
 	<string name="item_errormessage">Error Message</string>
 	<string name="action_done">Done</string>
 	<string name="action_edit">Edit</string>
@@ -36,8 +36,8 @@
 		<item>Failed</item>
 		<item>Normal</item>
 		<item>On the way</item>
-		<item>Signed</item>
-		<item>Return</item>
+		<item>Delivered</item>
+		<item>Returned</item>
 		<item>Other problem</item>
 	</string-array>
 
@@ -75,21 +75,21 @@
 	<string name="item_api_desc">AiChaKuaiDi</string>
 	<string name="api_provider_home">"http://www.ickd.cn"</string>
 	<string name="item_donate">Donate</string>
-	<string name="donate_content">"If this application is useful for you, and you\'re willing to support us, you could donate us through Alipay.\nOur Alipay account: 316643843\@qq.com\nAlso you can use that QR Code."</string>
-	<string name="item_weibo">Sina weibo</string>
+	<string name="donate_content">"If this application helps you, and you\'re willing to support us, you may donate to us via Alipay.\nMake a transaction to our Alipay account: 316643843\@qq.com, or simply scan the QR Code above."</string>
+	<string name="item_weibo">Sina Weibo</string>
 	<string name="item_weibo_author">\@某烧饼</string>
 	<string name="item_weibo_author_url">"http://weibo.com/fython"</string>
-	<string name="item_github">Github repo</string>
+	<string name="item_github">Github Repo</string>
 	<string name="item_github_url">"https://github.com/PaperAirplane-Dev-Team/ExpressHelper"</string>
-	<string name="category_ui">UI</string>
+	<string name="category_ui">UI Designer</string>
 	<string name="item_list_use_card_style">Use card style list</string>
-	<string name="toast_you_need_restart">Options will apply after restarting app.</string>
+	<string name="toast_you_need_restart">Changes will apply after restarting the application.</string>
 	<string name="category_api">API</string>
-	<string name="item_token_choose">API Token Choose</string>
+	<string name="item_token_choose">Select API Token</string>
 	<string-array name="item_token_list">
-		<item>Default (5000 times per day, thx Weibo\@稀饭_Fighting)</item>
-		<item>Secondary (2000 times per day)</item>
-		<item>Custom (If you often use this app, we recommend you choose this)</item>
+		<item>Default (5000 times per day, thx to Weibo user \@稀饭_Fighting)</item>
+		<item>Alternative (2000 times per day)</item>
+		<item>Custom (recommended for frequent use)</item>
 	</string-array>
 	<string-array name="item_token_list_values">
 		<item>0</item>
@@ -97,10 +97,10 @@
 		<item>2</item>
 	</string-array>
 	<string name="item_token_custom">Custom Token</string>
-	<string name="item_token_custom_desc">If our token is use out today, you could use your own token.</string>
-	<string name="dialog_token_custom_title">Enter your own token</string>
-	<string name="dialog_token_custom_secret">App secret</string>
-	<string name="dialog_token_custom_id">App id</string>
-	<string name="dialog_token_custom_how_to_get_it">How to get it?</string>
+	<string name="item_token_custom_desc">You may use your own API token in case ours exceeds the daily limit.</string>
+	<string name="dialog_token_custom_title">Enter your own API token</string>
+	<string name="dialog_token_custom_secret">API Secret</string>
+	<string name="dialog_token_custom_id">API ID</string>
+	<string name="dialog_token_custom_how_to_get_it">How to get one?</string>
 
 </resources>
