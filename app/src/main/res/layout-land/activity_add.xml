@@ -75,26 +75,29 @@
 					app:floatingLabel="highlight"
 					app:iconLeft="@drawable/ic_event_note_black_24dp"
 					app:iconPadding="0dp"/>
-					
+
 				<LinearLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:orientation="horizontal"
 					android:paddingLeft="12dp"
-					android:paddingTop="8dp" >
-					
+					android:paddingTop="10dp"
+					android:gravity="center_vertical">
+
 					<ImageView
 						android:src="@drawable/ic_local_shipping_black_24dp"
 						android:scaleType="centerInside"
-						android:layout_width="24dp"  
-						android:layout_height="24dp" />
+						android:layout_width="24dp"
+						android:layout_height="24dp"
+						android:alpha="0.6"/>
 
 					<Spinner
 						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
+						android:layout_height="30dp"
+						android:layout_marginLeft="4dp"
 						android:id="@+id/spinner_company"
 						android:prompt="@string/hint_et_company"/>
-					
+
 				</LinearLayout>
 
 				<com.rengwuxian.materialedittext.MaterialEditText

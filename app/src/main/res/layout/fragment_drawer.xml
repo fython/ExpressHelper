@@ -11,11 +11,20 @@
 		android:layout_height="0dp"
 	    android:id="@+id/statusHeaderView"/>
 
-	<ListView android:id="@+id/drawer_list"
+	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:choiceMode="singleChoice"
-		android:divider="@android:color/transparent"
-		android:dividerHeight="0dp" />
+		android:layout_height="match_parent">
+
+		<ListView android:id="@+id/drawer_list"
+		          android:layout_width="match_parent"
+		          android:layout_height="wrap_content"
+		          android:choiceMode="singleChoice"
+		          android:divider="@android:color/transparent"
+		          android:layout_gravity="center"
+		          android:dividerHeight="0dp"
+		          android:layout_marginBottom="30dp"/>
+
+	</FrameLayout>
+
 
 </LinearLayout>
