@@ -86,4 +86,13 @@ public abstract class AbsActivity extends SwipeBackActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void onBackPressed() {
+		if (mSwipeBackLayout != null && mSwipeBackLayout.isGestureEnabled()) {
+			scrollToFinishActivity();
+		} else {
+			super.onBackPressed();
+		}
+	}
+
 }

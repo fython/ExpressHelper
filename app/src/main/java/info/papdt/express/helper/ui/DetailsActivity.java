@@ -163,7 +163,7 @@ public class DetailsActivity extends AbsActivity {
 			syncActionBarCustomView();
 			invalidateOptionsMenu();
 		} else {
-			finish();
+			scrollToFinishActivity();
 		}
 	}
 

@@ -181,6 +181,10 @@ public class SwipeBackLayout extends FrameLayout {
         mEnable = enable;
     }
 
+	public boolean isGestureEnabled() {
+		return mEnable;
+	}
+
     /**
      * Enable edge tracking for the selected edges of the parent view. The
      * callback's
