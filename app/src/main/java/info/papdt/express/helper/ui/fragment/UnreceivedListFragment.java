@@ -2,6 +2,8 @@ package info.papdt.express.helper.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +23,7 @@ import java.io.IOException;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
@@ -32,6 +35,8 @@ public class UnreceivedListFragment extends Fragment {
 	private SwipeRefreshLayout refreshLayout;
 	private ListView mListView;
 	private HomeCardAdapter mAdapter;
+
+	private Settings mSets;
 
 	private boolean isFirstCreate = true;
 
@@ -49,6 +54,8 @@ public class UnreceivedListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+		if (mSets == null) mSets = Settings.getInstance(getActivity().getApplicationContext());
 
 		refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
 		mListView = (ListView) rootView.findViewById(R.id.listView);
@@ -78,6 +85,9 @@ public class UnreceivedListFragment extends Fragment {
 				return true;
 			}
 		});
+		if (mSets.getBoolean(Settings.KEY_USE_CARD_LIST, true)) {
+			mListView.setSelector(new ColorDrawable(Color.TRANSPARENT));
+		}
 
 		refreshLayout.setColorSchemeResources(R.color.blue_500);
 		refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
