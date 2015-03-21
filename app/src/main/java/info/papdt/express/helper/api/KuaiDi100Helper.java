@@ -1,6 +1,8 @@
 package info.papdt.express.helper.api;
 
 import android.util.*;
+
+import info.papdt.express.helper.api.secret.KuaiDi100;
 import info.papdt.express.helper.support.*;
 import org.json.*;
 import java.util.*;
@@ -9,6 +11,8 @@ public class KuaiDi100Helper {
 	
 	public static String myid = "104262", mysecret = "2ac58b166085aefdc9c93a3a69010e87";
 	public static String xfid = "109066", xfsecret = "b1726be0ec9c6a1abe60e3d71ef72603";
+	public static String smid = KuaiDi100.SKINME_API_ID, smsecret = KuaiDi100.SKINME_API_SECRET;
+	// public static String smid = "", smsecret = "";
 
 	private static final String TAG = "KuaiDi100Helper";
 

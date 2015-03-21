@@ -33,3 +33,9 @@ local.properties
 *.iml
 .idea/
 .gradle/
+
+# Secret Files
+/app/src/main/java/info/papdt/express/helper/api/secret
+
+# Build Files
+/libraries/*/build

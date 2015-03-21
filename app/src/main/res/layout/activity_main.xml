@@ -5,7 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="info.papdt.express.helper.ui.MainActivity">
+    tools:context="info.papdt.express.helper.ui.MainActivity"
+    android:background="@color/background_material_light">
 	
 	<FrameLayout
 			android:layout_width="match_parent"

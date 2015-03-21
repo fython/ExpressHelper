@@ -13,12 +13,15 @@ import android.view.View;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.support.Utility;
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
-public abstract class AbsActivity extends ActionBarActivity {
+public abstract class AbsActivity extends SwipeBackActivity {
 
 	protected Toolbar mToolbar;
 	protected ActionBar mActionBar;
 	protected Settings mSets;
+	private SwipeBackLayout mSwipeBackLayout;
 
 	protected int statusBarHeight = 0;
 
@@ -60,6 +63,15 @@ public abstract class AbsActivity extends ActionBarActivity {
 
 		}
 		mActionBar = getSupportActionBar();
+
+		try {
+			mSwipeBackLayout = getSwipeBackLayout();
+
+			mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT | SwipeBackLayout.EDGE_RIGHT);
+			mSwipeBackLayout.setEnableGesture(mSets.getBoolean(Settings.KEY_SWIPE_BACK, true));
+		} catch (Exception e) {
+
+		}
 
 		setUpViews();
 	}

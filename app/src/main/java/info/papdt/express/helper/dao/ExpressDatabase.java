@@ -10,8 +10,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import info.papdt.express.helper.api.KuaiDi100Helper;
+import info.papdt.express.helper.api.secret.KuaiDi100;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
 import info.papdt.express.helper.support.HttpUtils;
@@ -185,7 +187,13 @@ public class ExpressDatabase {
 		String[] result = new String[1];
 
 		String secret, app_id;
-		switch (mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0)) {
+
+		int choice = mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0);
+		if (choice == 4) {
+			Random r = new Random();
+			choice = (choice = r.nextInt(2)) == 2 ? choice : 3;
+		}
+		switch (choice) {
 			case 1:
 				secret = KuaiDi100Helper.mysecret;
 				app_id = KuaiDi100Helper.myid;
@@ -193,6 +201,10 @@ public class ExpressDatabase {
 			case 2:
 				secret = mSets.getString(Settings.KEY_CUSTOM_SECRET, "error");
 				app_id = mSets.getString(Settings.KEY_CUSTOM_ID, "error");
+				break;
+			case 3:
+				secret = KuaiDi100Helper.smsecret;
+				app_id = KuaiDi100Helper.smid;
 				break;
 			case 0:
 			default:

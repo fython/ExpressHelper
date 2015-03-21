@@ -81,16 +81,20 @@
 	<string name="item_github_url">"https://github.com/PaperAirplane-Dev-Team/ExpressHelper"</string>
 	<string name="category_ui">介面</string>
 	<string name="item_list_use_card_style">採用卡片樣式列表</string>
-	<string name="toast_you_need_restart">設定將在重啟應用程式後生效。</string>
+	<string name="toast_you_need_restart">設定將在重啟應用程式後完全生效。</string>
 	<string name="category_api">API</string>
 	<string name="item_token_choose">API密鑰選擇</string>
 	<string-array name="item_token_list">
-		<item>默認 (單日5000次查尋, 感謝新浪微博網友\@稀饭_Fighting 提供)</item>
-		<item>備用 (原API Token, 單日2000次查尋)</item>
-		<item>自訂 (如果你經常使用該程式, 建議你選擇這項)</item>
+		<item>隨機 (默認)</item>
+		<item>稀飯\'s (單日5000次, 感謝微博用戶\@稀饭_Fighting 提供)</item>
+		<item>SkinMe\'s (單日5000次, 感謝微博用戶\@啾咕咕www 提供)</item>
+		<item>備用 (單日2000次)</item>
+		<item>自訂 (推薦經常使用的用戶選擇)</item>
 	</string-array>
 	<string-array name="item_token_list_values">
+		<item>4</item>
 		<item>0</item>
+		<item>3</item>
 		<item>1</item>
 		<item>2</item>
 	</string-array>
@@ -100,5 +104,6 @@
 	<string name="dialog_token_custom_secret">應用Secret</string>
 	<string name="dialog_token_custom_id">應用ID</string>
 	<string name="dialog_token_custom_how_to_get_it">如何申請?</string>
+	<string name="item_enable_swipe_back">啟用滑動返回手勢</string>
 
 </resources>

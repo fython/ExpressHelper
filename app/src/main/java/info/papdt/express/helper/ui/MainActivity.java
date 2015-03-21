@@ -55,6 +55,8 @@ public class MainActivity extends AbsActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		setSwipeBackEnable(false);
+
 		/** Init Navigation Drawer */
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);

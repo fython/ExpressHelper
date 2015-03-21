@@ -35,7 +35,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 
 	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider,
 		pref_weibo, pref_github, pref_token_custom;
-	private SwitchPreference pref_card_list;
+	private SwitchPreference pref_card_list, pref_swipe_back;
 	private MaterialListPreference pref_token_choose;
 
 	private MaterialDialog dialog_custom_token;
@@ -59,6 +59,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_github = findPreference("github_repo");
 		pref_token_choose = (MaterialListPreference) findPreference("api_token_choose");
 		pref_token_custom = findPreference("api_token_custom");
+		pref_swipe_back = (SwitchPreference) findPreference("swipe_back");
 
 		String version = "Unknown";
 		try {
@@ -69,11 +70,17 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		}
 		pref_version.setSummary(version);
 		pref_card_list.setChecked(mSets.getBoolean(Settings.KEY_USE_CARD_LIST, true));
+		pref_swipe_back.setChecked(mSets.getBoolean(Settings.KEY_SWIPE_BACK, true));
 		pref_token_custom.setDefaultValue(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0));
 		pref_token_custom.setEnabled(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0) == 2);
+		String[] values = getResources().getStringArray(R.array.item_token_list_values);
+		int index, target = mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0);
+		for (index = 0; index < values.length; index++) {
+			if (values[index].equals(String.valueOf(target))) break;
+		}
 		pref_token_choose.setSummary(
 				getResources().getStringArray(R.array.item_token_list)
-				[mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0)]
+				[index]
 		);
 
 		pref_weibo.setOnPreferenceClickListener(this);
@@ -84,6 +91,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_card_list.setOnPreferenceChangeListener(this);
 		pref_token_custom.setOnPreferenceClickListener(this);
 		pref_token_choose.setOnPreferenceChangeListener(this);
+		pref_swipe_back.setOnPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -188,7 +196,19 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			int value = Integer.parseInt((String) newValue);
 			mSets.putInt(Settings.KEY_TOKEN_CHOOSE, value);
 			pref_token_custom.setEnabled(value == 2);
-			pref_token_choose.setSummary(getResources().getStringArray(R.array.item_token_list)[value]);
+			String[] values = getResources().getStringArray(R.array.item_token_list_values);
+			int index;
+			for (index = 0; index < values.length; index++) {
+				if (values[index].equals(newValue)) break;
+			}
+			pref_token_choose.setSummary(getResources().getStringArray(R.array.item_token_list)[index]);
+			return true;
+		}
+		if (pref == pref_swipe_back) {
+			Boolean b = (Boolean) newValue;
+			mSets.putBoolean(Settings.KEY_SWIPE_BACK, b);
+			pref_swipe_back.setChecked(b);
+			showRestartTips();
 			return true;
 		}
 		return false;

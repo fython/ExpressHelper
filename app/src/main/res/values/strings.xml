@@ -87,12 +87,16 @@
 	<string name="category_api">API</string>
 	<string name="item_token_choose">Select API Token</string>
 	<string-array name="item_token_list">
-		<item>Default (5000 times per day, thx to Weibo user \@稀饭_Fighting)</item>
+		<item>Random (Default)</item>
+		<item>XiFang\'s (5000 times per day, thx to Weibo user \@稀饭_Fighting)</item>
+		<item>SkinMe\'s (5000 times per day, thx to Weibo user \@啾咕咕www)</item>
 		<item>Alternative (2000 times per day)</item>
 		<item>Custom (recommended for frequent use)</item>
 	</string-array>
 	<string-array name="item_token_list_values">
+		<item>4</item>
 		<item>0</item>
+		<item>3</item>
 		<item>1</item>
 		<item>2</item>
 	</string-array>
@@ -102,5 +106,6 @@
 	<string name="dialog_token_custom_secret">API Secret</string>
 	<string name="dialog_token_custom_id">API ID</string>
 	<string name="dialog_token_custom_how_to_get_it">How to get one?</string>
+	<string name="item_enable_swipe_back">Enable swipe back gesture</string>
 
 </resources>
