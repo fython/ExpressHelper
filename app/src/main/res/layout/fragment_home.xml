@@ -8,14 +8,10 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<ListView
-			android:id="@+id/listView"
+		<com.github.ksoichiro.android.observablescrollview.ObservableListView
+			android:id="@+id/scroll"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:paddingTop="8dp"
-			android:clipToPadding="false"
-			android:divider="@null"
-			android:dividerHeight="8dp"/>
+			android:layout_height="match_parent" />
 
 	</android.support.v4.widget.SwipeRefreshLayout>
     

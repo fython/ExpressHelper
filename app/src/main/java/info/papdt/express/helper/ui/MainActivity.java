@@ -1,23 +1,22 @@
 package info.papdt.express.helper.ui;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.github.ksoichiro.android.observablescrollview.Scrollable;
+import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.melnykov.fab.FloatingActionButton;
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 
 import org.json.JSONException;
 
@@ -25,27 +24,19 @@ import java.io.IOException;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
-import info.papdt.express.helper.ui.fragment.HomeFragment;
-import info.papdt.express.helper.ui.fragment.NavigationDrawerFragment;
-import info.papdt.express.helper.ui.fragment.ReceivedListFragment;
-import info.papdt.express.helper.ui.fragment.UnreceivedListFragment;
+import info.papdt.express.helper.ui.adapter.HomePagerAdapter;
 
-public class MainActivity extends AbsActivity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends AbsActivity implements ObservableScrollViewCallbacks {
 
 	public ExpressDatabase mExpressDB;
 
-	private ActionBarDrawerToggle mDrawerToggle;
-	private DrawerLayout mDrawerLayout;
-	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private View mHeaderView;
+	private int mBaseTranslationY;
+
+	private ViewPager mPager;
+	private SlidingTabLayout mSlidingTab;
+	private HomePagerAdapter mPagerAdapter;
 	private FloatingActionButton mFAB;
-
-	private ActionBarHelper mActionBar;
-
-	private HomeFragment fragmentHome;
-	private ReceivedListFragment fragmentOK;
-	private UnreceivedListFragment fragmentUR;
-	private int mCurrent;
 
 	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100,
 			REQUEST_DETAILS = 101, RESULT_HAS_CHANGED = 101;
@@ -57,19 +48,13 @@ public class MainActivity extends AbsActivity implements
 
 		setSwipeBackEnable(false);
 
-		/** Init Navigation Drawer */
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
-				.findFragmentById(R.id.navigation_drawer);
-		mNavigationDrawerFragment.setHeaderHeight(statusBarHeight);
-		mActionBar = new ActionBarHelper();
-		mActionBar.init();
-
 		/** Init Database */
 		mExpressDB = new ExpressDatabase(getApplicationContext());
 		refreshDatabase(false);
 
-		setUpDrawer();
-		mCurrent = 0;
+		/** Init ViewPager */
+		mPagerAdapter = new HomePagerAdapter(getSupportFragmentManager());
+		mPager.setAdapter(mPagerAdapter);
 	}
 
 	public void refreshDatabase(boolean pullNewData) {
@@ -88,6 +73,35 @@ public class MainActivity extends AbsActivity implements
 
 	@Override
 	protected void setUpViews() {
+		mHeaderView = findViewById(R.id.header);
+		ViewCompat.setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
+		mPager = (ViewPager) findViewById(R.id.pager);
+
+		/** Set up SlidingTabLayout */
+		mSlidingTab = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+		mSlidingTab.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
+		mSlidingTab.setSelectedIndicatorColors(getResources().getColor(android.R.color.white));
+		mSlidingTab.setDistributeEvenly(true);
+		mSlidingTab.setViewPager(mPager);
+
+		// When the page is selected, other fragments' scrollY should be adjusted
+		// according to the toolbar status(shown/hidden)
+		mSlidingTab.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageScrolled(int i, float v, int i2) {
+			}
+
+			@Override
+			public void onPageSelected(int i) {
+				propagateToolbarState(toolbarIsShown());
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int i) {
+			}
+		});
+
+		/** Set up FloatingActionButton */
 		mFAB = (FloatingActionButton) findViewById(R.id.fab);
 		mFAB.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -99,43 +113,147 @@ public class MainActivity extends AbsActivity implements
 		});
 	}
 
-	private void setUpDrawer() {
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-		mDrawerLayout.setDrawerListener(new MyDrawerListener());
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
-				GravityCompat.START);
-
-		mDrawerToggle = new ActionBarDrawerToggle(this,
-				mDrawerLayout,
-				R.string.navigation_drawer_open,
-				R.string.navigation_drawer_close
-		) {
-			@Override
-			public void onDrawerClosed(View drawerView) {
-				super.onDrawerClosed(drawerView);
-				invalidateOptionsMenu();
+	@Override
+	public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+		if (dragging) {
+			int toolbarHeight = mToolbar.getHeight();
+			float currentHeaderTranslationY = ViewHelper.getTranslationY(mHeaderView);
+			if (firstScroll) {
+				if (-toolbarHeight < currentHeaderTranslationY) {
+					mBaseTranslationY = scrollY;
+				}
 			}
-
-			@Override
-			public void onDrawerOpened(View drawerView) {
-				super.onDrawerOpened(drawerView);
-				invalidateOptionsMenu();
-			}
-		};
-
-		mDrawerLayout.post(new Runnable() {
-			@Override
-			public void run() {
-				mDrawerToggle.syncState();
-			}
-		});
-
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+			float headerTranslationY = ScrollUtils.getFloat(-(scrollY - mBaseTranslationY), -toolbarHeight, 0);
+			ViewPropertyAnimator.animate(mHeaderView).cancel();
+			ViewHelper.setTranslationY(mHeaderView, headerTranslationY);
+		}
 	}
 
-	public boolean isDrawerOpen() {
-		return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(Gravity.LEFT);
+	@Override
+	public void onDownMotionEvent() {
+	}
+
+	@Override
+	public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+		mBaseTranslationY = 0;
+
+		Fragment fragment = getCurrentFragment();
+		if (fragment == null) {
+			return;
+		}
+		View view = fragment.getView();
+		if (view == null) {
+			return;
+		}
+
+		// ObservableXxxViews have same API
+		// but currently they don't have any common interfaces.
+		adjustToolbar(scrollState, view);
+	}
+
+	private Fragment getCurrentFragment() {
+		return mPagerAdapter.getItemAt(mPager.getCurrentItem());
+	}
+
+	private void adjustToolbar(ScrollState scrollState, View view) {
+		int toolbarHeight = mToolbar.getHeight();
+		final Scrollable scrollView = (Scrollable) view.findViewById(R.id.scroll);
+		if (scrollView == null) {
+			return;
+		}
+		int scrollY = scrollView.getCurrentScrollY();
+		if (scrollState == ScrollState.DOWN) {
+			showToolbar();
+		} else if (scrollState == ScrollState.UP) {
+			if (toolbarHeight <= scrollY) {
+				hideToolbar();
+			} else {
+				showToolbar();
+			}
+		} else {
+			// Even if onScrollChanged occurs without scrollY changing, toolbar should be adjusted
+			if (toolbarIsShown() || toolbarIsHidden()) {
+				// Toolbar is completely moved, so just keep its state
+				// and propagate it to other pages
+				propagateToolbarState(toolbarIsShown());
+			} else {
+				// Toolbar is moving but doesn't know which to move:
+				// you can change this to hideToolbar()
+				showToolbar();
+			}
+		}
+	}
+
+	private void propagateToolbarState(boolean isShown) {
+		int toolbarHeight = mToolbar.getHeight();
+
+		// Set scrollY for the fragments that are not created yet
+		mPagerAdapter.setScrollY(isShown ? 0 : toolbarHeight);
+
+		// Set scrollY for the active fragments
+		for (int i = 0; i < mPagerAdapter.getCount(); i++) {
+			// Skip current item
+			if (i == mPager.getCurrentItem()) {
+				continue;
+			}
+
+			// Skip destroyed or not created item
+			Fragment f = mPagerAdapter.getItemAt(i);
+			if (f == null) {
+				continue;
+			}
+
+			View view = f.getView();
+			if (view == null) {
+				continue;
+			}
+			propagateToolbarState(isShown, view, toolbarHeight);
+		}
+	}
+
+	private void propagateToolbarState(boolean isShown, View view, int toolbarHeight) {
+		Scrollable scrollView = (Scrollable) view.findViewById(R.id.scroll);
+		if (scrollView == null) {
+			return;
+		}
+		if (isShown) {
+			// Scroll up
+			if (0 < scrollView.getCurrentScrollY()) {
+				scrollView.scrollVerticallyTo(0);
+			}
+		} else {
+			// Scroll down (to hide padding)
+			if (scrollView.getCurrentScrollY() < toolbarHeight) {
+				scrollView.scrollVerticallyTo(toolbarHeight);
+			}
+		}
+	}
+
+	private boolean toolbarIsShown() {
+		return ViewHelper.getTranslationY(mHeaderView) == 0;
+	}
+
+	private boolean toolbarIsHidden() {
+		return ViewHelper.getTranslationY(mHeaderView) == - mToolbar.getHeight();
+	}
+
+	private void showToolbar() {
+		float headerTranslationY = ViewHelper.getTranslationY(mHeaderView);
+		if (headerTranslationY != 0) {
+			ViewPropertyAnimator.animate(mHeaderView).cancel();
+			ViewPropertyAnimator.animate(mHeaderView).translationY(0).setDuration(200).start();
+		}
+		propagateToolbarState(true);
+	}
+
+	private void hideToolbar() {
+		float headerTranslationY = ViewHelper.getTranslationY(mHeaderView);
+		int toolbarHeight = mToolbar.getHeight();
+		if (headerTranslationY != -toolbarHeight) {
+			ViewPropertyAnimator.animate(mHeaderView).cancel();
+			ViewPropertyAnimator.animate(mHeaderView).translationY(-toolbarHeight).setDuration(200).start();
+		}
+		propagateToolbarState(false);
 	}
 
 	@Override
@@ -153,24 +271,24 @@ public class MainActivity extends AbsActivity implements
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					fragmentHome.mDB = mExpressDB;
-					fragmentHome.setUpAdapter();
+					// fragmentHome.mDB = mExpressDB;
+					// fragmentHome.setUpAdapter();
 				}
 				break;
 			case REQUEST_DETAILS:
 				if (resultCode == RESULT_HAS_CHANGED) {
 					try {
-						fragmentHome.mHandler.sendEmptyMessage(HomeFragment.FLAG_REFRESH_ADAPTER_ONLY);
+						// fragmentHome.mHandler.sendEmptyMessage(HomeFragment.FLAG_REFRESH_ADAPTER_ONLY);
 					} catch (Exception e) {
 
 					}
 					try {
-						fragmentOK.mHandler.sendEmptyMessage(ReceivedListFragment.FLAG_REFRESH_ADAPTER_ONLY);
+						// fragmentOK.mHandler.sendEmptyMessage(ReceivedListFragment.FLAG_REFRESH_ADAPTER_ONLY);
 					} catch (Exception e) {
 
 					}
 					try {
-						fragmentUR.mHandler.sendEmptyMessage(UnreceivedListFragment.FLAG_REFRESH_ADAPTER_ONLY);
+						// fragmentUR.mHandler.sendEmptyMessage(UnreceivedListFragment.FLAG_REFRESH_ADAPTER_ONLY);
 					} catch (Exception e) {
 
 					}
@@ -192,171 +310,15 @@ public class MainActivity extends AbsActivity implements
 	}
 
 	@Override
-	public boolean onNavigationDrawerItemSelected(int position) {
-        if (position != 3) {
-            mCurrent = position;
-        }
-		try {
-			mDrawerLayout.closeDrawer(Gravity.LEFT);
-		} catch (NullPointerException e) {
-
-		}
-
-		FragmentManager fragmentManager = getFragmentManager();
-		switch (position) {
-			case 0:
-				if (fragmentHome == null) {
-					fragmentHome = HomeFragment.newInstance();
-				}
-				fragmentManager
-						.beginTransaction()
-						.replace(R.id.container, fragmentHome)
-						.commit();
-                setTitle(R.string.app_name);
-				return true;
-			case 1:
-				if (fragmentUR == null) {
-					fragmentUR = UnreceivedListFragment.newInstance();
-				}
-				fragmentManager
-						.beginTransaction()
-						.replace(R.id.container, fragmentUR)
-						.commit();
-                setTitle(R.string.title_section_2);
-				return true;
-			case 2:
-				if (fragmentOK == null) {
-					fragmentOK = ReceivedListFragment.newInstance();
-				}
-				fragmentManager
-						.beginTransaction()
-						.replace(R.id.container, fragmentOK)
-						.commit();
-                setTitle(R.string.title_section_3);
-				return true;
-			case 3:
-				SettingsActivity.launchActivity(this, SettingsActivity.FLAG_MAIN);
-				return false;
-			default:
-				fragmentManager
-						.beginTransaction()
-						.replace(R.id.container, PlaceholderFragment.newInstance())
-						.commit();
-                setTitle(R.string.app_name);
-				return true;
-		}
-	}
-
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// getMenuInflater().inflate(R.menu.main, menu);
-		if (!isDrawerOpen()) {
-			return true;
-		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		mDrawerToggle.syncState();
-	}
-
-	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
-		}
-
 		int id = item.getItemId();
 
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-	
-	@Override
-	public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
-            mDrawerLayout.closeDrawer(Gravity.LEFT);
-        }
-		else if (mCurrent != 0) {
-            mNavigationDrawerFragment.selectItem(0);
-		} else {
-			super.onBackPressed();
-		}
-	}
-
-	public static class PlaceholderFragment extends Fragment {
-
-		public static PlaceholderFragment newInstance() {
-			PlaceholderFragment fragment = new PlaceholderFragment();
-			return fragment;
-		}
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_placeholder, container, false);
-			return rootView;
-		}
-
-	}
-
-	private class MyDrawerListener implements DrawerLayout.DrawerListener {
-		@Override
-		public void onDrawerOpened(View drawerView) {
-			mDrawerToggle.onDrawerOpened(drawerView);
-			mActionBar.onDrawerOpened();
-		}
-
-		@Override
-		public void onDrawerClosed(View drawerView) {
-			mDrawerToggle.onDrawerClosed(drawerView);
-			mActionBar.onDrawerClosed();
-		}
-
-		@Override
-		public void onDrawerSlide(View drawerView, float slideOffset) {
-			mDrawerToggle.onDrawerSlide(drawerView, slideOffset);
-		}
-
-		@Override
-		public void onDrawerStateChanged(int newState) {
-			mDrawerToggle.onDrawerStateChanged(newState);
-		}
-	}
-
-	private class ActionBarHelper {
-		private final ActionBar mActionBar;
-		private CharSequence mDrawerTitle;
-		private CharSequence mTitle;
-
-		ActionBarHelper() {
-			mActionBar = getSupportActionBar();
-		}
-
-		public void init() {
-			mActionBar.setDisplayHomeAsUpEnabled(true);
-			mActionBar.setDisplayShowHomeEnabled(false);
-			mTitle = mDrawerTitle = getTitle();
-		}
-
-		public void onDrawerClosed() {
-			mActionBar.setTitle(mTitle);
-		}
-
-		public void onDrawerOpened() {
-			mActionBar.setTitle(mDrawerTitle);
-		}
-
 	}
 
 }

@@ -34,4 +34,5 @@ dependencies {
     compile 'com.rengwuxian.materialedittext:library:1.8.+'
     compile 'de.hdodenhof:circleimageview:1.2.+'
     compile 'com.afollestad:material-dialogs:0.6.3.2'
+    compile 'com.github.ksoichiro:android-observablescrollview:1.5.0'
 }

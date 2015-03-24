@@ -1,6 +1,5 @@
 package info.papdt.express.helper.ui.fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,16 +7,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 
 import org.json.JSONException;
 
@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment {
 	public ExpressDatabase mDB;
 
 	private SwipeRefreshLayout refreshLayout;
-	private ListView mListView;
+	private ObservableListView mListView;
 	private HomeCardAdapter mAdapter;
 
 	private Settings mSets;
@@ -58,8 +58,17 @@ public class HomeFragment extends Fragment {
 		if (mSets == null) mSets = Settings.getInstance(getActivity().getApplicationContext());
 
 		refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
-		mListView = (ListView) rootView.findViewById(R.id.listView);
 
+		mListView = (ObservableListView) rootView.findViewById(R.id.scroll);
+
+		Fragment parentFragment = getParentFragment();
+		ViewGroup viewGroup = (ViewGroup) parentFragment.getView();
+		if (viewGroup != null) {
+			mListView.setTouchInterceptionViewGroup((ViewGroup) viewGroup.findViewById(R.id.container));
+			if (parentFragment instanceof ObservableScrollViewCallbacks) {
+				mListView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentFragment);
+			}
+		}
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
