@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<style name="AppTheme" parent="@style/BaseAppTheme.Translucent"/>
+	<style name="AppTheme.Translucent" parent="@style/BaseAppTheme.Translucent"/>
+
+	<style name="AppTheme" parent="@style/BaseAppTheme"/>
 
     <style name="BaseAppTheme.Translucent" parent="BaseAppTheme">
 	    <item name="android:windowBackground">@android:color/transparent</item>
@@ -15,6 +17,10 @@
 	</style>
 
 	<style name="AppTheme.NoActionBar" parent="@style/AppTheme">
+		<item name="windowActionBar">false</item>
+	</style>
+
+	<style name="AppTheme.NoActionBar.Translucent" parent="@style/AppTheme.Translucent">
 		<item name="windowActionBar">false</item>
 	</style>
 
