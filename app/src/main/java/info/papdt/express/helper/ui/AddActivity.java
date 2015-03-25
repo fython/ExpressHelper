@@ -20,6 +20,7 @@ import java.util.Random;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.api.KuaiDi100Helper;
+import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.support.HttpUtils;
 import info.papdt.express.helper.support.Settings;
 
@@ -107,7 +108,7 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 
 		public static final String FLAG_COMPANY_NOT_EXIST = "company_null",
 				FLAG_NETWORK_ERROR = "network_error", FLAG_UNKNOWN_ERROR = "unknown_error",
-				FLAG_CLIENT_ERROR = "client_error";
+				FLAG_CLIENT_ERROR = "client_error", FLAG_HAS_BEEN_EXIST = "has_been_exist";
 
 		@Override
 		protected void onPreExecute() {
@@ -120,6 +121,12 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 			String[] result = new String[1];
 			String companyCode = src[0];
 			String mailNumber = src[1];
+
+			ExpressDatabase db = new ExpressDatabase(getApplicationContext());
+			db.init();
+			if (db.findExpress(companyCode, mailNumber) != -1) {
+				return FLAG_HAS_BEEN_EXIST;
+			}
 
 			String secret, app_id;
 
@@ -187,6 +194,14 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 				Toast.makeText(
 						getApplicationContext(),
 						R.string.toast_client_error,
+						Toast.LENGTH_SHORT
+				).show();
+				return;
+			}
+			if (result == FLAG_HAS_BEEN_EXIST) {
+				Toast.makeText(
+						getApplicationContext(),
+						R.string.toast_has_been_exist,
 						Toast.LENGTH_SHORT
 				).show();
 				return;

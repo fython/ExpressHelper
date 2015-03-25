@@ -9,11 +9,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Random;
 
 import info.papdt.express.helper.api.KuaiDi100Helper;
-import info.papdt.express.helper.api.secret.KuaiDi100;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
 import info.papdt.express.helper.support.HttpUtils;
