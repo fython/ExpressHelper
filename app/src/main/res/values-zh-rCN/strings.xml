@@ -82,7 +82,6 @@
 	<string name="item_github">Github 开源项目</string>
 	<string name="item_github_url">"https://github.com/PaperAirplane-Dev-Team/ExpressHelper"</string>
 	<string name="category_ui">界面</string>
-	<string name="item_list_use_card_style">使用卡片式列表</string>
 	<string name="toast_you_need_restart">设置将在重启应用后完全生效。</string>
 	<string name="category_api">API</string>
 	<string name="item_token_choose">API密钥选择</string>

@@ -82,8 +82,7 @@
 	<string name="item_weibo_author_url">"http://weibo.com/fython"</string>
 	<string name="item_github">Github Repo</string>
 	<string name="item_github_url">"https://github.com/PaperAirplane-Dev-Team/ExpressHelper"</string>
-	<string name="category_ui">UI Designer</string>
-	<string name="item_list_use_card_style">Use card style list</string>
+	<string name="category_ui">UI</string>
 	<string name="toast_you_need_restart">Changes will apply after restarting the application.</string>
 	<string name="category_api">API</string>
 	<string name="item_token_choose">Select API Token</string>

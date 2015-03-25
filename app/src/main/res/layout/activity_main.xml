@@ -46,7 +46,7 @@
 				app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 				app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-			<com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
+			<info.papdt.express.helper.view.SlidingTabLayout
 				android:id="@+id/sliding_tabs"
 				android:layout_width="match_parent"
 				android:layout_height="@dimen/tab_height"

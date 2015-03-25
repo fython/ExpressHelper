@@ -3,7 +3,6 @@
 
 	<PreferenceCategory android:title="@string/category_ui">
 
-		<SwitchPreference android:key="use_card_list" android:title="@string/item_list_use_card_style"/>
 		<SwitchPreference android:key="swipe_back" android:title="@string/item_enable_swipe_back"/>
 
 	</PreferenceCategory>

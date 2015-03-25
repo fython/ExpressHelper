@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.ui.widget;
+package info.papdt.express.helper.view;
 
 import android.R;
 import android.content.Context;

@@ -1,14 +1,12 @@
 package info.papdt.express.helper.ui.fragment.settings;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Toast;
@@ -35,7 +33,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 
 	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider,
 		pref_weibo, pref_github, pref_token_custom;
-	private SwitchPreference pref_card_list, pref_swipe_back;
+	private SwitchPreference pref_swipe_back;
 	private MaterialListPreference pref_token_choose;
 
 	private MaterialDialog dialog_custom_token;
@@ -55,7 +53,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_os_license = findPreference("open_source_license");
 		pref_api_provider = findPreference("api_provider");
 		pref_donate = findPreference("donate");
-		pref_card_list = (SwitchPreference) findPreference("use_card_list");
 		pref_github = findPreference("github_repo");
 		pref_token_choose = (MaterialListPreference) findPreference("api_token_choose");
 		pref_token_custom = findPreference("api_token_custom");
@@ -69,7 +66,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			// Keep the default value
 		}
 		pref_version.setSummary(version);
-		pref_card_list.setChecked(mSets.getBoolean(Settings.KEY_USE_CARD_LIST, true));
 		pref_swipe_back.setChecked(mSets.getBoolean(Settings.KEY_SWIPE_BACK, true));
 		pref_token_custom.setDefaultValue(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0));
 		pref_token_custom.setEnabled(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0) == 2);
@@ -88,7 +84,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_api_provider.setOnPreferenceClickListener(this);
 		pref_donate.setOnPreferenceClickListener(this);
 		pref_github.setOnPreferenceClickListener(this);
-		pref_card_list.setOnPreferenceChangeListener(this);
 		pref_token_custom.setOnPreferenceClickListener(this);
 		pref_token_choose.setOnPreferenceChangeListener(this);
 		pref_swipe_back.setOnPreferenceChangeListener(this);
@@ -185,13 +180,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 
 	@Override
 	public boolean onPreferenceChange(Preference pref, Object newValue) {
-		if (pref == pref_card_list) {
-			Boolean b = (Boolean) newValue;
-			mSets.putBoolean(Settings.KEY_USE_CARD_LIST, b);
-			pref_card_list.setChecked(b);
-			showRestartTips();
-			return true;
-		}
 		if (pref == pref_token_choose) {
 			int value = Integer.parseInt((String) newValue);
 			mSets.putInt(Settings.KEY_TOKEN_CHOOSE, value);
