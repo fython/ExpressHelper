@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -15,7 +14,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
-import java.util.Locale;
 import java.util.Random;
 
 import info.papdt.express.helper.R;
@@ -73,8 +71,6 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 	}
 
 	private void postData() {
-		
-		
 		if (TextUtils.isEmpty(mEditTextSerial.getText())) {
 			Toast.makeText(
 					getApplicationContext(),
@@ -83,6 +79,7 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 			).show();
 			return;
 		}
+
 		new PostApiTask().execute(KuaiDi100Helper.CompanyInfo.info.get(KuaiDi100Helper.CompanyInfo.names[mNow]), mEditTextSerial.getText().toString());
 	}
 

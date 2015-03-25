@@ -6,29 +6,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.view.MenuCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,7 +34,7 @@ import info.papdt.express.helper.support.ExpressResult;
 
 public class DetailsActivity extends AbsActivity {
 
-	private ListView mListView;
+	private LinearLayout mContentLayout;
 	private EditText mEditTextName;
 	private TextView tv_company, tv_mail_no, tv_status, tv_round_center;
 	private CircleImageView iv_round;
@@ -49,8 +43,6 @@ public class DetailsActivity extends AbsActivity {
 	private Express express;
 	private ExpressResult cache;
 	private ExpressDatabase edb;
-
-	private ArrayList<Map<String, String>> list;
 
 	private boolean isEditingTitle = false;
 
@@ -85,7 +77,7 @@ public class DetailsActivity extends AbsActivity {
 
 	@Override
 	protected void setUpViews() {
-		mListView = (ListView) findViewById(R.id.listView);
+		mContentLayout = (LinearLayout) findViewById(R.id.content_list);
 		tv_company = (TextView) findViewById(R.id.tv_express_company);
 		tv_mail_no = (TextView) findViewById(R.id.tv_mail_no);
 		tv_status = (TextView) findViewById(R.id.tv_status);
@@ -177,6 +169,30 @@ public class DetailsActivity extends AbsActivity {
 		mActionBar.setDisplayShowTitleEnabled(!isEditingTitle);
 	}
 
+	private void addDetailsItem(String title, String info) {
+		View v = View.inflate(mActionBar.getThemedContext(), R.layout.simple_list_item, null);
+
+		((TextView) v.findViewById(android.R.id.text1)).setText(title);
+		((TextView) v.findViewById(android.R.id.text2)).setText(info);
+		v.setTag(title + ": " + info);
+		v.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View view) {
+				setClipboard((String) view.getTag());
+				Toast.makeText(
+						getApplicationContext(),
+						R.string.details_has_copied,
+						Toast.LENGTH_SHORT
+				).show();
+				return true;
+			}
+		});
+
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+		mContentLayout.addView(v, 0, lp);
+	}
+
 	private void setUpHeaderView() {
 		tv_status.setText(getResources().getStringArray(R.array.status)[cache.status]);
 		tv_company.setText(cache.expTextName);
@@ -188,46 +204,14 @@ public class DetailsActivity extends AbsActivity {
 	}
 
 	private void setUpListView() {
-		list = new ArrayList<>();
-
 		if (cache.errCode != 0){
-			list.add(produce(getString(R.string.item_errorcode), getResources().getStringArray(R.array.errCode)[cache.errCode]));
-			list.add(produce(getString(R.string.item_errormessage), cache.message));
+			addDetailsItem(getString(R.string.item_errorcode), getResources().getStringArray(R.array.errCode)[cache.errCode]);
+			addDetailsItem(getString(R.string.item_errormessage), cache.message);
 		}
 
 		for (int i = cache.data.size() - 1; i >= 0; i--){
-			list.add(produce(
-					cache.data.get(i).get("time"),
-					cache.data.get(i).get("context")
-			));
+			addDetailsItem(cache.data.get(i).get("time"), cache.data.get(i).get("context"));
 		}
-
-		mListView.setAdapter(new SimpleAdapter(
-				getApplicationContext(),
-				list,
-				R.layout.simple_list_item,
-				new String[]{"0", "1"},
-				new int[]{android.R.id.text1, android.R.id.text2}
-		));
-		mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				setClipboard(list.get(position).get("0") + ": " + list.get(position).get("1"));
-				Toast.makeText(
-						getApplicationContext(),
-						R.string.details_has_copied,
-						Toast.LENGTH_SHORT
-				).show();
-				return true;
-			}
-		});
-	}
-
-	private Map<String, String> produce(String t1, String t2){
-		Map<String, String> map = new HashMap<>();
-		map.put("0", t1);
-		map.put("1", t2);
-		return map;
 	}
 
 	private void setClipboard(String text) {
