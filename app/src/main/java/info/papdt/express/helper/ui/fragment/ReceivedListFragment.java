@@ -38,8 +38,6 @@ public class ReceivedListFragment extends Fragment {
 
 	private Settings mSets;
 
-	private boolean isFirstCreate = true;
-
 	public static final int FLAG_REFRESH_LIST = 0, FLAG_REFRESH_ADAPTER_ONLY = 1;
 
 	public static ReceivedListFragment newInstance() {
@@ -96,12 +94,9 @@ public class ReceivedListFragment extends Fragment {
 				mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
 			}
 		});
-		if (isFirstCreate) {
-			isFirstCreate = false;
-			mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
-		} else {
-			setUpAdapter();
-		}
+
+		mDB = ((MainActivity) getActivity()).mExpressDB;
+		setUpAdapter();
 
 		return rootView;
 	}

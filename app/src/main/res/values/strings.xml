@@ -86,6 +86,8 @@
 	<string name="item_list_use_card_style">Use card style list</string>
 	<string name="toast_you_need_restart">Changes will apply after restarting the application.</string>
 	<string name="category_api">API</string>
+	<string name="item_auto_refresh_first">Auto refresh when launching app</string>
+	<string name="item_auto_refresh_first_desc">It may waste more API times.</string>
 	<string name="item_token_choose">Select API Token</string>
 	<string-array name="item_token_list">
 		<item>Random (Default)</item>

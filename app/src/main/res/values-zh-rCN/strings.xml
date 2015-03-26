@@ -85,6 +85,8 @@
 	<string name="item_list_use_card_style">使用卡片式列表</string>
 	<string name="toast_you_need_restart">设置将在重启应用后完全生效。</string>
 	<string name="category_api">API</string>
+	<string name="item_auto_refresh_first">启动时自动刷新</string>
+	<string name="item_auto_refresh_first_desc">可能会消耗更多的API查询次数。</string>
 	<string name="item_token_choose">API密钥选择</string>
 	<string-array name="item_token_list">
 		<item>随机 (默认)</item>

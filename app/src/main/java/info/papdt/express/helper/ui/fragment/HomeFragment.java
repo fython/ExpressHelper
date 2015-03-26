@@ -40,6 +40,8 @@ public class HomeFragment extends Fragment {
 
 	private Settings mSets;
 
+	private boolean isFirstCreate = true;
+
 	public static final int FLAG_REFRESH_LIST = 0, FLAG_REFRESH_ADAPTER_ONLY = 1;
 
 	public static HomeFragment newInstance() {
@@ -95,6 +97,11 @@ public class HomeFragment extends Fragment {
 
 		mDB = ((MainActivity) getActivity()).mExpressDB;
 		setUpAdapter();
+
+		if (isFirstCreate && mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, true)) {
+			isFirstCreate = false;
+			mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
+		}
 
 		return rootView;
 	}

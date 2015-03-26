@@ -10,6 +10,8 @@
 
 	<PreferenceCategory android:title="@string/category_api">
 
+		<SwitchPreference android:key="auto_refresh_first" android:title="@string/item_auto_refresh_first"
+			android:summary="@string/item_auto_refresh_first_desc"/>
 		<com.afollestad.materialdialogs.prefs.MaterialListPreference
 			android:key="api_token_choose" android:title="@string/item_token_choose"
 			android:entries="@array/item_token_list"
