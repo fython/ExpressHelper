@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 
 public class HomeFragment extends BaseHomeFragment {
 
-	private HomeCardAdapter mAdapter;
+	private boolean isFirstCreate = true;
 
 	public static HomeFragment newInstance() {
 		HomeFragment fragment = new HomeFragment();
@@ -22,6 +24,11 @@ public class HomeFragment extends BaseHomeFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View rootView = super.onCreateView(inflater, container, savedInstanceState);
+
+		if (isFirstCreate && mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, true)) {
+			isFirstCreate = false;
+			mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
+		}
 
 		return rootView;
 	}

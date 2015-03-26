@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
@@ -30,6 +31,8 @@ import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 public abstract class BaseHomeFragment extends Fragment {
 
 	public ExpressDatabase mDB;
+
+	protected Settings mSets;
 
 	protected SwipeRefreshLayout refreshLayout;
 	protected ObservableListView mListView;
@@ -41,6 +44,10 @@ public abstract class BaseHomeFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+		if (mSets == null) {
+			mSets = Settings.getInstance(getActivity().getApplicationContext());
+		}
 
 		refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
 

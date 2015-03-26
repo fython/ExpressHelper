@@ -34,6 +34,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider,
 		pref_weibo, pref_github, pref_token_custom;
 	private SwitchPreference pref_swipe_back;
+	private SwitchPreference pref_auto_refresh;
 	private MaterialListPreference pref_token_choose;
 
 	private MaterialDialog dialog_custom_token;
@@ -57,6 +58,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_token_choose = (MaterialListPreference) findPreference("api_token_choose");
 		pref_token_custom = findPreference("api_token_custom");
 		pref_swipe_back = (SwitchPreference) findPreference("swipe_back");
+		pref_auto_refresh = (SwitchPreference) findPreference("auto_refresh_first");
 
 		String version = "Unknown";
 		try {
@@ -67,6 +69,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		}
 		pref_version.setSummary(version);
 		pref_swipe_back.setChecked(mSets.getBoolean(Settings.KEY_SWIPE_BACK, true));
+		pref_auto_refresh.setChecked(mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, true));
 		pref_token_custom.setDefaultValue(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0));
 		pref_token_custom.setEnabled(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0) == 2);
 		String[] values = getResources().getStringArray(R.array.item_token_list_values);
@@ -87,6 +90,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_token_custom.setOnPreferenceClickListener(this);
 		pref_token_choose.setOnPreferenceChangeListener(this);
 		pref_swipe_back.setOnPreferenceChangeListener(this);
+		pref_auto_refresh.setOnPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -197,6 +201,12 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			mSets.putBoolean(Settings.KEY_SWIPE_BACK, b);
 			pref_swipe_back.setChecked(b);
 			showRestartTips();
+			return true;
+		}
+		if (pref == pref_auto_refresh) {
+			Boolean b = (Boolean) newValue;
+			mSets.putBoolean(Settings.KEY_AUTO_REFRESH_FIRST, b);
+			pref_auto_refresh.setChecked(b);
 			return true;
 		}
 		return false;
