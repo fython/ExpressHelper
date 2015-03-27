@@ -27,7 +27,7 @@ public class HomeFragment extends BaseHomeFragment {
 	                         Bundle savedInstanceState) {
 		View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
-		if (isFirstCreate && mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, true)) {
+		if (isFirstCreate && mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, false)) {
 			isFirstCreate = false;
 			mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
 		}

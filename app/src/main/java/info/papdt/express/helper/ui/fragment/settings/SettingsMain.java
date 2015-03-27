@@ -69,7 +69,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		}
 		pref_version.setSummary(version);
 		pref_swipe_back.setChecked(mSets.getBoolean(Settings.KEY_SWIPE_BACK, true));
-		pref_auto_refresh.setChecked(mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, true));
+		pref_auto_refresh.setChecked(mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, false));
 		pref_token_custom.setDefaultValue(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0));
 		pref_token_custom.setEnabled(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0) == 2);
 		String[] values = getResources().getStringArray(R.array.item_token_list_values);
