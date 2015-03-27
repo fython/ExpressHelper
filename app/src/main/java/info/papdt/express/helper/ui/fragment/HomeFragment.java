@@ -10,6 +10,8 @@ import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 
 public class HomeFragment extends BaseHomeFragment {
 
+	private HomeCardAdapter mAdapter;
+
 	private boolean isFirstCreate = true;
 
 	public static HomeFragment newInstance() {

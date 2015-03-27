@@ -1,25 +1,27 @@
 package info.papdt.express.helper.ui.adapter;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.github.ksoichiro.android.observablescrollview.CacheFragmentStatePagerAdapter;
 
+import info.papdt.express.helper.R;
+import info.papdt.express.helper.ui.fragment.BaseHomeFragment;
 import info.papdt.express.helper.ui.fragment.HomeFragment;
 import info.papdt.express.helper.ui.fragment.ReceivedListFragment;
 import info.papdt.express.helper.ui.fragment.UnreceivedListFragment;
 
 public class HomePagerAdapter extends CacheFragmentStatePagerAdapter {
 
-	private static final String[] TITLES = new String[] {"All", "Unreceived", "Received"};
+	private static String[] TITLES;
 
 	private int mScrollY;
 
-	private Fragment mHomeFragment, mUnreceivedFragment, mReceivedFragment;
-
-	public HomePagerAdapter(FragmentManager fm) {
+	public HomePagerAdapter(Context context, FragmentManager fm) {
 		super(fm);
+		TITLES = context.getResources().getStringArray(R.array.title_sections);
 	}
 
 	public void setScrollY(int scrollY) {
@@ -31,33 +33,24 @@ public class HomePagerAdapter extends CacheFragmentStatePagerAdapter {
 		Fragment f = null;
 		switch (position) {
 			case 0:
-				if (mHomeFragment == null) {
-					mHomeFragment = HomeFragment.newInstance();
-				}
-				f = mHomeFragment;
+				f = HomeFragment.newInstance();
 				if (0 < mScrollY) {
 					Bundle args = new Bundle();
-					args.putInt("initial_position", 1);
+					args.putInt(BaseHomeFragment.ARG_INITIAL_POSITION, 1);
 					f.setArguments(args);
 				}
 			case 1:
-				if (mUnreceivedFragment == null) {
-					mUnreceivedFragment = UnreceivedListFragment.newInstance();
-				}
-				f = mUnreceivedFragment;
+				f = HomeFragment.newInstance();
 				if (0 < mScrollY) {
 					Bundle args = new Bundle();
-					args.putInt("initial_position", 1);
+					args.putInt(BaseHomeFragment.ARG_INITIAL_POSITION, 1);
 					f.setArguments(args);
 				}
 			case 2:
-				if (mReceivedFragment == null) {
-					mReceivedFragment = ReceivedListFragment.newInstance();
-				}
-				f = mReceivedFragment;
+				f = HomeFragment.newInstance();
 				if (0 < mScrollY) {
 					Bundle args = new Bundle();
-					args.putInt("initial_position", 1);
+					args.putInt(BaseHomeFragment.ARG_INITIAL_POSITION, 1);
 					f.setArguments(args);
 				}
 		}

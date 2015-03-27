@@ -4,6 +4,8 @@ import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 
 public class UnreceivedListFragment extends BaseHomeFragment {
 
+	private HomeCardAdapter mAdapter;
+
 	public static UnreceivedListFragment newInstance() {
 		UnreceivedListFragment fragment = new UnreceivedListFragment();
 		return fragment;

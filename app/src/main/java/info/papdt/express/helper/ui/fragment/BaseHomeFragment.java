@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 
 import org.json.JSONException;
 
@@ -36,9 +38,9 @@ public abstract class BaseHomeFragment extends Fragment {
 
 	protected SwipeRefreshLayout refreshLayout;
 	protected ObservableListView mListView;
-	protected HomeCardAdapter mAdapter;
 
 	public static final int FLAG_REFRESH_LIST = 0, FLAG_REFRESH_ADAPTER_ONLY = 1;
+	public static final String ARG_INITIAL_POSITION = "initial_position";
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,15 +54,25 @@ public abstract class BaseHomeFragment extends Fragment {
 		refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
 
 		mListView = (ObservableListView) rootView.findViewById(R.id.scroll);
+		mListView.addHeaderView(inflater.inflate(R.layout.padding, null));
 
-		Fragment parentFragment = getParentFragment();
-		ViewGroup viewGroup = (ViewGroup) parentFragment.getView();
-		if (viewGroup != null) {
-			mListView.setTouchInterceptionViewGroup((ViewGroup) viewGroup.findViewById(R.id.container));
-			if (parentFragment instanceof ObservableScrollViewCallbacks) {
-				mListView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentFragment);
+		Activity parentActivity = getActivity();
+		if (parentActivity instanceof ObservableScrollViewCallbacks) {
+			// Scroll to the specified position after layout
+			Bundle args = getArguments();
+			if (args != null && args.containsKey(ARG_INITIAL_POSITION)) {
+				final int initialPosition = args.getInt(ARG_INITIAL_POSITION, 0);
+				ScrollUtils.addOnGlobalLayoutListener(mListView, new Runnable() {
+					@Override
+					public void run() {
+						// scrollTo() doesn't work, should use setSelection()
+						mListView.setSelection(initialPosition);
+					}
+				});
 			}
+			mListView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentActivity);
 		}
+
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -75,8 +87,8 @@ public abstract class BaseHomeFragment extends Fragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				int realPosition = mDB.findExpress(
-						mAdapter.getItem(position).getCompanyCode(),
-						mAdapter.getItem(position).getMailNumber()
+						((HomeCardAdapter) mListView.getAdapter()).getItem(position).getCompanyCode(),
+						((HomeCardAdapter) mListView.getAdapter()).getItem(position).getMailNumber()
 				);
 				showDeleteDialog(realPosition);
 				return true;
@@ -117,7 +129,7 @@ public abstract class BaseHomeFragment extends Fragment {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						mAdapter.notifyDataSetChanged();
+						mListView.getAdapter().notifyAll();
 					}
 				})
 				.show();

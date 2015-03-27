@@ -7,6 +7,11 @@
 	<string name="title_section_1">All</string>
 	<string name="title_section_2">Pending</string>
 	<string name="title_section_3">Delivered</string>
+	<string-array name="title_sections">
+		<item>@string/title_section_1</item>
+		<item>@string/title_section_2</item>
+		<item>@string/title_section_3</item>
+	</string-array>
 
 	<string name="dialog_delete_title">Delete?</string>
 	<string name="dialog_delete_msg">This operation can\'t be reversed.</string>

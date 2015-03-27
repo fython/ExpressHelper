@@ -53,8 +53,10 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		refreshDatabase(false);
 
 		/** Init ViewPager */
-		mPagerAdapter = new HomePagerAdapter(getSupportFragmentManager());
+		mPagerAdapter = new HomePagerAdapter(getApplicationContext(),
+				getSupportFragmentManager());
 		mPager.setAdapter(mPagerAdapter);
+		mSlidingTab.setViewPager(mPager);
 	}
 
 	public void refreshDatabase(boolean pullNewData) {
@@ -82,7 +84,6 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		mSlidingTab.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
 		mSlidingTab.setSelectedIndicatorColors(getResources().getColor(android.R.color.white));
 		mSlidingTab.setDistributeEvenly(true);
-		mSlidingTab.setViewPager(mPager);
 
 		// When the page is selected, other fragments' scrollY should be adjusted
 		// according to the toolbar status(shown/hidden)
@@ -310,13 +311,20 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
+		getMenuInflater().inflate(R.menu.main_menu, menu);
+		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
+
+		if (id == R.id.action_settings) {
+			SettingsActivity.launchActivity(this, SettingsActivity.FLAG_MAIN);
+			return true;
+		}
 
 		return super.onOptionsItemSelected(item);
 	}

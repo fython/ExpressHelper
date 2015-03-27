@@ -2,6 +2,7 @@ package info.papdt.express.helper.ui.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,14 +42,15 @@ public class HomeCardAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
+		int result = -1;
 		if (type == TYPE_ALL) {
-			return db.size();
+			result =  db.size();
 		} else if (type == TYPE_UNRECEIVED) {
-			return db.urSize();
+			result = db.urSize();
 		} else if (type == TYPE_RECEIVED) {
-			return db.okSize();
+			result = db.okSize();
 		}
-		return -1;
+		return result;
 	}
 
 	@Override
