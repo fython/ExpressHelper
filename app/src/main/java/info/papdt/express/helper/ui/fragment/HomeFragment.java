@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment {
 		mDB = ((MainActivity) getActivity()).mExpressDB;
 		setUpAdapter();
 
-		if (isFirstCreate && mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, true)) {
+		if (isFirstCreate && mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, false)) {
 			isFirstCreate = false;
 			mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
 		}
@@ -174,11 +174,15 @@ public class HomeFragment extends Fragment {
 			if (db != null) {
 				mDB = db;
 			} else {
-				Toast.makeText(
-						getActivity().getApplicationContext(),
-						R.string.toast_network_error,
-						Toast.LENGTH_SHORT
-				).show();
+				try {
+					Toast.makeText(
+							getActivity().getApplicationContext(),
+							R.string.toast_network_error,
+							Toast.LENGTH_SHORT
+					).show();
+				} catch (Exception e) {
+
+				}
 			}
 			if (mDB != null) {
 				setUpAdapter();
