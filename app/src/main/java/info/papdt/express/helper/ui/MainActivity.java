@@ -6,11 +6,11 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.DecelerateInterpolator;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -43,7 +43,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 	private FloatingActionButton mFAB;
 
 	private SearchBox mSearchBox;
-	private LinearLayout mCompanyListPage;
+	private View mCompanyListPage, mCompanyListPageBackground;
 
 	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100,
 			REQUEST_DETAILS = 101, RESULT_HAS_CHANGED = 101;
@@ -86,7 +86,10 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		statusHeaderView1.getLayoutParams().height = statusBarHeight;
 
 		mSearchBox = (SearchBox) findViewById(R.id.searchBox);
-		mCompanyListPage = (LinearLayout) findViewById(R.id.company_list_page);
+		mCompanyListPage = findViewById(R.id.company_list_page);
+		mCompanyListPageBackground = findViewById(R.id.company_list_page_background);
+
+		mSearchBox.setLogoText("");
 
 		mHeaderView = findViewById(R.id.header);
 		ViewCompat.setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
@@ -129,6 +132,12 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 
 	public void openCompanyList() {
 		mCompanyListPage.setVisibility(View.VISIBLE);
+		AlphaAnimation anim = new AlphaAnimation(0f, 1f);
+		anim.setInterpolator(new DecelerateInterpolator());
+		anim.setFillAfter(true);
+		anim.setDuration(250);
+		mCompanyListPageBackground.startAnimation(anim);
+
 		mSearchBox.revealFromMenuItem(R.id.action_select_company, this);
 		mSearchBox.setSearchListener(new SearchBox.SearchListener() {
 			@Override
@@ -160,6 +169,13 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 
 	public void closeCompanyList() {
 		mSearchBox.hideCircularly(this);
+
+		AlphaAnimation anim = new AlphaAnimation(1f, 0f);
+		anim.setInterpolator(new DecelerateInterpolator());
+		anim.setFillAfter(true);
+		anim.setDuration(250);
+		mCompanyListPageBackground.startAnimation(anim);
+
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
@@ -170,7 +186,16 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 					}
 				});
 			}
-		}, 500);
+		}, 250);
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (mSearchBox.isSearchOpened()) {
+			closeCompanyList();
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	@Override

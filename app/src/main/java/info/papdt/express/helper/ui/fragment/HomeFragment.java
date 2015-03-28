@@ -39,6 +39,7 @@ public class HomeFragment extends BaseHomeFragment {
 	public void setUpAdapter() {
 		mAdapter = new HomeCardRecyclerAdapter(getActivity().getApplicationContext(), mDB, headerView);
 		mRecyclerView.setAdapter(mAdapter);
+		setUpAdapterListener();
 	}
 
 }

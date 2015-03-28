@@ -2,7 +2,6 @@ package info.papdt.express.helper.ui.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,9 @@ import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
+import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
 
-public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 
 	private static final int VIEW_TYPE_HEADER = 0;
 	private static final int VIEW_TYPE_ITEM = 1;
@@ -45,7 +45,7 @@ public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 	}
 
 	@Override
-	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+	public ClickableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		switch (viewType) {
 			case VIEW_TYPE_HEADER:
 				return new HeaderViewHolder(headerView);
@@ -59,8 +59,10 @@ public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 	}
 
 	@Override
-	public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+	public void onBindViewHolder(ClickableViewHolder viewHolder, final int position) {
 		if (!(viewHolder instanceof ViewHolder)) return;
+
+		super.onBindViewHolder(viewHolder, position);
 
 		Express item = getItem(position + (headerView != null ? -1 : 0));
 
@@ -117,7 +119,7 @@ public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 		return null;
 	}
 
-	public class ViewHolder extends RecyclerView.ViewHolder {
+	public class ViewHolder extends ClickableViewHolder {
 
 		public CircleImageView iv_round;
 		public TextView tv_title, tv_desp, tv_time, tv_center_round;
@@ -133,7 +135,7 @@ public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 	}
 
-	public class HeaderViewHolder extends RecyclerView.ViewHolder {
+	public class HeaderViewHolder extends ClickableViewHolder {
 
 		public HeaderViewHolder(View view) {
 			super(view);

@@ -30,7 +30,7 @@ import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomeCardRecyclerAdapter;
-import info.papdt.express.helper.ui.common.OnRecyclerItemClickListener;
+import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
 
 public abstract class BaseHomeFragment extends Fragment {
 
@@ -80,28 +80,6 @@ public abstract class BaseHomeFragment extends Fragment {
 			mRecyclerView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentActivity);
 		}
 
-		mRecyclerView.addOnItemTouchListener(
-				new OnRecyclerItemClickListener(
-						getActivity().getApplicationContext(),
-						new OnRecyclerItemClickListener.OnItemClickListener() {
-							@Override
-							public void onItemClick(View view, int position) {
-								HomeCardRecyclerAdapter adapter =
-										(HomeCardRecyclerAdapter) mRecyclerView.getAdapter();
-								int realPosition = mDB.findExpress(
-										adapter.getItem(position - 1).getCompanyCode(),
-										adapter.getItem(position - 1).getMailNumber()
-								);
-								Intent intent = new Intent(getActivity(), DetailsActivity.class);
-								intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-								intent.putExtra("id", realPosition);
-								intent.putExtra("data", mDB.getExpress(realPosition).toJSONObject().toString());
-								getActivity().startActivityForResult(intent, MainActivity.REQUEST_DETAILS);
-							}
-						}
-				)
-		);
-
 		refreshLayout.setProgressViewEndTarget(
 				true,
 				getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_default_height_material) +
@@ -145,6 +123,45 @@ public abstract class BaseHomeFragment extends Fragment {
 					}
 				})
 				.show();
+	}
+
+	protected void setUpAdapterListener() {
+		MyRecyclerViewAdapter adapter = (MyRecyclerViewAdapter) mRecyclerView.getAdapter();
+		adapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+			@Override
+			public void onItemClicked(int position) {
+				if (position == 0) return;
+
+				HomeCardRecyclerAdapter adapter =
+						(HomeCardRecyclerAdapter) mRecyclerView.getAdapter();
+				int realPosition = mDB.findExpress(
+						adapter.getItem(position - 1).getCompanyCode(),
+						adapter.getItem(position - 1).getMailNumber()
+				);
+				Intent intent = new Intent(getActivity(), DetailsActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+				intent.putExtra("id", realPosition);
+				intent.putExtra("data", mDB.getExpress(realPosition).toJSONObject().toString());
+				getActivity().startActivityForResult(intent, MainActivity.REQUEST_DETAILS);
+			}
+		});
+		adapter.setOnItemLongClickListener(new MyRecyclerViewAdapter.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClicked(int position) {
+				if (position == 0) return false;
+
+				HomeCardRecyclerAdapter adapter =
+						(HomeCardRecyclerAdapter) mRecyclerView.getAdapter();
+				int realPosition = mDB.findExpress(
+						adapter.getItem(position - 1).getCompanyCode(),
+						adapter.getItem(position - 1).getMailNumber()
+				);
+
+				showDeleteDialog(realPosition);
+
+				return true;
+			}
+		});
 	}
 
 	public Handler mHandler = new Handler() {

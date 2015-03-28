@@ -4,6 +4,7 @@
 
 	<item android:id="@+id/action_select_company"
 	      android:title="@string/action_select_company"
+	      android:icon="@drawable/ic_local_shipping_white_24dp"
 	      app:showAsAction="always"/>
 
 </menu>

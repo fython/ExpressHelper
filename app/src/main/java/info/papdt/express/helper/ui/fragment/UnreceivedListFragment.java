@@ -18,6 +18,7 @@ public class UnreceivedListFragment extends BaseHomeFragment {
 	public void setUpAdapter() {
 		mAdapter = new HomeCardRecyclerAdapter(getActivity().getApplicationContext(), mDB, HomeCardRecyclerAdapter.TYPE_UNRECEIVED, headerView);
 		mRecyclerView.setAdapter(mAdapter);
+		setUpAdapterListener();
 	}
 
 }

@@ -31,6 +31,7 @@
 					android:id="@+id/pager"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent" />
+
 			</FrameLayout>
 
 			<LinearLayout
@@ -72,29 +73,38 @@
 		</FrameLayout>
 
 	</LinearLayout>
-	
-	<LinearLayout
+
+	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical"
-		android:background="#7fffffff"
-		android:visibility="gone"
-		android:id="@+id/company_list_page">
-		
+		android:id="@+id/company_list_page"
+		android:visibility="gone">
+
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="0dp"
-		    android:id="@+id/statusHeaderView1"/>
-		
-		<com.quinny898.library.persistentsearch.SearchBox
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:id="@+id/searchBox"
-			android:layout_marginTop="-6dp"
-			android:layout_marginLeft="-6dp"
-			android:layout_marginRight="-6dp"
-			android:visibility="gone"/>
-		
-	</LinearLayout>
+			android:layout_height="match_parent"
+			android:id="@+id/company_list_page_background"
+			android:background="#afffffff"
+			android:clickable="true"/>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+
+			<View
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:id="@+id/statusHeaderView1"/>
+
+			<com.quinny898.library.persistentsearch.SearchBox
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/searchBox"
+				android:visibility="gone"/>
+
+		</LinearLayout>
+
+	</FrameLayout>
 
 </FrameLayout>
