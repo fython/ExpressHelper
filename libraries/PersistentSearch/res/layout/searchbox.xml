@@ -42,7 +42,6 @@
             android:layout_marginLeft="54dp"
             android:singleLine="true"
             android:gravity="center_vertical"
-            android:text="Logo"
             android:textColor="#212121"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -74,16 +73,18 @@
             android:layout_toLeftOf="@+id/mic"
             android:onClick="mic"
             android:layout_marginRight="13dp"
-            android:src="@drawable/ic_action_mic" />
+            android:src="@drawable/ic_action_mic"
+	        android:background="?attr/selectableItemBackgroundBorderless"/>
 
         <com.balysv.materialmenu.MaterialMenuView
             android:id="@+id/material_menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             app:mm_color="#616161"
             app:mm_strokeWidth="2"
-            app:mm_transformDuration="500" />
+            app:mm_transformDuration="500"/>
 
         <ProgressBar
             android:id="@+id/pb"

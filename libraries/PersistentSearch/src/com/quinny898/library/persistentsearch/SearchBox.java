@@ -661,7 +661,9 @@ public class SearchBox extends RelativeLayout {
 		
 	}
 
-	
+	public boolean isSearchOpened() {
+		return searchOpen;
+	}
 
 	class SearchAdapter extends ArrayAdapter<SearchResult> {
 		public SearchAdapter(Context context, ArrayList<SearchResult> options) {
