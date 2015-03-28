@@ -108,6 +108,11 @@ public abstract class BaseHomeFragment extends Fragment {
 				)
 		);
 
+		refreshLayout.setProgressViewEndTarget(
+				true,
+				getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_default_height_material) +
+						getResources().getDimensionPixelOffset(R.dimen.tab_height)
+		);
 		refreshLayout.setColorSchemeResources(R.color.blue_500);
 		refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 			@Override
