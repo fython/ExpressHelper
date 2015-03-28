@@ -3,14 +3,15 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:foreground="?attr/selectableItemBackground">
+	android:clickable="true"
+	android:foreground="?attr/selectableItemBackgroundBorderless"
+	android:paddingLeft="16dp"
+	android:paddingRight="16dp">
 
 	<TwoLineListItem
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:mode="twoLine"
-		android:paddingLeft="8dp"
-		android:paddingRight="8dp">
+		android:mode="twoLine">
 
 		<TextView android:id="@android:id/text1"
 		          android:layout_width="match_parent"

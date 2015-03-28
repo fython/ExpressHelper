@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -170,7 +171,12 @@ public class DetailsActivity extends AbsActivity {
 	}
 
 	private void addDetailsItem(String title, String info) {
-		View v = View.inflate(mActionBar.getThemedContext(), R.layout.simple_list_item, null);
+		View v = View.inflate(
+				new ContextThemeWrapper(
+						getApplicationContext(),
+						R.style.Base_Theme_AppCompat_Light
+				), R.layout.simple_list_item, null
+		);
 
 		((TextView) v.findViewById(android.R.id.text1)).setText(title);
 		((TextView) v.findViewById(android.R.id.text2)).setText(info);
@@ -209,7 +215,7 @@ public class DetailsActivity extends AbsActivity {
 			addDetailsItem(getString(R.string.item_errormessage), cache.message);
 		}
 
-		for (int i = cache.data.size() - 1; i >= 0; i--){
+		for (int i = 0; i < cache.data.size(); i++){
 			addDetailsItem(cache.data.get(i).get("time"), cache.data.get(i).get("context"));
 		}
 	}
