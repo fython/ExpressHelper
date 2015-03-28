@@ -39,20 +39,23 @@ public class HomePagerAdapter extends CacheFragmentStatePagerAdapter {
 					args.putInt(BaseHomeFragment.ARG_INITIAL_POSITION, 1);
 					f.setArguments(args);
 				}
+				break;
 			case 1:
-				f = HomeFragment.newInstance();
+				f = UnreceivedListFragment.newInstance();
 				if (0 < mScrollY) {
 					Bundle args = new Bundle();
 					args.putInt(BaseHomeFragment.ARG_INITIAL_POSITION, 1);
 					f.setArguments(args);
 				}
+				break;
 			case 2:
-				f = HomeFragment.newInstance();
+				f = ReceivedListFragment.newInstance();
 				if (0 < mScrollY) {
 					Bundle args = new Bundle();
 					args.putInt(BaseHomeFragment.ARG_INITIAL_POSITION, 1);
 					f.setArguments(args);
 				}
+				break;
 		}
 		return f;
 	}

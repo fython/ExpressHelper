@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -25,6 +26,7 @@ import java.io.IOException;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
+import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
@@ -76,20 +78,18 @@ public abstract class BaseHomeFragment extends Fragment {
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				int realPosition = (int) view.getTag(R.string.title_section_2);
 				Intent intent = new Intent(getActivity(), DetailsActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-				intent.putExtra("id", position);
-				intent.putExtra("data", mDB.getExpress(position).toJSONObject().toString());
+				intent.putExtra("id", realPosition);
+				intent.putExtra("data", mDB.getExpress(realPosition).toJSONObject().toString());
 				getActivity().startActivityForResult(intent, MainActivity.REQUEST_DETAILS);
 			}
 		});
 		mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				int realPosition = mDB.findExpress(
-						((HomeCardAdapter) mListView.getAdapter()).getItem(position).getCompanyCode(),
-						((HomeCardAdapter) mListView.getAdapter()).getItem(position).getMailNumber()
-				);
+				int realPosition = (int) view.getTag(R.string.title_section_2);
 				showDeleteDialog(realPosition);
 				return true;
 			}
@@ -129,7 +129,7 @@ public abstract class BaseHomeFragment extends Fragment {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						mListView.getAdapter().notifyAll();
+						((BaseAdapter) mListView.getAdapter()).notifyDataSetChanged();
 					}
 				})
 				.show();

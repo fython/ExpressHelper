@@ -84,9 +84,9 @@ public class HomeCardAdapter extends BaseAdapter {
 			holder.tv_time = (TextView) view.findViewById(R.id.tv_time);
 			holder.tv_center_round = (TextView) view.findViewById(R.id.center_text);
 
-			view.setTag(holder);
+			view.setTag(R.string.title_section_1, holder);
 		} else {
-			holder = (ViewHolder) view.getTag();
+			holder = (ViewHolder) view.getTag(R.string.title_section_1);
 		}
 
 		Express nowItem = getItem(i);
@@ -110,6 +110,8 @@ public class HomeCardAdapter extends BaseAdapter {
 		}
 		holder.tv_desp.setText(desp);
 		holder.tv_time.setText(time);
+
+		view.setTag(R.string.title_section_2, i);
 
 		return view;
 	}
