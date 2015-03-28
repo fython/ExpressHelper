@@ -108,4 +108,6 @@
 	<string name="dialog_token_custom_how_to_get_it">如何申請?</string>
 	<string name="item_enable_swipe_back">啟用滑動返回手勢</string>
 
+	<string name="action_select_company">快遞公司列單</string>
+
 </resources>

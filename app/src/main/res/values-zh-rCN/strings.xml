@@ -2,8 +2,6 @@
 <resources>
 
     <string name="app_name">水表助手</string>
-    <string name="navigation_drawer_open">展开抽屉</string>
-	<string name="navigation_drawer_close">关闭抽屉</string>
 	<string name="title_section_1">全部</string>
 	<string name="title_section_3">已签收</string>
 
@@ -108,5 +106,7 @@
 	<string name="dialog_token_custom_id">应用ID</string>
 	<string name="dialog_token_custom_how_to_get_it">如何申请?</string>
 	<string name="item_enable_swipe_back">启用滑动返回手势</string>
+
+	<string name="action_select_company">快递公司列表</string>
 
 </resources>

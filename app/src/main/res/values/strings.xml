@@ -2,8 +2,6 @@
 <resources>
 
     <string name="app_name">ExpressHelper</string>
-    <string name="navigation_drawer_open">Open Drawer</string>
-	<string name="navigation_drawer_close">Close Drawer</string>
 	<string name="title_section_1">All</string>
 	<string name="title_section_2">Pending</string>
 	<string name="title_section_3">Delivered</string>
@@ -114,5 +112,7 @@
 	<string name="dialog_token_custom_id">API ID</string>
 	<string name="dialog_token_custom_how_to_get_it">How to get one?</string>
 	<string name="item_enable_swipe_back">Enable swipe back gesture</string>
+
+	<string name="action_select_company">Shipment companies list</string>
 
 </resources>

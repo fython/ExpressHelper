@@ -22,6 +22,15 @@
         </activity>
 
 	    <activity
+		    android:name=".ui.CompanySelectActivity"
+		    android:label="@string/action_select_company"
+		    android:theme="@style/AppTheme.NoActionBar.Translucent">
+		    <intent-filter>
+			    <action android:name="android.intent.action.MAIN"/>
+		    </intent-filter>
+	    </activity>
+
+	    <activity
 		    android:name=".ui.AddActivity"
 		    android:label="@string/title_add_express"
 		    android:theme="@style/AppTheme.NoActionBar.Translucent">

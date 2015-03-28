@@ -2,12 +2,15 @@ package info.papdt.express.helper.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -17,6 +20,7 @@ import info.papdt.express.helper.view.SlidingTabLayout;
 import com.melnykov.fab.FloatingActionButton;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.quinny898.library.persistentsearch.SearchBox;
 
 import org.json.JSONException;
 
@@ -37,6 +41,9 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 	private SlidingTabLayout mSlidingTab;
 	private HomePagerAdapter mPagerAdapter;
 	private FloatingActionButton mFAB;
+
+	private SearchBox mSearchBox;
+	private LinearLayout mCompanyListPage;
 
 	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100,
 			REQUEST_DETAILS = 101, RESULT_HAS_CHANGED = 101;
@@ -75,6 +82,12 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 
 	@Override
 	protected void setUpViews() {
+		View statusHeaderView1 = findViewById(R.id.statusHeaderView1);
+		statusHeaderView1.getLayoutParams().height = statusBarHeight;
+
+		mSearchBox = (SearchBox) findViewById(R.id.searchBox);
+		mCompanyListPage = (LinearLayout) findViewById(R.id.company_list_page);
+
 		mHeaderView = findViewById(R.id.header);
 		ViewCompat.setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
 		mPager = (ViewPager) findViewById(R.id.pager);
@@ -112,6 +125,52 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 				startActivityForResult(intent, REQUEST_ADD);
 			}
 		});
+	}
+
+	public void openCompanyList() {
+		mCompanyListPage.setVisibility(View.VISIBLE);
+		mSearchBox.revealFromMenuItem(R.id.action_select_company, this);
+		mSearchBox.setSearchListener(new SearchBox.SearchListener() {
+			@Override
+			public void onSearchOpened() {
+
+			}
+
+			@Override
+			public void onSearchCleared() {
+
+			}
+
+			@Override
+			public void onSearchClosed() {
+				closeCompanyList();
+			}
+
+			@Override
+			public void onSearchTermChanged() {
+
+			}
+
+			@Override
+			public void onSearch(String result) {
+
+			}
+		});
+	}
+
+	public void closeCompanyList() {
+		mSearchBox.hideCircularly(this);
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						mCompanyListPage.setVisibility(View.GONE);
+					}
+				});
+			}
+		}, 500);
 	}
 
 	@Override
@@ -308,6 +367,10 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 
 		if (id == R.id.action_settings) {
 			SettingsActivity.launchActivity(this, SettingsActivity.FLAG_MAIN);
+			return true;
+		}
+		if (id == R.id.action_select_company) {
+			openCompanyList();
 			return true;
 		}
 
