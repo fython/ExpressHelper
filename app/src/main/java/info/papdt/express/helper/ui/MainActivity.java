@@ -272,27 +272,12 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 					} catch (JSONException e) {
 						e.printStackTrace();
 					}
-					// fragmentHome.mDB = mExpressDB;
-					// fragmentHome.setUpAdapter();
+					mPagerAdapter.notifyDataSetChanged();
 				}
 				break;
 			case REQUEST_DETAILS:
 				if (resultCode == RESULT_HAS_CHANGED) {
-					try {
-						// fragmentHome.mHandler.sendEmptyMessage(HomeFragment.FLAG_REFRESH_ADAPTER_ONLY);
-					} catch (Exception e) {
-
-					}
-					try {
-						// fragmentOK.mHandler.sendEmptyMessage(ReceivedListFragment.FLAG_REFRESH_ADAPTER_ONLY);
-					} catch (Exception e) {
-
-					}
-					try {
-						// fragmentUR.mHandler.sendEmptyMessage(UnreceivedListFragment.FLAG_REFRESH_ADAPTER_ONLY);
-					} catch (Exception e) {
-
-					}
+					mPagerAdapter.notifyDataSetChanged();
 				}
 				break;
 		}

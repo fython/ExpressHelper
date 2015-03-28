@@ -5,9 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
-import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 import info.papdt.express.helper.ui.adapter.HomeCardRecyclerAdapter;
 
 public class HomeFragment extends BaseHomeFragment {

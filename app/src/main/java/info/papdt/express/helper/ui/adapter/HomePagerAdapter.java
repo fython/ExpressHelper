@@ -60,6 +60,17 @@ public class HomePagerAdapter extends CacheFragmentStatePagerAdapter {
 		return f;
 	}
 
+	public void notifyDataSetChanged() {
+		for (int i = 0; i < 3; i++) {
+			try {
+				BaseHomeFragment fragment = (BaseHomeFragment) this.getItemAt(i);
+				fragment.mHandler.sendEmptyMessage(BaseHomeFragment.FLAG_REFRESH_ADAPTER_ONLY);
+			} catch (Exception e) {
+
+			}
+		}
+	}
+
 	@Override
 	public int getCount() {
 		return 3;

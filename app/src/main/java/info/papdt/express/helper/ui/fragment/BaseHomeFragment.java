@@ -10,16 +10,12 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
@@ -30,11 +26,9 @@ import java.io.IOException;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
-import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
-import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
 import info.papdt.express.helper.ui.adapter.HomeCardRecyclerAdapter;
 import info.papdt.express.helper.ui.common.OnRecyclerItemClickListener;
 
