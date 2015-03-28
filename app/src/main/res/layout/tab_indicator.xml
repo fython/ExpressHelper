@@ -15,8 +15,10 @@
           style="@style/ThemeOverlay.AppCompat.Light"
           android:layout_width="wrap_content"
           android:layout_height="48dp"
+          android:background="?attr/selectableItemBackgroundBorderless"
           android:gravity="center"
           android:paddingLeft="16dp"
           android:paddingRight="16dp"
+          android:textAllCaps="true"
           android:textColor="@android:color/white"
           android:textSize="14sp" />

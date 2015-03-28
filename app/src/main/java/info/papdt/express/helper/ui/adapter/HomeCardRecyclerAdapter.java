@@ -1,0 +1,144 @@
+package info.papdt.express.helper.ui.adapter;
+
+import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.widget.RecyclerView;
+import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+import info.papdt.express.helper.R;
+import info.papdt.express.helper.dao.ExpressDatabase;
+import info.papdt.express.helper.support.Express;
+import info.papdt.express.helper.support.ExpressResult;
+
+public class HomeCardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+	private static final int VIEW_TYPE_HEADER = 0;
+	private static final int VIEW_TYPE_ITEM = 1;
+
+	private LayoutInflater mInflater;
+	private ExpressDatabase db;
+	private int type;
+	private View headerView;
+
+	private int[] defaultColors;
+
+	public static final int TYPE_ALL = 0, TYPE_UNRECEIVED = 1, TYPE_RECEIVED = 2;
+
+	public HomeCardRecyclerAdapter(Context context, ExpressDatabase db, View headerView) {
+		this(context, db, TYPE_ALL, headerView);
+	}
+
+	public HomeCardRecyclerAdapter(Context context, ExpressDatabase db, int type, View headerView) {
+		this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		this.mInflater = mInflater.cloneInContext(new ContextThemeWrapper(context, R.style.AppTheme_NoActionBar));
+		this.db = db;
+		this.defaultColors = context.getResources().getIntArray(R.array.statusColor);
+		this.type = type;
+		this.headerView = headerView;
+	}
+
+	@Override
+	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		switch (viewType) {
+			case VIEW_TYPE_HEADER:
+				return new HeaderViewHolder(headerView);
+			case VIEW_TYPE_ITEM:
+				View v = LayoutInflater.from(parent.getContext())
+						.inflate(R.layout.card_express_item, parent, false);
+				return new ViewHolder(v);
+			default:
+				return null;
+		}
+	}
+
+	@Override
+	public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+		if (!(viewHolder instanceof ViewHolder)) return;
+
+		Express item = getItem(position + (headerView != null ? -1 : 0));
+
+		ExpressResult cache = ExpressResult.buildFromJSON(item.getData());
+
+		ViewHolder holder = (ViewHolder) viewHolder;
+
+		ColorDrawable drawable = new ColorDrawable(defaultColors[cache.status]);
+		holder.iv_round.setImageDrawable(drawable);
+
+		holder.tv_title.setText(item.getName());
+
+		String desp, time;
+		try {
+			Map<String, String> lastData = cache.data.get(cache.data.size() - 1);
+			holder.tv_center_round.setText(cache.expTextName.substring(0, 1));
+			desp = lastData.get("context");
+			time = lastData.get("time");
+		} catch (Exception e) {
+			desp = "failed";
+			time = "1970/01/01";
+		}
+		holder.tv_desp.setText(desp);
+		holder.tv_time.setText(time);
+	}
+
+	@Override
+	public int getItemCount() {
+		int result = -1;
+		if (type == TYPE_ALL) {
+			result =  db.size();
+		} else if (type == TYPE_UNRECEIVED) {
+			result = db.urSize();
+		} else if (type == TYPE_RECEIVED) {
+			result = db.okSize();
+		}
+		if (headerView != null) result++;
+		return result;
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		return (position == 0 && headerView != null) ? VIEW_TYPE_HEADER : VIEW_TYPE_ITEM;
+	}
+
+	public Express getItem(int i) {
+		if (type == TYPE_ALL) {
+			return db.getExpress(i);
+		} else if (type == TYPE_UNRECEIVED) {
+			return db.getUnreceivedArray().get(i);
+		} else if (type == TYPE_RECEIVED) {
+			return db.getReceivedArray().get(i);
+		}
+		return null;
+	}
+
+	public class ViewHolder extends RecyclerView.ViewHolder {
+
+		public CircleImageView iv_round;
+		public TextView tv_title, tv_desp, tv_time, tv_center_round;
+
+		public ViewHolder(View itemView) {
+			super(itemView);
+			this.iv_round = (CircleImageView) itemView.findViewById(R.id.iv_round);
+			this.tv_title = (TextView) itemView.findViewById(R.id.tv_title);
+			this.tv_desp = (TextView) itemView.findViewById(R.id.tv_desp);
+			this.tv_time = (TextView) itemView.findViewById(R.id.tv_time);
+			this.tv_center_round = (TextView) itemView.findViewById(R.id.center_text);
+		}
+
+	}
+
+	public class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+		public HeaderViewHolder(View view) {
+			super(view);
+		}
+
+	}
+
+}

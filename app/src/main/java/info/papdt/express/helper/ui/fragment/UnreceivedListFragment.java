@@ -1,10 +1,10 @@
 package info.papdt.express.helper.ui.fragment;
 
-import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
+import info.papdt.express.helper.ui.adapter.HomeCardRecyclerAdapter;
 
 public class UnreceivedListFragment extends BaseHomeFragment {
 
-	private HomeCardAdapter mAdapter;
+	private HomeCardRecyclerAdapter mAdapter;
 
 	public static UnreceivedListFragment newInstance() {
 		UnreceivedListFragment fragment = new UnreceivedListFragment();
@@ -16,8 +16,8 @@ public class UnreceivedListFragment extends BaseHomeFragment {
 
 	@Override
 	public void setUpAdapter() {
-		mAdapter = new HomeCardAdapter(getActivity().getApplicationContext(), mDB, HomeCardAdapter.TYPE_UNRECEIVED);
-		mListView.setAdapter(mAdapter);
+		mAdapter = new HomeCardRecyclerAdapter(getActivity().getApplicationContext(), mDB, HomeCardRecyclerAdapter.TYPE_UNRECEIVED, headerView);
+		mRecyclerView.setAdapter(mAdapter);
 	}
 
 }

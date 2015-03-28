@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 
@@ -31,6 +35,8 @@ import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomeCardAdapter;
+import info.papdt.express.helper.ui.adapter.HomeCardRecyclerAdapter;
+import info.papdt.express.helper.ui.common.OnRecyclerItemClickListener;
 
 public abstract class BaseHomeFragment extends Fragment {
 
@@ -39,7 +45,10 @@ public abstract class BaseHomeFragment extends Fragment {
 	protected Settings mSets;
 
 	protected SwipeRefreshLayout refreshLayout;
-	protected ObservableListView mListView;
+	protected ObservableRecyclerView mRecyclerView;
+	protected View headerView;
+
+	protected Context context;
 
 	public static final int FLAG_REFRESH_LIST = 0, FLAG_REFRESH_ADAPTER_ONLY = 1;
 	public static final String ARG_INITIAL_POSITION = "initial_position";
@@ -55,45 +64,49 @@ public abstract class BaseHomeFragment extends Fragment {
 
 		refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeRefreshLayout);
 
-		mListView = (ObservableListView) rootView.findViewById(R.id.scroll);
-		mListView.addHeaderView(inflater.inflate(R.layout.padding, null));
+		mRecyclerView = (ObservableRecyclerView) rootView.findViewById(R.id.scroll);
+		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		mRecyclerView.setHasFixedSize(true);
+		headerView = inflater.inflate(R.layout.padding, null);
 
 		Activity parentActivity = getActivity();
+		context = parentActivity.getApplicationContext();
 		if (parentActivity instanceof ObservableScrollViewCallbacks) {
 			// Scroll to the specified position after layout
 			Bundle args = getArguments();
 			if (args != null && args.containsKey(ARG_INITIAL_POSITION)) {
 				final int initialPosition = args.getInt(ARG_INITIAL_POSITION, 0);
-				ScrollUtils.addOnGlobalLayoutListener(mListView, new Runnable() {
+				ScrollUtils.addOnGlobalLayoutListener(mRecyclerView, new Runnable() {
 					@Override
 					public void run() {
-						// scrollTo() doesn't work, should use setSelection()
-						mListView.setSelection(initialPosition);
+						mRecyclerView.scrollVerticallyToPosition(initialPosition);
 					}
 				});
 			}
-			mListView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentActivity);
+			mRecyclerView.setScrollViewCallbacks((ObservableScrollViewCallbacks) parentActivity);
 		}
 
-		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				int realPosition = (int) view.getTag(R.string.title_section_2);
-				Intent intent = new Intent(getActivity(), DetailsActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-				intent.putExtra("id", realPosition);
-				intent.putExtra("data", mDB.getExpress(realPosition).toJSONObject().toString());
-				getActivity().startActivityForResult(intent, MainActivity.REQUEST_DETAILS);
-			}
-		});
-		mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				int realPosition = (int) view.getTag(R.string.title_section_2);
-				showDeleteDialog(realPosition);
-				return true;
-			}
-		});
+		mRecyclerView.addOnItemTouchListener(
+				new OnRecyclerItemClickListener(
+						getActivity().getApplicationContext(),
+						new OnRecyclerItemClickListener.OnItemClickListener() {
+							@Override
+							public void onItemClick(View view, int position) {
+								HomeCardRecyclerAdapter adapter =
+										(HomeCardRecyclerAdapter) mRecyclerView.getAdapter();
+								int realPosition = mDB.findExpress(
+										adapter.getItem(position - 1).getCompanyCode(),
+										adapter.getItem(position - 1).getMailNumber()
+								);
+								Intent intent = new Intent(getActivity(), DetailsActivity.class);
+								intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+								intent.putExtra("id", realPosition);
+								intent.putExtra("data", mDB.getExpress(realPosition).toJSONObject().toString());
+								getActivity().startActivityForResult(intent, MainActivity.REQUEST_DETAILS);
+							}
+						}
+				)
+		);
 
 		refreshLayout.setColorSchemeResources(R.color.blue_500);
 		refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -129,7 +142,7 @@ public abstract class BaseHomeFragment extends Fragment {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						((BaseAdapter) mListView.getAdapter()).notifyDataSetChanged();
+						mRecyclerView.getAdapter().notifyDataSetChanged();
 					}
 				})
 				.show();
@@ -175,7 +188,7 @@ public abstract class BaseHomeFragment extends Fragment {
 				mDB = db;
 			} else {
 				Toast.makeText(
-						getActivity().getApplicationContext(),
+						context,
 						R.string.toast_network_error,
 						Toast.LENGTH_SHORT
 				).show();
