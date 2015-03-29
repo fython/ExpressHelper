@@ -44,70 +44,76 @@
 
 		</FrameLayout>
 
-		<LinearLayout
+		<ScrollView
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:orientation="vertical"
-			android:paddingLeft="16dp"
-			android:paddingRight="16dp"
-			android:paddingTop="12dp"
-			android:paddingBottom="10dp"
 			android:layout_weight="1">
-
-			<com.rengwuxian.materialedittext.MaterialEditText
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/et_name"
-				android:hint="@string/hint_et_name"
-				android:singleLine="true"
-				app:floatingLabel="highlight"
-				app:iconLeft="@drawable/ic_event_note_black_24dp"
-				app:iconPadding="0dp"
-				app:baseColor="@color/abc_primary_text_material_light"
-				app:primaryColor="?attr/colorPrimary"
-				android:textColorHint="@color/hint_foreground_material_light"/>
 
 			<LinearLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:paddingLeft="12dp"
-				android:paddingTop="10dp"
-				android:gravity="center_vertical">
-					
-				<ImageView
-					android:src="@drawable/ic_local_shipping_black_24dp"
-					android:scaleType="centerInside"
-					android:layout_width="24dp"
-					android:layout_height="24dp"
-					android:alpha="0.6"/>
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:paddingLeft="16dp"
+				android:paddingRight="16dp"
+				android:paddingTop="12dp"
+				android:paddingBottom="10dp">
 
-				<Spinner
+				<com.rengwuxian.materialedittext.MaterialEditText
 					android:layout_width="match_parent"
-					android:layout_height="30dp"
-					android:layout_marginLeft="4dp"
-					android:id="@+id/spinner_company"
-					android:alpha="0.75"
-					android:prompt="@string/hint_et_company"/>
-					
+					android:layout_height="wrap_content"
+					android:id="@+id/et_name"
+					android:hint="@string/hint_et_name"
+					android:singleLine="true"
+					app:floatingLabel="highlight"
+					app:iconLeft="@drawable/ic_event_note_black_24dp"
+					app:iconPadding="0dp"
+					app:baseColor="@color/abc_primary_text_material_light"
+					app:primaryColor="?attr/colorPrimary"
+					android:textColorHint="@color/hint_foreground_material_light"/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+					android:paddingLeft="12dp"
+					android:paddingTop="10dp"
+					android:gravity="center_vertical">
+
+					<ImageView
+						android:src="@drawable/ic_local_shipping_black_24dp"
+						android:scaleType="centerInside"
+						android:layout_width="24dp"
+						android:layout_height="24dp"
+						android:alpha="0.6"/>
+
+					<Spinner
+						android:layout_width="match_parent"
+						android:layout_height="30dp"
+						android:layout_marginLeft="4dp"
+						android:id="@+id/spinner_company"
+						android:alpha="0.75"
+						android:prompt="@string/hint_et_company"/>
+
+				</LinearLayout>
+
+				<com.rengwuxian.materialedittext.MaterialEditText
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/et_number"
+					android:hint="@string/hint_et_number"
+					android:singleLine="true"
+					android:layout_marginTop="4dp"
+					android:inputType="textEmailAddress"
+					app:floatingLabel="highlight"
+					app:iconLeft="@drawable/ic_assignment_black_24dp"
+					app:iconPadding="0dp"
+					app:baseColor="@color/abc_primary_text_material_light"
+					app:primaryColor="?attr/colorPrimary"
+					android:textColorHint="@color/hint_foreground_material_light"/>
+
 			</LinearLayout>
 
-			<com.rengwuxian.materialedittext.MaterialEditText
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/et_number"
-				android:hint="@string/hint_et_number"
-				android:singleLine="true"
-				android:layout_marginTop="4dp"
-				android:inputType="textEmailAddress"
-				app:floatingLabel="highlight"
-				app:iconLeft="@drawable/ic_assignment_black_24dp"
-				app:iconPadding="0dp"
-				app:baseColor="@color/abc_primary_text_material_light"
-				app:primaryColor="?attr/colorPrimary"
-				android:textColorHint="@color/hint_foreground_material_light"/>
-
-		</LinearLayout>
+		</ScrollView>
 
 		<LinearLayout
 			android:layout_width="match_parent"
