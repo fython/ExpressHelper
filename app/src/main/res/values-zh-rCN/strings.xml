@@ -108,5 +108,6 @@
 	<string name="item_enable_swipe_back">启用滑动返回手势</string>
 
 	<string name="action_select_company">快递公司列表</string>
+	<string name="search_hint_company">搜索 「快递公司」</string>
 
 </resources>

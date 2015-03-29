@@ -1,21 +1,29 @@
 package info.papdt.express.helper.ui;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.DecelerateInterpolator;
 
+import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
+
+import info.papdt.express.helper.api.KuaiDi100Helper;
+import info.papdt.express.helper.api.secret.KuaiDi100;
+import info.papdt.express.helper.ui.adapter.CompanyListRecyclerAdapter;
+import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
 import info.papdt.express.helper.view.SlidingTabLayout;
 import com.melnykov.fab.FloatingActionButton;
 import com.nineoldandroids.view.ViewHelper;
@@ -25,6 +33,7 @@ import com.quinny898.library.persistentsearch.SearchBox;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
@@ -44,6 +53,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 
 	private SearchBox mSearchBox;
 	private View mCompanyListPage, mCompanyListPageBackground;
+	private ObservableRecyclerView mCompanyList;
 
 	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100,
 			REQUEST_DETAILS = 101, RESULT_HAS_CHANGED = 101;
@@ -88,8 +98,12 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		mSearchBox = (SearchBox) findViewById(R.id.searchBox);
 		mCompanyListPage = findViewById(R.id.company_list_page);
 		mCompanyListPageBackground = findViewById(R.id.company_list_page_background);
+		mCompanyList = (ObservableRecyclerView) mCompanyListPage.findViewById(R.id.recycler_view);
 
 		mSearchBox.setLogoText("");
+		mSearchBox.setHintText(getString(R.string.search_hint_company));
+		mCompanyList.setLayoutManager(new LinearLayoutManager(this));
+		mCompanyList.setHasFixedSize(true);
 
 		mHeaderView = findViewById(R.id.header);
 		ViewCompat.setElevation(mHeaderView, getResources().getDimension(R.dimen.toolbar_elevation));
@@ -142,12 +156,11 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		mSearchBox.setSearchListener(new SearchBox.SearchListener() {
 			@Override
 			public void onSearchOpened() {
-
+				new SearchCompanyTask().execute();
 			}
 
 			@Override
 			public void onSearchCleared() {
-
 			}
 
 			@Override
@@ -157,13 +170,13 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 
 			@Override
 			public void onSearchTermChanged() {
-
+				new SearchCompanyTask().execute(mSearchBox.getSearchText());
 			}
 
 			@Override
 			public void onSearch(String result) {
-
 			}
+
 		});
 	}
 
@@ -400,6 +413,44 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	public void mic(View v) {
+		mSearchBox.micClick(this);
+	}
+
+	public class SearchCompanyTask extends AsyncTask<String, Void, ArrayList<KuaiDi100Helper.CompanyInfo.Company>> {
+
+		@Override
+		protected ArrayList<KuaiDi100Helper.CompanyInfo.Company> doInBackground(String... params) {
+			ArrayList<KuaiDi100Helper.CompanyInfo.Company> src = new ArrayList<>(KuaiDi100Helper.CompanyInfo.info);
+			if (params.length > 0) {
+				if (params[0] != null && params[0].trim().length() > 0) {
+					for (int i = 0; i < src.size(); i++) {
+						if (!src.get(i).name.contains(params[0])) {
+							src.remove(i);
+							i--;
+						}
+					}
+				}
+			}
+			return src;
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<KuaiDi100Helper.CompanyInfo.Company> result) {
+			if (result != null) {
+				CompanyListRecyclerAdapter adapter = new CompanyListRecyclerAdapter(result);
+				mCompanyList.setAdapter(adapter);
+				adapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+					@Override
+					public void onItemClicked(int position) {
+
+					}
+				});
+			}
+		}
+
 	}
 
 }

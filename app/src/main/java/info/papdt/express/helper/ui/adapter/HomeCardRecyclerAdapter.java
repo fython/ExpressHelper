@@ -22,7 +22,6 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 	private static final int VIEW_TYPE_HEADER = 0;
 	private static final int VIEW_TYPE_ITEM = 1;
 
-	private LayoutInflater mInflater;
 	private ExpressDatabase db;
 	private int type;
 	private View headerView;
@@ -36,8 +35,6 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 	}
 
 	public HomeCardRecyclerAdapter(Context context, ExpressDatabase db, int type, View headerView) {
-		this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.mInflater = mInflater.cloneInContext(new ContextThemeWrapper(context, R.style.AppTheme_NoActionBar));
 		this.db = db;
 		this.defaultColors = context.getResources().getIntArray(R.array.statusColor);
 		this.type = type;

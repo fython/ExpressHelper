@@ -29,13 +29,19 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 		holder.getParentView().setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				itemClickListener.onItemClicked(position);
+				if (itemClickListener != null) {
+					itemClickListener.onItemClicked(position);
+				}
 			}
 		});
 		holder.getParentView().setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				return itemLongClickListener.onItemLongClicked(position);
+				if (itemLongClickListener != null) {
+					return itemLongClickListener.onItemLongClicked(position);
+				} else {
+					return false;
+				}
 			}
 		});
 	}

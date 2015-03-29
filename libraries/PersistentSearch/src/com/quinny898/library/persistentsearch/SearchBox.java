@@ -628,6 +628,7 @@ public class SearchBox extends RelativeLayout {
 		this.materialMenu.animateState(IconState.BURGER);
 		this.logo.setVisibility(View.VISIBLE);
 		this.search.setVisibility(View.GONE);
+		this.search.setText("");
 		this.results.setVisibility(View.GONE);
 		if (tint != null && rootLayout != null) {
 			rootLayout.removeView(tint);
@@ -651,9 +652,9 @@ public class SearchBox extends RelativeLayout {
 		logo.setText(text);
 	}
 
-	
-	
-	
+	public void setHintText(String text) {
+		search.setHint(text);
+	}
 
 	private void search(String text) {
 		SearchResult option = new SearchResult(text, null);

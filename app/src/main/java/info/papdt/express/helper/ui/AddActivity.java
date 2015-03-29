@@ -81,7 +81,10 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 			return;
 		}
 
-		new PostApiTask().execute(KuaiDi100Helper.CompanyInfo.info.get(KuaiDi100Helper.CompanyInfo.names[mNow]), mEditTextSerial.getText().toString());
+		new PostApiTask().execute(
+				KuaiDi100Helper.CompanyInfo.info.get(mNow).code,
+				mEditTextSerial.getText().toString()
+		);
 	}
 
 	public void onItemSelected(AdapterView<?> parent, View view, 

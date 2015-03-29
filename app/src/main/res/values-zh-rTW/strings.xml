@@ -109,5 +109,6 @@
 	<string name="item_enable_swipe_back">啟用滑動返回手勢</string>
 
 	<string name="action_select_company">快遞公司列單</string>
+	<string name="search_hint_company">搜尋 「快遞公司」</string>
 
 </resources>

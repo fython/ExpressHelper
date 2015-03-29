@@ -114,5 +114,6 @@
 	<string name="item_enable_swipe_back">Enable swipe back gesture</string>
 
 	<string name="action_select_company">Shipment companies list</string>
+	<string name="search_hint_company">Search 「Shipment companies」</string>
 
 </resources>

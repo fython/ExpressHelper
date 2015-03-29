@@ -52,13 +52,16 @@
             android:layout_alignBottom="@+id/material_menu_button"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
             android:layout_marginLeft="64dp"
             android:background="@null"
             android:ems="10"
             android:textColor="#212121"
             android:singleLine="true"
             android:imeOptions="actionSearch"
-            android:visibility="gone" >
+            android:visibility="gone"
+            android:hint="23123123"
+	        >
 
             <requestFocus />
         </EditText>
