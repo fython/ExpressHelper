@@ -79,7 +79,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 	public void refreshDatabase(boolean pullNewData) {
 		mExpressDB.init();
 		if (pullNewData) {
-			mExpressDB.pullNewDataFromNetwork();
+			mExpressDB.pullNewDataFromNetwork(false);
 			try {
 				mExpressDB.save();
 			} catch (IOException e) {

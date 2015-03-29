@@ -30,7 +30,7 @@
 	<string-array name="status">
 		<item>失败</item>
 		<item>正常</item>
-		<item>在路上</item>
+		<item>正在派送</item>
 		<item>已签收</item>
 		<item>退回</item>
 		<item>其它问题</item>

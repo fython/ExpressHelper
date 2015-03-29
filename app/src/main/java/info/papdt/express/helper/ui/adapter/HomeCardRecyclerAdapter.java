@@ -63,7 +63,7 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 
 		Express item = getItem(position + (headerView != null ? -1 : 0));
 
-		ExpressResult cache = ExpressResult.buildFromJSON(item.getData());
+		ExpressResult cache = item.getData();
 
 		ViewHolder holder = (ViewHolder) viewHolder;
 

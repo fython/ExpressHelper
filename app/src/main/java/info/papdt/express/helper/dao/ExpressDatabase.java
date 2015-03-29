@@ -81,7 +81,7 @@ public class ExpressDatabase {
 		array_ur = new ArrayList<>();
 		for (int i = 0; i < size(); i++) {
 			Express exp = getExpress(i);
-			ExpressResult cache = ExpressResult.buildFromJSON(exp.getData());
+			ExpressResult cache = exp.getData();
 			if (cache.status == 3) {
 				array_ok.add(exp);
 			} else {
@@ -172,8 +172,11 @@ public class ExpressDatabase {
 		Utility.saveFile(context, "data.json", obj.toString());
 	}
 
-	public void pullNewDataFromNetwork() {
+	public void pullNewDataFromNetwork(boolean refreshDelivered) {
 		for (Express nowExp : mExpressArray) {
+			if (!refreshDelivered && nowExp.getData().getStatus() == ExpressResult.STATUS_DELIVERED) {
+				continue;
+			}
 			String result = getDataFromNetwork(nowExp.getCompanyCode(), nowExp.getMailNumber());
 			if (result != null) {
 				nowExp.setData(result);

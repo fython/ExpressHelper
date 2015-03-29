@@ -5,10 +5,13 @@ import android.text.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import info.papdt.express.helper.api.KuaiDi100Helper;
+
 public class Express {
 
 	private String companyCode, mailNumber, name;
-	private String jsonData;
+	private String jsonData, lastJsonData;
+	private int lastStatus;
 
 	public Express(String companyCode, String mailNumber){
 		this(companyCode, mailNumber, mailNumber);
@@ -20,12 +23,33 @@ public class Express {
 		this.name = name;
 	}
 	
-	public String getData() {
+	public String getDataStr() {
 		return jsonData;
 	}
 	
 	public void setData(String jsonStr) {
 		this.jsonData = jsonStr;
+	}
+
+	public String getLastDataStr() {
+		return lastJsonData;
+	}
+
+	public void setLastData(String lastJsonStr) {
+		this.lastJsonData = lastJsonStr;
+		this.lastStatus = getLastData().getStatus();
+	}
+
+	public int getLastStatus() {
+		return lastStatus;
+	}
+
+	public ExpressResult getData() {
+		return ExpressResult.buildFromJSON(jsonData);
+	}
+
+	public ExpressResult getLastData() {
+		return ExpressResult.buildFromJSON(lastJsonData);
 	}
 
 	public String getCompanyCode(){
@@ -50,7 +74,7 @@ public class Express {
 			obj0.put("name", getName());
 			obj0.put("companyCode", getCompanyCode());
 			obj0.put("mailNumber", getMailNumber());
-			obj0.put("cache", getData());
+			obj0.put("cache", getDataStr());
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

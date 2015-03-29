@@ -65,7 +65,7 @@ public class DetailsActivity extends AbsActivity {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		cache = ExpressResult.buildFromJSON(express.getData());
+		cache = express.getData();
 
 		edb = new ExpressDatabase(getApplicationContext());
 
