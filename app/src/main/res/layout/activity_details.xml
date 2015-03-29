@@ -60,6 +60,7 @@
 				android:orientation="vertical"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
+				android:layout_weight="1"
 				android:gravity="center_vertical">
 
 				<TextView
@@ -91,6 +92,15 @@
 					android:textSize="14sp"/>
 
 			</LinearLayout>
+
+			<ImageButton
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:padding="8dp"
+				android:layout_marginRight="8dp"
+				android:id="@+id/btn_number_visible"
+				android:background="?attr/selectableItemBackgroundBorderless"
+				android:src="@drawable/ic_visibility_off_white_24dp"/>
 
 		</LinearLayout>
 

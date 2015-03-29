@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class DetailsActivity extends AbsActivity {
 	private EditText mEditTextName;
 	private TextView tv_company, tv_mail_no, tv_status, tv_round_center;
 	private CircleImageView iv_round;
+	private ImageButton mButtonNumberVisible;
 
 	private int eid;
 	private Express express;
@@ -48,7 +50,7 @@ public class DetailsActivity extends AbsActivity {
 	private String phoneNumber;
 	private boolean hasPhoneNumber = true;
 
-	private boolean isEditingTitle = false;
+	private boolean isEditingTitle = false, isShowingTrueNumber = true;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +91,19 @@ public class DetailsActivity extends AbsActivity {
 		tv_status = (TextView) findViewById(R.id.tv_status);
 		tv_round_center = (TextView) findViewById(R.id.center_text);
 		iv_round = (CircleImageView) findViewById(R.id.iv_round);
+		mButtonNumberVisible = (ImageButton) findViewById(R.id.btn_number_visible);
 
 		mEditTextName = new EditText(mActionBar.getThemedContext());
 		ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL);
 		mActionBar.setCustomView(mEditTextName, lp);
 		mActionBar.setDisplayShowCustomEnabled(false);
 		mActionBar.setDisplayShowTitleEnabled(true);
+		mButtonNumberVisible.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toggleNumberShowing();
+			}
+		});
 	}
 
 	@Override
@@ -156,6 +165,20 @@ public class DetailsActivity extends AbsActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
+	private void toggleNumberShowing() {
+		isShowingTrueNumber = !isShowingTrueNumber;
+		if (isShowingTrueNumber) {
+			tv_mail_no.setText(express.getMailNumber());
+			mButtonNumberVisible.setImageResource(R.drawable.ic_visibility_white_24dp);
+		} else {
+			int length = tv_mail_no.length();
+			String str = "";
+			for (int i = 0; i < length; i++) str += "*";
+			tv_mail_no.setText(str);
+			mButtonNumberVisible.setImageResource(R.drawable.ic_visibility_off_white_24dp);
+		}
+	}
+
 	@Override
 	public void onBackPressed() {
 		if (isEditingTitle) {
@@ -211,7 +234,8 @@ public class DetailsActivity extends AbsActivity {
 		tv_status.setText(getResources().getStringArray(R.array.status)[cache.status]);
 		tv_company.setText(cache.expTextName);
 		tv_round_center.setText(cache.expTextName.substring(0, 1));
-		tv_mail_no.setText(cache.mailNo);
+		tv_mail_no.setText(express.getMailNumber());
+		toggleNumberShowing();
 
 		ColorDrawable drawable = new ColorDrawable(getResources().getIntArray(R.array.statusColor) [cache.status]);
 		iv_round.setImageDrawable(drawable);
