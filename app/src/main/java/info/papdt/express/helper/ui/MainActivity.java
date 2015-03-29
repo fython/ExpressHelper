@@ -151,6 +151,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		anim.setFillAfter(true);
 		anim.setDuration(250);
 		mCompanyListPageBackground.startAnimation(anim);
+		mCompanyList.startAnimation(anim);
 
 		mSearchBox.revealFromMenuItem(R.id.action_select_company, this);
 		mSearchBox.setSearchListener(new SearchBox.SearchListener() {
@@ -188,6 +189,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		anim.setFillAfter(true);
 		anim.setDuration(250);
 		mCompanyListPageBackground.startAnimation(anim);
+		mCompanyList.startAnimation(anim);
 
 		new Handler().postDelayed(new Runnable() {
 			@Override
@@ -205,7 +207,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 	@Override
 	public void onBackPressed() {
 		if (mSearchBox.isSearchOpened()) {
-			closeCompanyList();
+			mSearchBox.toggleSearch();
 		} else {
 			super.onBackPressed();
 		}

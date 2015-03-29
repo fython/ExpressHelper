@@ -84,8 +84,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:id="@+id/company_list_page_background"
-			android:background="#afffffff"
-			android:clickable="true"/>
+			android:background="#dfffffff"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
