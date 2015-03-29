@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,11 +9,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -54,6 +58,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 	private SearchBox mSearchBox;
 	private View mCompanyListPage, mCompanyListPageBackground;
 	private ObservableRecyclerView mCompanyList;
+	private CompanyListRecyclerAdapter mCompanyListAdapter;
 
 	public static final int REQUEST_ADD = 100, RESULT_ADD_FINISH = 100,
 			REQUEST_DETAILS = 101, RESULT_HAS_CHANGED = 101;
@@ -442,12 +447,23 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		@Override
 		protected void onPostExecute(ArrayList<KuaiDi100Helper.CompanyInfo.Company> result) {
 			if (result != null) {
-				CompanyListRecyclerAdapter adapter = new CompanyListRecyclerAdapter(result);
-				mCompanyList.setAdapter(adapter);
-				adapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+				mCompanyListAdapter = new CompanyListRecyclerAdapter(result);
+				mCompanyList.setAdapter(mCompanyListAdapter);
+				mCompanyListAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
 					@Override
 					public void onItemClicked(int position) {
-
+						String phone = mCompanyListAdapter.getItem(position).phone;
+						if (phone != null && phone != "null" && !TextUtils.isEmpty(phone)) {
+							Intent intent = new Intent(Intent.ACTION_DIAL);
+							intent.setData(Uri.parse("tel:" + phone));
+							startActivity(intent);
+						} else {
+							Toast.makeText(
+									getApplicationContext(),
+									R.string.toast_phone_is_not_exist,
+									Toast.LENGTH_SHORT
+							).show();
+						}
 					}
 				});
 			}

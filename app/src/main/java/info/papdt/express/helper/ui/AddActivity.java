@@ -5,12 +5,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -22,17 +20,16 @@ import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.support.HttpUtils;
 import info.papdt.express.helper.support.Settings;
 
-public class AddActivity extends AbsActivity implements OnItemSelectedListener{
+public class AddActivity extends AbsActivity {
 
 	private boolean isChecking = false;
 
 	private MaterialEditText mEditTextSerial, mEditTextName;
-	private Spinner mSpinnerCompany;
+	private TextView mCompanyNameText;
 	private ProgressBar mProgress;
 	private View mButtonDone;
-	private ArrayAdapter<String> mCompanyAdapter;
-	private int mNow = 0;
-	
+	private int mNow = -1;
+
 	public static final String TAG = "AddActivity";
 	
 	//918108247993
@@ -49,19 +46,10 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 	@Override
 	protected void setUpViews() {
 		mEditTextSerial = (MaterialEditText) findViewById(R.id.et_number);
-		mSpinnerCompany = (Spinner) findViewById(R.id.spinner_company);
+		mCompanyNameText = (TextView) findViewById(R.id.tv_company_name);
 		mEditTextName = (MaterialEditText) findViewById(R.id.et_name);
 		mButtonDone = findViewById(R.id.btn_done);
 		mProgress = (ProgressBar) findViewById(R.id.progressBar);
-		mCompanyAdapter = new ArrayAdapter<String>( 
-			this,
-			android.R.layout.simple_spinner_item,
-			KuaiDi100Helper.CompanyInfo.names);
-		mCompanyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		mSpinnerCompany.setAdapter(mCompanyAdapter);
-		mSpinnerCompany.setOnItemSelectedListener(this);
-		mSpinnerCompany.setSelection(0,true);
-		mSpinnerCompany.setPrompt(getString(R.string.hint_et_company));
 		mButtonDone.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -69,6 +57,30 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 				postData();
 			}
 		});
+
+		ImageButton mButtonSelect = (ImageButton) findViewById(R.id.btn_select);
+		mButtonSelect.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				CompanySelectActivity.launchActivity(AddActivity.this);
+			}
+		});
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		switch (requestCode) {
+			case CompanySelectActivity.REQUEST_CODE_SELECT:
+				if (resultCode == CompanySelectActivity.RESULT_SELECTED) {
+					mNow = KuaiDi100Helper.CompanyInfo.findCompanyByCode(intent.getStringExtra("company_code"));
+					setCompanyNameText();
+				}
+				break;
+		}
+	}
+
+	private void setCompanyNameText() {
+		mCompanyNameText.setText(KuaiDi100Helper.CompanyInfo.names [mNow]);
 	}
 
 	private void postData() {
@@ -80,21 +92,20 @@ public class AddActivity extends AbsActivity implements OnItemSelectedListener{
 			).show();
 			return;
 		}
+		if (mNow == -1) {
+			Toast.makeText(
+					getApplicationContext(),
+					R.string.toast_company_name_empty,
+					Toast.LENGTH_SHORT
+			).show();
+			return;
+		}
 
 		new PostApiTask().execute(
 				KuaiDi100Helper.CompanyInfo.info.get(mNow).code,
 				mEditTextSerial.getText().toString()
 		);
 	}
-
-	public void onItemSelected(AdapterView<?> parent, View view, 
-            int pos, long id) {
-        mNow = pos;
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        
-    }
 	
 	private void receiveData(String result, String name) {
 		Intent intent = new Intent(this, MainActivity.class);

@@ -1,6 +1,5 @@
 package info.papdt.express.helper.ui.adapter;
 
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,8 @@ public class CompanyListRecyclerAdapter extends MyRecyclerViewAdapter {
 	@Override
 	public void onBindViewHolder(ClickableViewHolder holder, int position) {
 		if (!(holder instanceof ViewHolder)) return;
+
+		super.onBindViewHolder(holder, position);
 
 		ViewHolder h = (ViewHolder) holder;
 

@@ -5,9 +5,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
+import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.Menu;
@@ -24,11 +25,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.api.KuaiDi100Helper;
 import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
@@ -45,9 +45,10 @@ public class DetailsActivity extends AbsActivity {
 	private ExpressResult cache;
 	private ExpressDatabase edb;
 
-	private boolean isEditingTitle = false;
+	private String phoneNumber;
+	private boolean hasPhoneNumber = true;
 
-	private static final int MENU_ITEM_DONE = 0x00, MENU_ITEM_EDIT = 0x01;
+	private boolean isEditingTitle = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,10 @@ public class DetailsActivity extends AbsActivity {
 			e.printStackTrace();
 		}
 		cache = express.getData();
+
+		int company_id = KuaiDi100Helper.CompanyInfo.findCompanyByCode(express.getCompanyCode());
+		phoneNumber = KuaiDi100Helper.CompanyInfo.info.get(company_id).phone;
+		hasPhoneNumber = phoneNumber != null && phoneNumber != "null" && !TextUtils.isEmpty(phoneNumber);
 
 		edb = new ExpressDatabase(getApplicationContext());
 
@@ -95,15 +100,11 @@ public class DetailsActivity extends AbsActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.clear();
-		MenuItem item;
 		if (isEditingTitle) {
-			item = menu.add(0, MENU_ITEM_DONE, 0, R.string.action_done)
-					.setIcon(R.drawable.ic_done_white_24dp);
-			MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+			getMenuInflater().inflate(R.menu.details_menu_editing, menu);
 		} else {
-			item = menu.add(0, MENU_ITEM_EDIT, 0, R.string.action_edit)
-					.setIcon(R.drawable.ic_mode_edit_white_24dp);
-			MenuItemCompat.setShowAsAction(item, MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+			getMenuInflater().inflate(R.menu.details_menu, menu);
+			menu.findItem(R.id.action_phone).setVisible(hasPhoneNumber);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -111,7 +112,7 @@ public class DetailsActivity extends AbsActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == MENU_ITEM_DONE) {
+		if (id == R.id.action_edit_done) {
 			isEditingTitle = false;
 			new Thread() {
 				@Override
@@ -138,11 +139,18 @@ public class DetailsActivity extends AbsActivity {
 			syncActionBarCustomView();
 			invalidateOptionsMenu();
 			return true;
-		} else if (id == MENU_ITEM_EDIT) {
+		}
+		if (id == R.id.action_edit) {
 			isEditingTitle = true;
 			mEditTextName.setText(mActionBar.getTitle());
 			syncActionBarCustomView();
 			invalidateOptionsMenu();
+			return true;
+		}
+		if (id == R.id.action_phone) {
+			Intent intent = new Intent(Intent.ACTION_DIAL);
+			intent.setData(Uri.parse("tel:" + phoneNumber));
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

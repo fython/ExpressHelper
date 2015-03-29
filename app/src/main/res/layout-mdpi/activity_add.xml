@@ -74,9 +74,9 @@
 				android:layout_height="wrap_content"
 				android:orientation="horizontal"
 				android:paddingLeft="12dp"
-				android:paddingTop="10dp"
+				android:paddingTop="8dp"
 				android:gravity="center_vertical">
-					
+
 				<ImageView
 					android:src="@drawable/ic_local_shipping_black_24dp"
 					android:scaleType="centerInside"
@@ -84,14 +84,26 @@
 					android:layout_height="24dp"
 					android:alpha="0.6"/>
 
-				<Spinner
+				<TextView
 					android:layout_width="match_parent"
-					android:layout_height="30dp"
-					android:layout_marginLeft="4dp"
-					android:id="@+id/spinner_company"
-					android:alpha="0.75"
-					android:prompt="@string/hint_et_company"/>
-					
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:layout_marginLeft="12dp"
+					android:layout_marginRight="12dp"
+					android:gravity="center_vertical"
+					android:id="@+id/tv_company_name"
+					android:textAppearance="@style/TextAppearance.AppCompat"
+					android:text="@string/hint_company_name_empty"/>
+
+				<ImageButton
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/btn_select"
+					android:src="@drawable/ic_more_horiz_black_24dp"
+					android:background="?attr/selectableItemBackgroundBorderless"
+					android:padding="8dp"
+					android:alpha="0.75"/>
+
 			</LinearLayout>
 
 			<com.rengwuxian.materialedittext.MaterialEditText

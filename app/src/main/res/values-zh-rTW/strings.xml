@@ -17,6 +17,7 @@
 	<string name="toast_network_error">網路錯誤！請檢查你的連結後重試。</string>
 	<string name="toast_unknown_error">未知錯誤！</string>
 	<string name="toast_has_been_exist">這個快遞單號已存在于你的列單中。</string>
+	<string name="hint_company_name_empty">選擇物流公司....</string>
 
 	<string name="title_express_details">詳情</string>
 	<string name="item_status">狀態</string>
@@ -110,5 +111,9 @@
 
 	<string name="action_select_company">快遞公司列單</string>
 	<string name="search_hint_company">搜尋 「快遞公司」</string>
+	<string name="action_phone">撥打電話</string>
+	<string name="action_website">打開網頁</string>
+	<string name="toast_phone_is_not_exist">很抱歉，我們仍未收集該物流公司的電話號碼。</string>
+
 
 </resources>

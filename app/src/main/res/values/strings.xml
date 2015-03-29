@@ -26,6 +26,7 @@
 	<string name="toast_client_error">Client error! Please contact the author.</string>
 	<string name="toast_unknown_error">Unknown error!</string>
 	<string name="toast_has_been_exist">The package has been exist in your list.</string>
+	<string name="hint_company_name_empty">Select a carrier....</string>
 
 	<string name="title_express_details">Details</string>
 	<string name="item_status">Status</string>
@@ -115,5 +116,8 @@
 
 	<string name="action_select_company">Shipment companies list</string>
 	<string name="search_hint_company">Search 「Shipment companies」</string>
+	<string name="action_phone">Phone</string>
+	<string name="action_website">Open website</string>
+	<string name="toast_phone_is_not_exist">Sorry, we haven\'t known the phone number of this company.</string>
 
 </resources>

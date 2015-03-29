@@ -511,7 +511,7 @@ public class SearchBox extends RelativeLayout {
 	}
 
 	private void search(SearchResult result) {
-		if(!searchWithoutSuggestions && getNumberOfResults() == 0)return;
+		if (!searchWithoutSuggestions && getNumberOfResults() == 0)return;
 		setSearchString(result.title);
 		if (!TextUtils.isEmpty(getSearchText())) {
 			setLogoTextInt(result.title);
@@ -520,12 +520,12 @@ public class SearchBox extends RelativeLayout {
 		} else {
 			setLogoTextInt(logoText);
 		}
-		toggleSearch();
+		// toggleSearch();
 	}
 
-	
-
-	
+	public android.os.IBinder getEditTextWindowToken() {
+		return search.getWindowToken();
+	}
 
 	private void openSearch(Boolean openKeyboard) {
 		this.materialMenu.animateState(IconState.ARROW);

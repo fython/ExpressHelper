@@ -92,19 +92,28 @@ public class KuaiDi100Helper {
 			}
 			
 		}
+
+		public static int findCompanyByCode(String code) {
+			for (int i = 0; i < info.size(); i++) {
+				if (info.get(i).code.equals(code)) {
+					return i;
+				}
+			}
+			return -1;
+		}
 		
 		static {
 			info = new ArrayList<>();
-			info.add(new Company("顺丰快递","shunfeng", null, null));
-			info.add(new Company("申通快递","shentong", null, null));
-			info.add(new Company("中通快递","zhongtong", null, null));
-			info.add(new Company("圆通快递","yuantong", null, null));
-			info.add(new Company("韵达快递","yunda", null, null));
-			info.add(new Company("天天快递","tiantian", null, null));
-			info.add(new Company("德邦物流","debang", null, null));
-			info.add(new Company("UPS快递","ups", null, null));
-			info.add(new Company("EMS快递","ems", null, null));
-			info.add(new Company("AAE快递","aae", null, null));
+			info.add(new Company("顺丰快递","shunfeng", "95338", null));
+			info.add(new Company("申通快递","shentong", "400-889-5543", null));
+			info.add(new Company("中通快递","zhongtong", "400-827-0270", null));
+			info.add(new Company("圆通快递","yuantong", "95554", null));
+			info.add(new Company("韵达快递","yunda", "400-821-6789", null));
+			info.add(new Company("天天快递","tiantian", "400-188-8888", null));
+			info.add(new Company("德邦物流","debang", "95353", null));
+			info.add(new Company("UPS快递","ups", "400-820-8388", null));
+			info.add(new Company("EMS快递","ems", "11183", null));
+			info.add(new Company("AAE快递","aae", "400-610-0400", null));
 			info.add(new Company("安捷快递","anjie", null, null));
 			info.add(new Company("安能物流","anneng", null, null));
 			info.add(new Company("安迅物流","anxun", null, null));
@@ -209,7 +218,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("OCS快递","ocs", null, null));
 			info.add(new Company("陪行物流","peixing", null, null));
 			info.add(new Company("平安达","pinganda", null, null));
-			info.add(new Company("中国邮政","pingyou", null, null));
+			info.add(new Company("中国邮政","pingyou", "11185", null));
 			info.add(new Company("贝邮宝","ppbyb", null, null));
 			info.add(new Company("全晨快递","quanchen", null, null));
 			info.add(new Company("全峰快递","quanfeng", null, null));

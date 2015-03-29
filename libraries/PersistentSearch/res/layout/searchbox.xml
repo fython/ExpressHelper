@@ -60,7 +60,6 @@
             android:singleLine="true"
             android:imeOptions="actionSearch"
             android:visibility="gone"
-            android:hint="23123123"
 	        >
 
             <requestFocus />
