@@ -114,9 +114,9 @@ public class KuaiDi100Helper {
 			info.add(new Company("UPS快递","ups", "400-820-8388", null));
 			info.add(new Company("EMS快递","ems", "11183", null));
 			info.add(new Company("AAE快递","aae", "400-610-0400", null));
-			info.add(new Company("安捷快递","anjie", null, null));
-			info.add(new Company("安能物流","anneng", null, null));
-			info.add(new Company("安迅物流","anxun", null, null));
+			info.add(new Company("安捷快递","anjie", "0531-58705656", null));
+			info.add(new Company("安能物流","anneng", "400-104-0088", null));
+			info.add(new Company("安迅物流","anxun", "010-59288730", null));
 			info.add(new Company("奥硕物流","aoshuo", null, null));
 			info.add(new Company("Aramex国际快递","aramex", null, null));
 			info.add(new Company("百千诚国际物流","baiqian", null, null));
@@ -126,7 +126,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("长通物流","changtong", null, null));
 			info.add(new Company("程光快递","chengguang", null, null));
 			info.add(new Company("城际快递","chengji", null, null));
-			info.add(new Company("城市100","chengshi100", null, null));
+			info.add(new Company("城市100","chengshi100", "400-820-0088", null));
 			info.add(new Company("传喜快递","chuanxi", null, null));
 			info.add(new Company("传志快递","chuanzhi", null, null));
 			info.add(new Company("出口易物流","chukouyi", null, null));
@@ -138,7 +138,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("大金物流","dajin", null, null));
 			info.add(new Company("大田物流","datian", null, null));
 			info.add(new Company("大洋物流快递","dayang", null, null));
-			info.add(new Company("DHL快递","dhl", null, null));
+			info.add(new Company("DHL快递","dhl", "800-810-8000", null));
 			info.add(new Company("店通快递","diantong", null, null));
 			info.add(new Company("递四方速递","disifang", null, null));
 			info.add(new Company("DPEX快递","dpex", null, null));
@@ -147,8 +147,8 @@ public class KuaiDi100Helper {
 			info.add(new Company("E邮宝","eyoubao", null, null));
 			info.add(new Company("凡宇快递","fanyu", null, null));
 			info.add(new Company("Fardar","fardar", null, null));
-			info.add(new Company("国际Fedex","fedex", null, null));
-			info.add(new Company("Fedex国内","fedexcn", null, null));
+			info.add(new Company("国际Fedex","fedex", "400.886.1888", null));
+			info.add(new Company("Fedex国内","fedexcn", "400-889-1888", null));
 			info.add(new Company("飞豹快递","feibao", null, null));
 			info.add(new Company("原飞航物流","feihang", null, null));
 			info.add(new Company("飞特物流","feite", null, null));
@@ -219,7 +219,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("陪行物流","peixing", null, null));
 			info.add(new Company("平安达","pinganda", null, null));
 			info.add(new Company("中国邮政","pingyou", "11185", null));
-			info.add(new Company("贝邮宝","ppbyb", null, null));
+			info.add(new Company("贝邮宝","ppbyb", "4008-206-207", null));
 			info.add(new Company("全晨快递","quanchen", null, null));
 			info.add(new Company("全峰快递","quanfeng", null, null));
 			info.add(new Company("全日通快递","quanritong", null, null));
@@ -272,7 +272,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("誉美捷快递","yumeijie", null, null));
 			info.add(new Company("运通中港快递","yuntong", null, null));
 			info.add(new Company("增益快递","zengyi", null, null));
-			info.add(new Company("宅急送快递","zhaijisong", null, null));
+			info.add(new Company("宅急送快递","zhaijisong", "400-6789-000", null));
 			info.add(new Company("郑州建华快递","zhengzhoujianhua", null, null));
 			info.add(new Company("芝麻开门快递","zhima", null, null));
 			info.add(new Company("济南中天万运","zhongtian", null, null));
