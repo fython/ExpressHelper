@@ -34,6 +34,8 @@ public class CompanySelectActivity extends AbsActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_company);
 
+		setSwipeBackEnable(false);
+
 		mToolbar.setTitle("");
 
 		new Handler().postDelayed(new Runnable() {
@@ -81,7 +83,7 @@ public class CompanySelectActivity extends AbsActivity {
 	public void close() {
 		mSearchBox.hideCircularly(this);
 		hideSoftKeyboard();
-		scrollToFinishActivity();
+		finish();
 	}
 
 	private void hideSoftKeyboard() {

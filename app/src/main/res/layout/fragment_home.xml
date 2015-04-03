@@ -11,7 +11,10 @@
 		<com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView
 			android:id="@+id/scroll"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
+			android:layout_height="match_parent"
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:clipToPadding="false"/>
 
 	</android.support.v4.widget.SwipeRefreshLayout>
     

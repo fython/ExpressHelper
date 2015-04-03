@@ -101,6 +101,10 @@ public abstract class BaseHomeFragment extends Fragment {
 
 	public abstract void setUpAdapter();
 
+	public void scrollToTopItem() {
+		mRecyclerView.smoothScrollToPosition(1);
+	}
+
 	private void showDeleteDialog(final int realPosition) {
 		new MaterialDialog.Builder(getActivity())
 				.title(R.string.dialog_delete_title)

@@ -62,6 +62,8 @@ public class AddActivity extends AbsActivity {
 		mButtonSelect.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				mEditTextName.clearFocus();
+				mEditTextSerial.clearFocus();
 				CompanySelectActivity.launchActivity(AddActivity.this);
 			}
 		});

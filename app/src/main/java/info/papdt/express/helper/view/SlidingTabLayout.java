@@ -74,6 +74,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
 	private ViewPager mViewPager;
 	private SparseArray<String> mContentDescriptions = new SparseArray<String>();
 	private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
+	private OnTabItemClickListener onTabItemClickListener;
 
 	private final SlidingTabStrip mTabStrip;
 
@@ -180,6 +181,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
 		textView.setPadding(padding, padding, padding, padding);
 
 		return textView;
+	}
+
+	public void setOnTabItemClickListener(OnTabItemClickListener listener) {
+		this.onTabItemClickListener = listener;
 	}
 
 	private void populateTabStrip() {
@@ -312,10 +317,17 @@ public class SlidingTabLayout extends HorizontalScrollView {
 			for (int i = 0; i < mTabStrip.getChildCount(); i++) {
 				if (v == mTabStrip.getChildAt(i)) {
 					mViewPager.setCurrentItem(i);
+					if (onTabItemClickListener != null) onTabItemClickListener.onTabItemClick(i);
 					return;
 				}
 			}
 		}
+	}
+
+	public interface OnTabItemClickListener {
+
+		public void onTabItemClick(int pos);
+
 	}
 
 }

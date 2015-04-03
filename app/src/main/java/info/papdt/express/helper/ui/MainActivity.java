@@ -10,7 +10,6 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +24,10 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
 
 import info.papdt.express.helper.api.KuaiDi100Helper;
-import info.papdt.express.helper.api.secret.KuaiDi100;
+import info.papdt.express.helper.support.CrashHandler;
 import info.papdt.express.helper.ui.adapter.CompanyListRecyclerAdapter;
 import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
+import info.papdt.express.helper.ui.fragment.BaseHomeFragment;
 import info.papdt.express.helper.view.SlidingTabLayout;
 import com.melnykov.fab.FloatingActionButton;
 import com.nineoldandroids.view.ViewHelper;
@@ -67,6 +67,9 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		/** Init crash handler */
+		CrashHandler.init(getApplicationContext());
 
 		setSwipeBackEnable(false);
 
@@ -119,6 +122,17 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		mSlidingTab.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
 		mSlidingTab.setSelectedIndicatorColors(getResources().getColor(android.R.color.white));
 		mSlidingTab.setDistributeEvenly(true);
+		mSlidingTab.setOnTabItemClickListener(new SlidingTabLayout.OnTabItemClickListener() {
+			@Override
+			public void onTabItemClick(int pos) {
+				BaseHomeFragment fragment = (BaseHomeFragment) mPagerAdapter.getItemAt(pos);
+				try {
+					fragment.scrollToTopItem();
+				} catch (Exception e) {
+
+				}
+			}
+		});
 
 		// When the page is selected, other fragments' scrollY should be adjusted
 		// according to the toolbar status(shown/hidden)
