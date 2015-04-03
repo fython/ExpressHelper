@@ -70,6 +70,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 
 		/** Init crash handler */
 		CrashHandler.init(getApplicationContext());
+		CrashHandler.register();
 
 		setSwipeBackEnable(false);
 
