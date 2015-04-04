@@ -99,6 +99,7 @@ public class CompanySelectActivity extends AbsActivity {
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		mRecyclerView.setHasFixedSize(true);
 		mSearchBox.setHintText(getString(R.string.search_hint_company));
+		mSearchBox.setLogoText("");
 	}
 
 	@Override
