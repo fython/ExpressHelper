@@ -86,16 +86,20 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 		holder.tv_time.setText(time);
 	}
 
+	public int getExpressCount() {
+		if (type == TYPE_ALL) {
+			return db.size();
+		} else if (type == TYPE_UNRECEIVED) {
+			return db.urSize();
+		} else if (type == TYPE_RECEIVED) {
+			return db.okSize();
+		}
+		return -1;
+	}
+
 	@Override
 	public int getItemCount() {
-		int result = -1;
-		if (type == TYPE_ALL) {
-			result =  db.size();
-		} else if (type == TYPE_UNRECEIVED) {
-			result = db.urSize();
-		} else if (type == TYPE_RECEIVED) {
-			result = db.okSize();
-		}
+		int result = getExpressCount();
 		if (headerView != null) result++;
 		return result;
 	}
@@ -107,11 +111,11 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 
 	public Express getItem(int i) {
 		if (type == TYPE_ALL) {
-			return db.getExpress(i);
+			return db.getExpress(getExpressCount() - i - 1);
 		} else if (type == TYPE_UNRECEIVED) {
-			return db.getUnreceivedArray().get(i);
+			return db.getUnreceivedArray().get(getExpressCount() - i - 1);
 		} else if (type == TYPE_RECEIVED) {
-			return db.getReceivedArray().get(i);
+			return db.getReceivedArray().get(getExpressCount() - i - 1);
 		}
 		return null;
 	}
