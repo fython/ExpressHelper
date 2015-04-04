@@ -3,6 +3,7 @@ package info.papdt.express.helper.ui;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
@@ -57,6 +58,12 @@ public class AddActivity extends AbsActivity {
 				postData();
 			}
 		});
+
+		try {
+			ViewCompat.setElevation(findViewById(R.id.headerView), getResources().getDimension(R.dimen.toolbar_elevation));
+		} catch (Exception e) {
+
+		}
 
 		ImageButton mButtonSelect = (ImageButton) findViewById(R.id.btn_select);
 		mButtonSelect.setOnClickListener(new View.OnClickListener() {

@@ -4,4 +4,6 @@
 	<dimen name="tab_height">48dp</dimen>
 	<dimen name="toolbar_elevation">4dp</dimen>
 
+	<dimen name="touch_raise">6dp</dimen>
+
 </resources>

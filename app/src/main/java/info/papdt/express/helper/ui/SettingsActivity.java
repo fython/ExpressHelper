@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 
 import info.papdt.express.helper.R;
@@ -44,15 +45,12 @@ public class SettingsActivity extends AbsActivity {
 		setContentView(R.layout.activity_settings);
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
-
-		/** 初始化状态栏高度 */
-		View statusBarView = findViewById(R.id.statusHeaderView);
-		statusBarView.getLayoutParams().height = statusBarHeight;
-
 	}
 
 	@Override
 	public void setUpViews() {
+		ViewCompat.setElevation(mToolbar, getResources().getDimension(R.dimen.toolbar_elevation));
+
 		switch (flag) {
 			case FLAG_MAIN:
 				mFragment = SettingsMain.newInstance();

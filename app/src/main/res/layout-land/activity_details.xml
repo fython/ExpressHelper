@@ -21,14 +21,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<android.support.v7.widget.Toolbar
-				android:id="@+id/toolbar"
-				android:layout_width="match_parent"
-				android:layout_height="?attr/actionBarSize"
-				android:background="?attr/colorPrimary"
-				app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-				app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
 			<View
 				android:layout_width="match_parent"
 				android:layout_height="120dp"
@@ -36,6 +28,14 @@
 				android:layout_below="@+id/toolbar"
 				android:layout_alignParentLeft="true"
 				android:layout_alignParentStart="true"/>
+
+			<android.support.v7.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				android:background="?attr/colorPrimary"
+				app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+				app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 			<LinearLayout
 				android:orientation="horizontal"
@@ -61,7 +61,9 @@
 						android:layout_marginLeft="24dp"
 						android:layout_marginRight="24dp"
 						android:src="@color/pink_500"
-						android:layout_gravity="center"/>
+						android:layout_gravity="center"
+						app:border_color="@android:color/white"
+						app:border_width="2dp"/>
 
 					<TextView
 						android:layout_width="wrap_content"

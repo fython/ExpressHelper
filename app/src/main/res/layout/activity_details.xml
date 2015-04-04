@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:orientation="vertical"
               android:background="@color/background_material_light">
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:background="?attr/colorPrimary"
+		android:id="@+id/headerView"
 		android:orientation="vertical">
 
 		<View
@@ -20,7 +23,6 @@
 			android:id="@+id/toolbar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
-			android:background="?attr/colorPrimary"
 			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 			app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
@@ -28,8 +30,7 @@
 			android:orientation="horizontal"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:paddingBottom="8dp"
-			android:background="?attr/colorPrimary">
+			android:paddingBottom="8dp">
 
 			<FrameLayout
 				android:layout_width="wrap_content"
@@ -44,7 +45,9 @@
 					android:layout_marginLeft="24dp"
 					android:layout_marginRight="24dp"
 					android:src="@color/pink_500"
-					android:layout_gravity="center"/>
+					android:layout_gravity="center"
+					app:border_color="@android:color/white"
+					app:border_width="2dp"/>
 
 				<TextView
 					android:layout_width="wrap_content"
@@ -104,19 +107,20 @@
 
 		</LinearLayout>
 
-		<ScrollView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:id="@+id/scrollView">
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:orientation="vertical"
-				android:id="@+id/content_list"/>
-
-		</ScrollView>
-
 	</LinearLayout>
 
-</FrameLayout>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/scrollView">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:id="@+id/content_list"/>
+
+	</ScrollView>
+
+</LinearLayout>

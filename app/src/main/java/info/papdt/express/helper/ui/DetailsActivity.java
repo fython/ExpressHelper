@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
@@ -92,6 +93,12 @@ public class DetailsActivity extends AbsActivity {
 		tv_round_center = (TextView) findViewById(R.id.center_text);
 		iv_round = (CircleImageView) findViewById(R.id.iv_round);
 		mButtonNumberVisible = (ImageButton) findViewById(R.id.btn_number_visible);
+
+		try {
+			ViewCompat.setElevation(findViewById(R.id.headerView), getResources().getDimension(R.dimen.toolbar_elevation));
+		} catch (NullPointerException e) {
+			// Just ignore it.
+		}
 
 		mEditTextName = new EditText(mActionBar.getThemedContext());
 		ActionBar.LayoutParams lp = new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_VERTICAL);
