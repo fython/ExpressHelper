@@ -32,8 +32,7 @@ public class KuaiDi100Helper {
 	public static ExpressResult buildDataFromResultStr(String jsonStr) {
 		ExpressResult result = new ExpressResult();
 		try {
-			JSONTokener jsonParser = new JSONTokener(jsonStr);
-			JSONObject person = (JSONObject) jsonParser.nextValue();
+			JSONObject person = new JSONObject(jsonStr);
 			JSONArray array = person.getJSONArray("data");
 
 			String json2;
