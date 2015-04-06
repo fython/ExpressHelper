@@ -118,18 +118,11 @@ public class CompanySelectActivity extends AbsActivity {
 
 		@Override
 		protected ArrayList<KuaiDi100Helper.CompanyInfo.Company> doInBackground(String... params) {
-			ArrayList<KuaiDi100Helper.CompanyInfo.Company> src = new ArrayList<>(KuaiDi100Helper.CompanyInfo.info);
 			if (params.length > 0) {
-				if (params[0] != null && params[0].trim().length() > 0) {
-					for (int i = 0; i < src.size(); i++) {
-						if (!src.get(i).name.contains(params[0])) {
-							src.remove(i);
-							i--;
-						}
-					}
-				}
+				return KuaiDi100Helper.searchCompany(params [0]);
+			} else {
+				return KuaiDi100Helper.CompanyInfo.info;
 			}
-			return src;
 		}
 
 		@Override

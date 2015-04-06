@@ -2,6 +2,13 @@ package info.papdt.express.helper.api;
 
 import android.util.*;
 
+import com.spreada.utils.chinese.ZHConverter;
+
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
 import info.papdt.express.helper.api.secret.KuaiDi100;
 import info.papdt.express.helper.support.*;
 import org.json.*;
@@ -74,10 +81,27 @@ public class KuaiDi100Helper {
 		return result;
 	}
 
+	public static ArrayList<CompanyInfo.Company> searchCompany(String keyword) {
+		keyword = ZHConverter.convert(keyword, ZHConverter.SIMPLIFIED);
+		ArrayList<CompanyInfo.Company> src = new ArrayList<>();
+		if (keyword != null && keyword.trim().length() > 0) {
+			for (int i = 0; i < CompanyInfo.info.size(); i++) {
+				if (!CompanyInfo.names [i].contains(keyword) && !CompanyInfo.pinyin [i].contains(keyword)) {
+					continue;
+				}
+
+				src.add(CompanyInfo.info.get(i));
+			}
+		} else {
+			return CompanyInfo.info;
+		}
+		return src;
+	}
+
 	public static class CompanyInfo {
 
 		public static ArrayList<Company> info;
-		public static String[] names;
+		public static String[] names, pinyin;
 
 		public static class Company {
 			
@@ -131,7 +155,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("出口易物流","chukouyi", null, null));
 			info.add(new Company("CityLinkExpress","citylink", null, null));
 			info.add(new Company("东方快递","coe", null, null));
-			info.add(new Company("中国远洋运输(COSCON)","coscon", null, null));
+			info.add(new Company("中国远洋运输","coscon", null, null));
 			info.add(new Company("城市之星","cszx", null, null));
 			info.add(new Company("大达物流","dada", null, null));
 			info.add(new Company("大金物流","dajin", null, null));
@@ -158,7 +182,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("高铁快递","gaotie", null, null));
 			info.add(new Company("广东邮政物流","gdyz", null, null));
 			info.add(new Company("邮政小包","gnxb", null, null));
-			info.add(new Company("共速达物流|快递","gongsuda", null, null));
+			info.add(new Company("共速达物流","gongsuda", null, null));
 			info.add(new Company("冠达快递","guanda", null, null));
 			info.add(new Company("国通快递","guotong", null, null));
 			info.add(new Company("山东海红快递","haihong", null, null));
@@ -193,7 +217,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("嘉里大通物流","jldt", null, null));
 			info.add(new Company("日本邮政","jppost", null, null));
 			info.add(new Company("康力物流","kangli", null, null));
-			info.add(new Company("顺鑫(KCS)快递","kcs", null, null));
+			info.add(new Company("顺鑫快递","kcs", null, null));
 			info.add(new Company("快捷快递","kuaijie", null, null));
 			info.add(new Company("快淘速递","kuaitao", null, null));
 			info.add(new Company("快优达速递","kuaiyouda", null, null));
@@ -213,7 +237,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("南北快递","nanbei", null, null));
 			info.add(new Company("尼尔快递","nell", null, null));
 			info.add(new Company("能达快递","nengda", null, null));
-			info.add(new Company("新顺丰（NSF）快递","nsf", null, null));
+			info.add(new Company("新顺丰快递","nsf", null, null));
 			info.add(new Company("OCS快递","ocs", null, null));
 			info.add(new Company("陪行物流","peixing", null, null));
 			info.add(new Company("平安达","pinganda", null, null));
@@ -230,7 +254,7 @@ public class KuaiDi100Helper {
 			info.add(new Company("瑞丰速递","ruifeng", null, null));
 			info.add(new Company("赛澳递","saiaodi", null, null));
 			info.add(new Company("三态速递","santai", null, null));
-			info.add(new Company("伟邦(SCS)快递","scs", null, null));
+			info.add(new Company("伟邦快递","scs", null, null));
 			info.add(new Company("圣安物流","shengan", null, null));
 			info.add(new Company("晟邦物流","shengbang", null, null));
 			info.add(new Company("盛丰物流","shengfeng", null, null));
@@ -282,8 +306,26 @@ public class KuaiDi100Helper {
 			info.add(new Company("中铁物流","ztwl", null, null));
 			info.add(new Company("佐川急便","zuochuan", null, null));
 			names = new String[info.size()];
+			pinyin = new String[info.size()];
+
+			HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
+			format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+
 			for (int i = 0; i < info.size(); i++) {
 				names [i] = info.get(i).name;
+
+				StringBuffer sb = new StringBuffer();
+				for (int j = 0; j < names [i].length(); j++) {
+					try {
+						String[] s = PinyinHelper.toHanyuPinyinStringArray(names[i].toCharArray() [j], format);
+						if (s == null) continue;
+						sb.append(s[0].toCharArray() [0]);
+					} catch (BadHanyuPinyinOutputFormatCombination e) {
+						e.printStackTrace();
+					}
+				}
+
+				pinyin [i] = sb.toString();
 			}
 		}
 
