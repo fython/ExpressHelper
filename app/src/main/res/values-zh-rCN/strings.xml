@@ -27,6 +27,10 @@
 	<string name="item_errormessage">错误信息</string>
 	<string name="action_done">完成</string>
 	<string name="action_edit">编辑</string>
+	<string name="action_copy">复制包裹信息</string>
+	<string name="action_share">分享....</string>
+	<string name="string_copy_format">我的包裹：%1$s. 快递单号：%2$s. 快递公司：%3$s. </string>
+	<string name="string_share_format">包裹状态：%1$s. 最新状况：%2$s.</string>
 
 	<string-array name="status">
 		<item>失败</item>

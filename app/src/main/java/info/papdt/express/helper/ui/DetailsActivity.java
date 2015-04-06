@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.ShareActionProvider;
 import android.text.TextUtils;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -121,6 +123,23 @@ public class DetailsActivity extends AbsActivity {
 		} else {
 			getMenuInflater().inflate(R.menu.details_menu, menu);
 			menu.findItem(R.id.action_phone).setVisible(hasPhoneNumber);
+
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(Intent.EXTRA_TEXT,
+					String.format(
+							getString(R.string.string_copy_format),
+							express.getName(),
+							express.getMailNumber(),
+							cache.expTextName
+					) + String.format(
+							getString(R.string.string_share_format),
+							getResources().getStringArray(R.array.status)[cache.getTrueStatus()],
+							cache.data.get(cache.data.size() - 1).get("context")
+					)
+			);
+			ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(menu.findItem(R.id.action_share));
+			provider.setShareIntent(intent);
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -167,6 +186,22 @@ public class DetailsActivity extends AbsActivity {
 			Intent intent = new Intent(Intent.ACTION_DIAL);
 			intent.setData(Uri.parse("tel:" + phoneNumber));
 			startActivity(intent);
+			return true;
+		}
+		if (id == R.id.action_copy) {
+			setClipboard(
+					String.format(
+							getString(R.string.string_copy_format),
+							express.getName(),
+							express.getMailNumber(),
+							cache.expTextName
+					)
+			);
+			Toast.makeText(
+					getApplicationContext(),
+					R.string.details_has_copied,
+					Toast.LENGTH_SHORT
+			).show();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

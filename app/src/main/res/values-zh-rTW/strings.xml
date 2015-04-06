@@ -27,6 +27,10 @@
 	<string name="item_errormessage">錯誤訊息</string>
 	<string name="action_done">完畢</string>
 	<string name="action_edit">編輯</string>
+	<string name="action_copy">拷貝包裹訊息</string>
+	<string name="action_share">分享....</string>
+	<string name="string_copy_format">我的包裹：%1$s. 快遞單號：%2$s. 快遞公司：%3$s. </string>
+	<string name="string_share_format">包裹狀態：%1$s. 最新狀況：%2$s.</string>
 
 	<string-array name="status">
 		<item>失敗</item>

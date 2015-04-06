@@ -36,6 +36,10 @@
 	<string name="item_errormessage">Error Message</string>
 	<string name="action_done">Done</string>
 	<string name="action_edit">Edit</string>
+	<string name="action_copy">Copy package information</string>
+	<string name="action_share">Share</string>
+	<string name="string_copy_format">My package: %1$s. Mail number: %2$s. Carrier: %3$s. </string>
+	<string name="string_share_format">The status: %1$s. The latest information: %2$s.</string>
 
 	<string-array name="status">
 		<item>Failed</item>
