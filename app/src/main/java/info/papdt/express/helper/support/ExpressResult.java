@@ -1,5 +1,7 @@
 package info.papdt.express.helper.support;
 
+import android.util.Log;
+
 import java.util.*;
 
 import info.papdt.express.helper.api.KuaiDi100Helper;
@@ -22,7 +24,7 @@ public class ExpressResult {
 	}
 
 	/** 为了解决奇葩的API把顺丰快递准备签收的状态当成已签收而设 F**k */
-	public int getStatus() {
+	public int getTrueStatus() {
 		if (expSpellName.equals("shunfeng")) {
 			if (data.get(data.size() - 1).get("context").contains("准备")) {
 				return STATUS_ON_THE_WAY;
@@ -30,7 +32,12 @@ public class ExpressResult {
 				return status;
 			}
 		} else {
-			return status;
+			if (data.get(data.size() - 1).get("context").contains("妥投") &&
+					!data.get(data.size() - 1).get("context").contains("未")) {
+				return STATUS_DELIVERED;
+			} else {
+				return status;
+			}
 		}
 	}
 		

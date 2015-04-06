@@ -238,7 +238,7 @@ public class DetailsActivity extends AbsActivity {
 	}
 
 	private void setUpHeaderView() {
-		tv_status.setText(getResources().getStringArray(R.array.status)[cache.status]);
+		tv_status.setText(getResources().getStringArray(R.array.status)[cache.getTrueStatus()]);
 		tv_company.setText(cache.expTextName);
 		tv_round_center.setText(cache.expTextName.substring(0, 1));
 		tv_mail_no.setText(express.getMailNumber());

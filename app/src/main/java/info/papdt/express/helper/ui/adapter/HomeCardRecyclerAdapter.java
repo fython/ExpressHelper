@@ -67,7 +67,7 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 
 		ViewHolder holder = (ViewHolder) viewHolder;
 
-		ColorDrawable drawable = new ColorDrawable(defaultColors[cache.status]);
+		ColorDrawable drawable = new ColorDrawable(defaultColors[cache.getTrueStatus()]);
 		holder.iv_round.setImageDrawable(drawable);
 
 		holder.tv_title.setText(item.getName());

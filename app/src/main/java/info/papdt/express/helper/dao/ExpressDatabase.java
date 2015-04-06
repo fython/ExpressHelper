@@ -82,7 +82,7 @@ public class ExpressDatabase {
 		for (int i = 0; i < size(); i++) {
 			Express exp = getExpress(i);
 			ExpressResult cache = exp.getData();
-			if (cache.status == 3) {
+			if (cache.getTrueStatus() == 3) {
 				array_ok.add(exp);
 			} else {
 				array_ur.add(exp);
@@ -174,7 +174,7 @@ public class ExpressDatabase {
 
 	public void pullNewDataFromNetwork(boolean refreshDelivered) {
 		for (Express nowExp : mExpressArray) {
-			if (!refreshDelivered && nowExp.getData().getStatus() == ExpressResult.STATUS_DELIVERED) {
+			if (!refreshDelivered && nowExp.getData().getTrueStatus() == ExpressResult.STATUS_DELIVERED) {
 				continue;
 			}
 			String result = getDataFromNetwork(nowExp.getCompanyCode(), nowExp.getMailNumber());
