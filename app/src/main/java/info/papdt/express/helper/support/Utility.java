@@ -1,6 +1,9 @@
 package info.papdt.express.helper.support;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,6 +11,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.ConnectivityManager;
 import android.os.Build;
 
 import java.io.File;
@@ -103,6 +107,61 @@ public class Utility {
 		String string = new String(b);
 
 		return string;
+	}
+
+	public static void startServiceAlarm(Context context, Class<?> service, long interval) {
+		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		Intent i = new Intent(context, service);
+		PendingIntent p = PendingIntent.getService(context, REQUEST_CODE, i, PendingIntent.FLAG_CANCEL_CURRENT);
+		am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, 0, interval, p);
+	}
+
+	public static void stopServiceAlarm(Context context, Class<?> service) {
+		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		Intent i = new Intent(context, service);
+		PendingIntent p = PendingIntent.getService(context, REQUEST_CODE, i, PendingIntent.FLAG_CANCEL_CURRENT);
+		am.cancel(p);
+	}
+
+	public static void startServices(Context context) {
+		Settings settings = Settings.getInstance(context);
+		int interval = getIntervalTime(settings.getInt(Settings.KEY_NOTIFICATION_INTERVAL, 1));
+
+		if (interval > -1) {
+			startServiceAlarm(context, ReminderService.class, interval);
+		}
+	}
+
+	public static void stopServices(Context context) {
+		stopServiceAlarm(context, ReminderService.class);
+	}
+
+	public static void restartServices(Context context) {
+		stopServices(context);
+
+		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+		if (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected()) {
+			startServices(context);
+		}
+	}
+
+	public static int getIntervalTime(int id) {
+		switch (id){
+			case 0:
+				return 1 * 60 * 1000;
+			case 1:
+				return 3 * 60 * 1000;
+			case 2:
+				return 5 * 60 * 1000;
+			case 3:
+				return 10 * 60 * 1000;
+			case 4:
+				return 30 * 60 * 1000;
+			case 5:
+				return -1;
+		}
+		return -1;
 	}
 
 }

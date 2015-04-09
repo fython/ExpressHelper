@@ -32,6 +32,12 @@ public class ExpressDatabase {
 		mExpressArray = new ArrayList<>();
 	}
 
+	public static ExpressDatabase getInstance(Context context) {
+		ExpressDatabase db = new ExpressDatabase(context);
+		db.init();
+		return db;
+	}
+
 	public void addExpress(String jsonStr, String name) {
 		ExpressResult res = ExpressResult.buildFromJSON(jsonStr);
 		Express exp;
@@ -153,6 +159,20 @@ public class ExpressDatabase {
 				} catch (Exception e) {
 					newExpress.setData(null);
 				}
+
+				try {
+					newExpress.setLastData(obj.getString("lastCache"));
+				} catch (Exception e) {
+					newExpress.setLastData(null);
+				}
+
+				try {
+					newExpress.shouldPush = obj.getBoolean("shouldPush");
+					newExpress.needPush = obj.getBoolean("needPush");
+				} catch (Exception e) {
+
+				}
+
 				mExpressArray.add(newExpress);
 			} catch (JSONException e){
 				Log.e(TAG, "第"+i+"组数据格式出现错误");

@@ -10,8 +10,9 @@ import info.papdt.express.helper.api.KuaiDi100Helper;
 public class Express {
 
 	private String companyCode, mailNumber, name;
-	private String jsonData, lastJsonData;
-	private int lastStatus;
+	private String jsonData = null, lastJsonData = null;
+	private int lastStatus = ExpressResult.STATUS_OTHER;
+	public boolean shouldPush = true, needPush = true;
 
 	public Express(String companyCode, String mailNumber){
 		this(companyCode, mailNumber, mailNumber);
@@ -75,6 +76,10 @@ public class Express {
 			obj0.put("companyCode", getCompanyCode());
 			obj0.put("mailNumber", getMailNumber());
 			obj0.put("cache", getDataStr());
+			obj0.put("lastCache", getLastDataStr());
+			obj0.put("lastStatus", getLastStatus());
+			obj0.put("needPush", needPush);
+			obj0.put("shouldPush", shouldPush);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
