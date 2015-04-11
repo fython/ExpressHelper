@@ -95,7 +95,7 @@ public class ReminderService extends IntentService {
 
 		ExpressDatabase db = ExpressDatabase.getInstance(getApplicationContext());
 
-		db.pullNewDataFromNetwork(true);
+		db.pullNewDataFromNetwork(false);
 		try {
 			db.save();
 		} catch (IOException e) {
