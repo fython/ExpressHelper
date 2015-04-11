@@ -11,4 +11,8 @@
 	      android:title="@string/title_settings"
 	      app:showAsAction="never"/>
 
+	<item android:id="@+id/action_donate"
+	      android:title="@string/item_donate"
+	      app:showAsAction="never"/>
+
 </menu>

@@ -32,7 +32,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 
 	private Settings mSets;
 
-	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider,
+	private Preference pref_version, pref_os_license, pref_api_provider,
 		pref_weibo, pref_github, pref_token_custom;
 	private SwitchPreference pref_swipe_back;
 	private MaterialListPreference pref_token_choose;
@@ -54,7 +54,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_weibo = findPreference("sina_weibo");
 		pref_os_license = findPreference("open_source_license");
 		pref_api_provider = findPreference("api_provider");
-		pref_donate = findPreference("donate");
 		pref_github = findPreference("github_repo");
 		pref_token_choose = (MaterialListPreference) findPreference("api_token_choose");
 		pref_token_custom = findPreference("api_token_custom");
@@ -94,7 +93,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_weibo.setOnPreferenceClickListener(this);
 		pref_os_license.setOnPreferenceClickListener(this);
 		pref_api_provider.setOnPreferenceClickListener(this);
-		pref_donate.setOnPreferenceClickListener(this);
 		pref_github.setOnPreferenceClickListener(this);
 		pref_token_custom.setOnPreferenceClickListener(this);
 		pref_token_choose.setOnPreferenceChangeListener(this);
@@ -116,10 +114,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			openWebsite(getString(R.string.api_provider_home));
 			return true;
 		}
-		if (p == pref_donate) {
-			showDonateDialog();
-			return true;
-		}
 		if (p == pref_github) {
 			openWebsite(getString(R.string.item_github_url));
 			return true;
@@ -134,22 +128,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 	private void openWebsite(String url) {
 		Uri uri = Uri.parse(url);
 		startActivity(new Intent(Intent.ACTION_VIEW, uri));
-	}
-
-	private void showDonateDialog() {
-		View v = View.inflate(
-				new ContextThemeWrapper(
-						getActivity().getApplicationContext(),
-						R.style.Theme_AppCompat_Light_Dialog
-				),
-				R.layout.dialog_donate,
-				null
-		);
-		new AlertDialog.Builder(getActivity(), R.style.Theme_AppCompat_Light_Dialog)
-				.setTitle(R.string.item_donate)
-				.setView(v)
-				.setNegativeButton(android.R.string.ok, null)
-				.show();
 	}
 
 	private void showCustomTokenDialog() {

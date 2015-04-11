@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
@@ -104,6 +107,16 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 				e.printStackTrace();
 			}
 		}
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					mPagerAdapter.notifyDataSetChanged();
+				} catch (Exception e) {
+					
+				}
+			}
+		});
 	}
 
 	@Override
@@ -229,6 +242,22 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 				});
 			}
 		}, 250);
+	}
+
+	private void showDonateDialog() {
+		View v = View.inflate(
+				new ContextThemeWrapper(
+						getApplicationContext(),
+						R.style.Theme_AppCompat_Light_Dialog
+				),
+				R.layout.dialog_donate,
+				null
+		);
+		new MaterialDialog.Builder(this)
+				.title(R.string.item_donate)
+				.customView(v, false)
+				.negativeText(android.R.string.ok)
+				.show();
 	}
 
 	@Override
@@ -438,6 +467,10 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		}
 		if (id == R.id.action_select_company) {
 			openCompanyList();
+			return true;
+		}
+		if (id == R.id.action_donate) {
+			showDonateDialog();
 			return true;
 		}
 
