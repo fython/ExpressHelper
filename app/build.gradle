@@ -7,8 +7,8 @@ android {
         applicationId "info.papdt.express.helper"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 12
-        versionName "1.1.0"
+        versionCode 13
+        versionName "1.1.1"
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
