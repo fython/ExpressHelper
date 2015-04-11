@@ -11,7 +11,12 @@
 	<item android:id="@+id/action_edit"
 	      android:icon="@drawable/ic_mode_edit_white_24dp"
 	      android:title="@string/action_edit"
-	      app:showAsAction="ifRoom"/>
+	      app:showAsAction="never"/>
+
+	<item android:id="@+id/action_should_push"
+		  android:title="@string/action_should_push"
+	      android:checkable="true"
+		  app:showAsAction="never"/>
 
 	<item android:id="@+id/action_copy"
 	      android:title="@string/action_copy"

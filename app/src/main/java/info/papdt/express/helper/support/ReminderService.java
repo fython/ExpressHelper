@@ -6,15 +6,23 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.IBinder;
-import android.text.TextUtils;
 import android.util.Log;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.ui.DetailsActivity;
 
 public class ReminderService extends IntentService {
+
 	private static final String TAG = ReminderService.class.getSimpleName();
 
 	private static final int ID = 100000;
@@ -30,21 +38,42 @@ public class ReminderService extends IntentService {
 			i.putExtra("id", position);
 			i.putExtra("data", exp.toJSONObject().toString());
 
-			pi = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+			pi = PendingIntent.getActivity(getApplicationContext(), position, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
-			String title;
+			String title = exp.getName();
 			if (exp.getData().getTrueStatus() == ExpressResult.STATUS_DELIVERED) {
-				title = exp.getName() + getString(R.string.notification_delivered);
+				title += getString(R.string.notification_delivered);
 			} else {
-				title = exp.getName() + getString(R.string.notification_new_message);
+				if (exp.getData().getTrueStatus() == ExpressResult.STATUS_ON_THE_WAY) {
+					title += getString(R.string.notification_on_the_way);
+				} else {
+					title += getString(R.string.notification_new_message);
+				}
+			}
+
+			int smallIcon;
+			switch (exp.getData().getTrueStatus()) {
+				case ExpressResult.STATUS_DELIVERED:
+					smallIcon = R.drawable.ic_done_white_24dp;
+					break;
+				case ExpressResult.STATUS_ON_THE_WAY:
+					smallIcon = R.drawable.ic_assignment_turned_in_white_24dp;
+					break;
+				default:
+					smallIcon = R.drawable.ic_assignment_returned_white_24dp;
 			}
 
 			Notification n = buildNotification(getApplicationContext(),
 						title,
-						exp.getData().data.get(0).get("context"),
-						R.drawable.ic_local_shipping_white_24dp,
+						exp.getData().data.get(exp.getData().data.size() - 1).get("context"),
+						R.drawable.ic_local_shipping_black_24dp,
+						smallIcon,
+						getResources().getIntArray(R.array.statusColor) [exp.getData().getTrueStatus()],
 						defaults,
-						pi);
+						pi,
+						null);
+
+			n.tickerText = title;
 
 			return n;
 		}
@@ -66,11 +95,19 @@ public class ReminderService extends IntentService {
 
 		ExpressDatabase db = ExpressDatabase.getInstance(getApplicationContext());
 
-		db.pullNewDataFromNetwork(false);
+		db.pullNewDataFromNetwork(true);
+		try {
+			db.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 
 		for (int i = 0; i < db.size(); i++) {
 			Express exp = db.getExpress(i);
-			if (exp.getData().getTrueStatus() != ExpressResult.STATUS_FAILED && exp.getData().getTrueStatus() != exp.getLastStatus()) {
+			if (exp.getData().getTrueStatus() != ExpressResult.STATUS_FAILED && exp.needPush && exp.shouldPush) {
+				// if (exp.getData().getTrueStatus() == exp.getLastStatus()) continue;
 				Notification n = produceNotifications(i, exp);
 				if (exp != null) {
 					nm.notify(i + 20000, n);
@@ -87,18 +124,32 @@ public class ReminderService extends IntentService {
 				Notification.DEFAULT_LIGHTS;
 	}
 
-	private static Notification buildNotification(Context context, String title, String text, int icon, int defaults, PendingIntent intent) {
-		return new Notification.Builder(context)
+	private static Notification buildNotification(Context context, String title, String text, int icon0, int icon1, int color,
+	                                              int defaults, PendingIntent contentIntent, PendingIntent deleteIntent) {
+		Notification n;
+		Notification.Builder builder = new Notification.Builder(context)
 				.setContentTitle(title)
 				.setContentText(text)
-				.setSmallIcon(icon)
+				.setSmallIcon(icon1)
+				.setLargeIcon(((BitmapDrawable) context.getResources().getDrawable(icon0)).getBitmap())
 				.setDefaults(defaults)
 				.setAutoCancel(true)
-				.setContentIntent(intent)
-				.build();
+				.setContentIntent(contentIntent);
+
+		if (Build.VERSION.SDK_INT >= 16) {
+			if (Build.VERSION.SDK_INT >= 21) {
+				builder.setColor(color);
+			}
+			n = builder.build();
+		} else {
+			n = builder.getNotification();
+		}
+
+		return n;
 	}
 
 	private static String format(Context context, int resId, int data) {
 		return String.format(context.getString(resId), data);
 	}
+
 }

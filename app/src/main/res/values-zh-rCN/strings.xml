@@ -31,6 +31,7 @@
 	<string name="action_share">分享....</string>
 	<string name="string_copy_format">我的包裹：%1$s. 快递单号：%2$s. 快递公司：%3$s. </string>
 	<string name="string_share_format">包裹状态：%1$s. 最新状况：%2$s.</string>
+	<string name="action_should_push">推送消息</string>
 
 	<string-array name="status">
 		<item>失败</item>
@@ -87,8 +88,6 @@
 	<string name="category_ui">界面</string>
 	<string name="toast_you_need_restart">设置将在重启应用后完全生效。</string>
 	<string name="category_api">API</string>
-	<string name="item_auto_refresh_first">启动时自动刷新</string>
-	<string name="item_auto_refresh_first_desc">可能会消耗更多的API查询次数。</string>
 	<string name="item_token_choose">API密钥选择</string>
 	<string-array name="item_token_list">
 		<item>随机 (默认)</item>
@@ -111,11 +110,30 @@
 	<string name="dialog_token_custom_id">应用ID</string>
 	<string name="dialog_token_custom_how_to_get_it">如何申请?</string>
 	<string name="item_enable_swipe_back">启用滑动返回手势</string>
+	<string name="item_notification_interval">推送通知频率</string>
+	<string-array name="notification_interval">
+		<item>30 分钟</item>
+		<item>1 小时</item>
+		<item>1.5 小时</item>
+		<item>3 小时</item>
+		<item>永不提醒</item>
+	</string-array>
+	<string-array name="notification_interval_item">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
 
 	<string name="action_select_company">快递公司列表</string>
 	<string name="search_hint_company">搜索 「快递公司」</string>
 	<string name="action_phone">拨打电话</string>
 	<string name="action_website">打开网页</string>
 	<string name="toast_phone_is_not_exist">很抱歉，我们还没有收录该物流公司的电话号码。</string>
+
+	<string name="notification_delivered">" 已签收。"</string>
+	<string name="notification_on_the_way">" 即将到达。"</string>
+	<string name="notification_new_message">" 有新动态。"</string>
 
 </resources>

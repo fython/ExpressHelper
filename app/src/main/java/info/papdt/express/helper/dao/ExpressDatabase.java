@@ -199,6 +199,12 @@ public class ExpressDatabase {
 			}
 			String result = getDataFromNetwork(nowExp.getCompanyCode(), nowExp.getMailNumber());
 			if (result != null) {
+				try {
+					nowExp.setLastData(nowExp.getDataStr());
+					if (nowExp.getLastData().data.size() != nowExp.getData().data.size()) nowExp.needPush = true;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				nowExp.setData(result);
 			}
 		}

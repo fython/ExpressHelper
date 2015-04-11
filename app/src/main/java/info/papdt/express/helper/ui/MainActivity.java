@@ -24,7 +24,9 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
 
 import info.papdt.express.helper.api.KuaiDi100Helper;
+import info.papdt.express.helper.support.ConnectivityReceiver;
 import info.papdt.express.helper.support.CrashHandler;
+import info.papdt.express.helper.support.Utility;
 import info.papdt.express.helper.ui.adapter.CompanyListRecyclerAdapter;
 import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
 import info.papdt.express.helper.ui.fragment.BaseHomeFragment;
@@ -71,6 +73,11 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		/** Init crash handler */
 		CrashHandler.init(getApplicationContext());
 		CrashHandler.register();
+
+		/** Start services */
+		if (ConnectivityReceiver.readNetworkState(getApplicationContext())) {
+			Utility.restartServices(getApplicationContext());
+		}
 
 		setSwipeBackEnable(false);
 

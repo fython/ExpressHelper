@@ -38,7 +38,9 @@ public class Express {
 
 	public void setLastData(String lastJsonStr) {
 		this.lastJsonData = lastJsonStr;
-		this.lastStatus = getLastData().getTrueStatus();
+		if (this.lastJsonData != null) {
+			this.lastStatus = getLastData().getTrueStatus();
+		}
 	}
 
 	public int getLastStatus() {

@@ -31,6 +31,22 @@
 	<string name="action_share">分享....</string>
 	<string name="string_copy_format">我的包裹：%1$s. 快遞單號：%2$s. 快遞公司：%3$s. </string>
 	<string name="string_share_format">包裹狀態：%1$s. 最新狀況：%2$s.</string>
+	<string name="action_should_push">推送通知</string>
+	<string name="item_notification_interval">推送通知週期</string>
+	<string-array name="notification_interval">
+		<item>30 分鐘</item>
+		<item>1 小時</item>
+		<item>1.5 小時</item>
+		<item>3 小時</item>
+		<item>永不提醒</item>
+	</string-array>
+	<string-array name="notification_interval_item">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
 
 	<string-array name="status">
 		<item>失敗</item>
@@ -88,8 +104,6 @@
 	<string name="category_ui">介面</string>
 	<string name="toast_you_need_restart">設定將在重啟應用程式後完全生效。</string>
 	<string name="category_api">API</string>
-	<string name="item_auto_refresh_first">啟動時自動刷新</string>
-	<string name="item_auto_refresh_first_desc">可能會消耗更多API查尋次數。</string>
 	<string name="item_token_choose">API密鑰選擇</string>
 	<string-array name="item_token_list">
 		<item>隨機 (默認)</item>
@@ -119,5 +133,8 @@
 	<string name="action_website">打開網頁</string>
 	<string name="toast_phone_is_not_exist">很抱歉，我們仍未收集該物流公司的電話號碼。</string>
 
+	<string name="notification_delivered">" 已簽收。"</string>
+	<string name="notification_on_the_way">" 即將到達。"</string>
+	<string name="notification_new_message">" 有新動態。"</string>
 
 </resources>

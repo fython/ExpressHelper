@@ -73,11 +73,24 @@ public class DetailsActivity extends AbsActivity {
 		}
 		cache = express.getData();
 
+		edb = new ExpressDatabase(getApplicationContext());
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					edb.init();
+					edb.getExpress(eid).needPush = false;
+					edb.save();
+				} catch (Exception e) {
+
+				}
+			}
+		}.start();
+
 		int company_id = KuaiDi100Helper.CompanyInfo.findCompanyByCode(express.getCompanyCode());
 		phoneNumber = KuaiDi100Helper.CompanyInfo.info.get(company_id).phone;
 		hasPhoneNumber = phoneNumber != null && phoneNumber != "null" && !TextUtils.isEmpty(phoneNumber);
-
-		edb = new ExpressDatabase(getApplicationContext());
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setTitle(express.getName());
@@ -123,6 +136,20 @@ public class DetailsActivity extends AbsActivity {
 		} else {
 			getMenuInflater().inflate(R.menu.details_menu, menu);
 			menu.findItem(R.id.action_phone).setVisible(hasPhoneNumber);
+			final MenuItem shouldPushItem = menu.findItem(R.id.action_should_push);
+			new Thread() {
+				@Override
+				public void run() {
+					edb.init();
+					final boolean b = edb.getExpress(eid).shouldPush;
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							shouldPushItem.setChecked(b);
+						}
+					});
+				}
+			}.start();
 
 			Intent intent = new Intent(Intent.ACTION_SEND);
 			intent.setType("text/plain");
@@ -202,6 +229,24 @@ public class DetailsActivity extends AbsActivity {
 					R.string.details_has_copied,
 					Toast.LENGTH_SHORT
 			).show();
+			return true;
+		}
+		if (id == R.id.action_should_push) {
+			express.shouldPush = !item.isChecked();
+			item.setChecked(!item.isChecked());
+			new Thread() {
+				@Override
+				public void run() {
+					try {
+						edb.init();
+						edb.getExpress(eid).shouldPush = express.shouldPush;
+						edb.save();
+						setResult(MainActivity.RESULT_HAS_CHANGED);
+					} catch (Exception e) {
+
+					}
+				}
+			}.start();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

@@ -40,6 +40,7 @@
 	<string name="action_share">Share</string>
 	<string name="string_copy_format">My package: %1$s. Mail number: %2$s. Carrier: %3$s. </string>
 	<string name="string_share_format">The status: %1$s. The latest information: %2$s.</string>
+	<string name="action_should_push">Push message</string>
 
 	<string-array name="status">
 		<item>Failed</item>
@@ -93,8 +94,6 @@
 	<string name="category_ui">UI</string>
 	<string name="toast_you_need_restart">Changes will apply after restarting the application.</string>
 	<string name="category_api">API</string>
-	<string name="item_auto_refresh_first">Auto refresh when launching app</string>
-	<string name="item_auto_refresh_first_desc">It may waste more API times.</string>
 	<string name="item_token_choose">Select API Token</string>
 	<string-array name="item_token_list">
 		<item>Random (Default)</item>
@@ -117,6 +116,21 @@
 	<string name="dialog_token_custom_id">API ID</string>
 	<string name="dialog_token_custom_how_to_get_it">How to get one?</string>
 	<string name="item_enable_swipe_back">Enable swipe back gesture</string>
+	<string name="item_notification_interval">Notification interval</string>
+	<string-array name="notification_interval">
+		<item>30 minutes</item>
+		<item>1 hour</item>
+		<item>1.5 hours</item>
+		<item>3 hours</item>
+		<item>Never</item>
+	</string-array>
+	<string-array name="notification_interval_item">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
 
 	<string name="action_select_company">Shipment companies list</string>
 	<string name="search_hint_company">Search 「Shipment companies」</string>
@@ -124,7 +138,8 @@
 	<string name="action_website">Open website</string>
 	<string name="toast_phone_is_not_exist">Sorry, we haven\'t known the phone number of this company.</string>
 
-	<string name="notification_delivered"> has been delivered.</string>
-	<string name="notification_new_message"> has a new message.</string>
+	<string name="notification_delivered">" has been delivered."</string>
+	<string name="notification_on_the_way">" is on the way."</string>
+	<string name="notification_new_message">" has a new message."</string>
 
 </resources>

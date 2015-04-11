@@ -17,6 +17,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
+import info.papdt.express.helper.support.Utility;
 import info.papdt.express.helper.ui.SettingsActivity;
 
 public class SettingsMain extends PreferenceFragment implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
@@ -34,8 +35,8 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 	private Preference pref_version, pref_donate, pref_os_license, pref_api_provider,
 		pref_weibo, pref_github, pref_token_custom;
 	private SwitchPreference pref_swipe_back;
-	private SwitchPreference pref_auto_refresh;
 	private MaterialListPreference pref_token_choose;
+	private MaterialListPreference pref_notification_interval;
 
 	private MaterialDialog dialog_custom_token;
 	private MaterialEditText et_secret, et_id;
@@ -58,7 +59,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_token_choose = (MaterialListPreference) findPreference("api_token_choose");
 		pref_token_custom = findPreference("api_token_custom");
 		pref_swipe_back = (SwitchPreference) findPreference("swipe_back");
-		pref_auto_refresh = (SwitchPreference) findPreference("auto_refresh_first");
+		pref_notification_interval = (MaterialListPreference) findPreference("notification_interval");
 
 		String version = "Unknown";
 		try {
@@ -69,7 +70,6 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		}
 		pref_version.setSummary(version);
 		pref_swipe_back.setChecked(mSets.getBoolean(Settings.KEY_SWIPE_BACK, true));
-		pref_auto_refresh.setChecked(mSets.getBoolean(Settings.KEY_AUTO_REFRESH_FIRST, false));
 		pref_token_custom.setDefaultValue(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0));
 		pref_token_custom.setEnabled(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0) == 2);
 		String[] values = getResources().getStringArray(R.array.item_token_list_values);
@@ -81,6 +81,15 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 				getResources().getStringArray(R.array.item_token_list)
 				[index]
 		);
+		String[] values1 = getResources().getStringArray(R.array.notification_interval_item);
+		int index1, target1 = mSets.getInt(Settings.KEY_NOTIFICATION_INTERVAL, 0);
+		for (index1 = 0; index1 < values.length; index1++) {
+			if (values1[index1].equals(String.valueOf(target1))) break;
+		}
+		pref_notification_interval.setSummary(
+				getResources().getStringArray(R.array.notification_interval)
+						[index1]
+		);
 
 		pref_weibo.setOnPreferenceClickListener(this);
 		pref_os_license.setOnPreferenceClickListener(this);
@@ -90,7 +99,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_token_custom.setOnPreferenceClickListener(this);
 		pref_token_choose.setOnPreferenceChangeListener(this);
 		pref_swipe_back.setOnPreferenceChangeListener(this);
-		pref_auto_refresh.setOnPreferenceChangeListener(this);
+		pref_notification_interval.setOnPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -196,17 +205,23 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			pref_token_choose.setSummary(getResources().getStringArray(R.array.item_token_list)[index]);
 			return true;
 		}
+		if (pref == pref_notification_interval) {
+			int value = Integer.parseInt((String) newValue);
+			mSets.putInt(Settings.KEY_NOTIFICATION_INTERVAL, value);
+			String[] values = getResources().getStringArray(R.array.notification_interval_item);
+			int index;
+			for (index = 0; index < values.length; index++) {
+				if (values[index].equals(newValue)) break;
+			}
+			pref_notification_interval.setSummary(getResources().getStringArray(R.array.notification_interval)[index]);
+			Utility.restartServices(getActivity().getApplicationContext());
+			return true;
+		}
 		if (pref == pref_swipe_back) {
 			Boolean b = (Boolean) newValue;
 			mSets.putBoolean(Settings.KEY_SWIPE_BACK, b);
 			pref_swipe_back.setChecked(b);
 			showRestartTips();
-			return true;
-		}
-		if (pref == pref_auto_refresh) {
-			Boolean b = (Boolean) newValue;
-			mSets.putBoolean(Settings.KEY_AUTO_REFRESH_FIRST, b);
-			pref_auto_refresh.setChecked(b);
 			return true;
 		}
 		return false;

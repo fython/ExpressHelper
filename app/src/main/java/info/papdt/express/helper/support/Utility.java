@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -112,22 +113,23 @@ public class Utility {
 	public static void startServiceAlarm(Context context, Class<?> service, long interval) {
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		Intent i = new Intent(context, service);
-		PendingIntent p = PendingIntent.getService(context, REQUEST_CODE, i, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent p = PendingIntent.getService(context, 10000, i, PendingIntent.FLAG_CANCEL_CURRENT);
 		am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME, 0, interval, p);
 	}
 
 	public static void stopServiceAlarm(Context context, Class<?> service) {
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		Intent i = new Intent(context, service);
-		PendingIntent p = PendingIntent.getService(context, REQUEST_CODE, i, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent p = PendingIntent.getService(context, 10000, i, PendingIntent.FLAG_CANCEL_CURRENT);
 		am.cancel(p);
 	}
 
 	public static void startServices(Context context) {
 		Settings settings = Settings.getInstance(context);
-		int interval = getIntervalTime(settings.getInt(Settings.KEY_NOTIFICATION_INTERVAL, 1));
+		int interval = getIntervalTime(settings.getInt(Settings.KEY_NOTIFICATION_INTERVAL, 0));
 
 		if (interval > -1) {
+			Log.i("Utils", "Interval : " + interval);
 			startServiceAlarm(context, ReminderService.class, interval);
 		}
 	}
@@ -149,16 +151,14 @@ public class Utility {
 	public static int getIntervalTime(int id) {
 		switch (id){
 			case 0:
-				return 1 * 60 * 1000;
+				return 1 * 30 * 60 * 1000;
 			case 1:
-				return 3 * 60 * 1000;
+				return 1 * 60 * 60 * 1000;
 			case 2:
-				return 5 * 60 * 1000;
+				return 3 * 30 * 60 * 1000;
 			case 3:
-				return 10 * 60 * 1000;
+				return 3 * 60 * 60 * 1000;
 			case 4:
-				return 30 * 60 * 1000;
-			case 5:
 				return -1;
 		}
 		return -1;
