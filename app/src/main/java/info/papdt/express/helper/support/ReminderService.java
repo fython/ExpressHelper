@@ -6,12 +6,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 
 import org.json.JSONException;
 
@@ -66,7 +63,8 @@ public class ReminderService extends IntentService {
 			Notification n = buildNotification(getApplicationContext(),
 						title,
 						exp.getData().data.get(exp.getData().data.size() - 1).get("context"),
-						R.drawable.ic_local_shipping_black_24dp,
+						Build.VERSION.SDK_INT < 20 ? R.drawable.ic_local_shipping_white_24dp
+								: R.drawable.ic_local_shipping_black_24dp,
 						smallIcon,
 						getResources().getIntArray(R.array.statusColor) [exp.getData().getTrueStatus()],
 						defaults,
@@ -107,12 +105,21 @@ public class ReminderService extends IntentService {
 		for (int i = 0; i < db.size(); i++) {
 			Express exp = db.getExpress(i);
 			if (exp.getData().getTrueStatus() != ExpressResult.STATUS_FAILED && exp.needPush && exp.shouldPush) {
-				// if (exp.getData().getTrueStatus() == exp.getLastStatus()) continue;
+				if (exp.getLastStatus() == ExpressResult.STATUS_DELIVERED) continue;
 				Notification n = produceNotifications(i, exp);
 				if (exp != null) {
 					nm.notify(i + 20000, n);
+					exp.needPush = false;
 				}
 			}
+		}
+
+		try {
+			db.save();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -146,10 +153,6 @@ public class ReminderService extends IntentService {
 		}
 
 		return n;
-	}
-
-	private static String format(Context context, int resId, int data) {
-		return String.format(context.getString(resId), data);
 	}
 
 }

@@ -140,33 +140,41 @@ public class DetailsActivity extends AbsActivity {
 			new Thread() {
 				@Override
 				public void run() {
-					edb.init();
-					final boolean b = edb.getExpress(eid).shouldPush;
-					runOnUiThread(new Runnable() {
-						@Override
-						public void run() {
-							shouldPushItem.setChecked(b);
-						}
-					});
+					try {
+						edb.init();
+						final boolean b = edb.getExpress(eid).shouldPush;
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								shouldPushItem.setChecked(b);
+							}
+						});
+					} catch (Exception e) {
+
+					}
 				}
 			}.start();
 
-			Intent intent = new Intent(Intent.ACTION_SEND);
-			intent.setType("text/plain");
-			intent.putExtra(Intent.EXTRA_TEXT,
-					String.format(
-							getString(R.string.string_copy_format),
-							express.getName(),
-							express.getMailNumber(),
-							cache.expTextName
-					) + String.format(
-							getString(R.string.string_share_format),
-							getResources().getStringArray(R.array.status)[cache.getTrueStatus()],
-							cache.data.get(cache.data.size() - 1).get("context")
-					)
-			);
-			ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(menu.findItem(R.id.action_share));
-			provider.setShareIntent(intent);
+			try {
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_TEXT,
+						String.format(
+								getString(R.string.string_copy_format),
+								express.getName(),
+								express.getMailNumber(),
+								cache.expTextName
+						) + String.format(
+								getString(R.string.string_share_format),
+								getResources().getStringArray(R.array.status)[cache.getTrueStatus()],
+								cache.data.get(cache.data.size() - 1).get("context")
+						)
+				);
+				ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(menu.findItem(R.id.action_share));
+				provider.setShareIntent(intent);
+			} catch (Exception e) {
+
+			}
 		}
 		return super.onPrepareOptionsMenu(menu);
 	}
