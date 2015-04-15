@@ -25,6 +25,7 @@
 	<string name="toast_network_error">Network error! Please check your internet connection and try again.</string>
 	<string name="toast_client_error">Client error! Please contact the author.</string>
 	<string name="toast_unknown_error">Unknown error!</string>
+	<string name="toast_add_package_failed">Failed to add the package.</string>
 	<string name="toast_has_been_exist">The package has been exist in your list.</string>
 	<string name="hint_company_name_empty">Select a carrier....</string>
 

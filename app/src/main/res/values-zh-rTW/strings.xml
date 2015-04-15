@@ -16,6 +16,7 @@
 	<string name="toast_company_not_exist">這家物流公司不存在或不支持。你可以試試簡體中文名稱。</string>
 	<string name="toast_network_error">網路錯誤！請檢查你的連結後重試。</string>
 	<string name="toast_unknown_error">未知錯誤！</string>
+	<string name="toast_add_package_failed">添加包裹失敗。</string>
 	<string name="toast_has_been_exist">這個快遞單號已存在于你的列單中。</string>
 	<string name="hint_company_name_empty">選擇物流公司....</string>
 

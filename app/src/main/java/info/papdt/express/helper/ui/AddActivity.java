@@ -18,6 +18,7 @@ import java.util.Random;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.api.KuaiDi100Helper;
 import info.papdt.express.helper.dao.ExpressDatabase;
+import info.papdt.express.helper.support.ExpressResult;
 import info.papdt.express.helper.support.HttpUtils;
 import info.papdt.express.helper.support.Settings;
 
@@ -117,6 +118,16 @@ public class AddActivity extends AbsActivity {
 	}
 	
 	private void receiveData(String result, String name) {
+		ExpressResult er = ExpressResult.buildFromJSON(result);
+		if (er.getTrueStatus() == ExpressResult.STATUS_FAILED) {
+			Toast.makeText(
+					getApplicationContext(),
+					R.string.toast_add_package_failed,
+					Toast.LENGTH_SHORT
+			).show();
+			return;
+		}
+
 		Intent intent = new Intent(this, MainActivity.class);
 		intent.putExtra("result", result);
 		intent.putExtra("name", name);
