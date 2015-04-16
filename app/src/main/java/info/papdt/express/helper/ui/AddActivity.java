@@ -122,7 +122,7 @@ public class AddActivity extends AbsActivity {
 		if (er.getTrueStatus() == ExpressResult.STATUS_FAILED) {
 			Toast.makeText(
 					getApplicationContext(),
-					R.string.toast_add_package_failed,
+					getResources().getStringArray(R.array.errCode_toast) [er.errCode],
 					Toast.LENGTH_SHORT
 			).show();
 			return;
