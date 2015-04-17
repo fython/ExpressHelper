@@ -9,15 +9,18 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.ui.DetailsActivity;
 
+@SuppressWarnings("ALL")
 public class ReminderService extends IntentService {
 
 	private static final String TAG = ReminderService.class.getSimpleName();
@@ -89,6 +92,13 @@ public class ReminderService extends IntentService {
 
 	@Override
 	public void onHandleIntent(Intent intent) {
+		boolean isEnabledDontDisturbMode = Settings.getInstance(getApplicationContext())
+				.getBoolean(Settings.KEY_NOTIFICATION_DO_NOT_DISTURB, true);
+		if (isEnabledDontDisturbMode && Utility.isDisturbTime(Calendar.getInstance())) {
+			Log.i(TAG, "现在是勿扰时间段，跳过检查。");
+			return;
+		}
+
 		NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
 		ExpressDatabase db = ExpressDatabase.getInstance(getApplicationContext());
@@ -131,6 +141,7 @@ public class ReminderService extends IntentService {
 				Notification.DEFAULT_LIGHTS;
 	}
 
+	@SuppressWarnings("getNotification")
 	private static Notification buildNotification(Context context, String title, String text, int icon0, int icon1, int color,
 	                                              int defaults, PendingIntent contentIntent, PendingIntent deleteIntent) {
 		Notification n;

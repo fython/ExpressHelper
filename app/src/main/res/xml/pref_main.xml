@@ -7,13 +7,21 @@
 
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="@string/category_api">
+	<PreferenceCategory android:title="@string/category_notification">
 
+		<SwitchPreference android:key="do_not_disturb"
+		                  android:title="@string/item_notification_do_not_disturb"
+		                  android:summary="@string/item_notification_do_not_disturb_desc"/>
 		<com.afollestad.materialdialogs.prefs.MaterialListPreference
 			android:key="notification_interval" android:title="@string/item_notification_interval"
 			android:entries="@array/notification_interval"
 			android:entryValues="@array/notification_interval_item"
 			android:defaultValue="2"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/category_api">
+
 		<com.afollestad.materialdialogs.prefs.MaterialListPreference
 			android:key="api_token_choose" android:title="@string/item_token_choose"
 			android:entries="@array/item_token_list"

@@ -2,8 +2,6 @@
 <resources>
 
     <string name="app_name">水錶助手</string>
-    <string name="navigation_drawer_open">展開抽屜</string>
-	<string name="navigation_drawer_close">關閉抽屜</string>
 	<string name="title_section_1">主頁</string>
 	<string name="title_section_3">已簽收</string>
 
@@ -33,21 +31,6 @@
 	<string name="string_copy_format">我的包裹：%1$s. 速遞單號：%2$s. 速遞公司：%3$s. </string>
 	<string name="string_share_format">包裹狀態：%1$s. 最新狀況：%2$s.</string>
 	<string name="action_should_push">推送通知</string>
-	<string name="item_notification_interval">推送通知週期</string>
-	<string-array name="notification_interval">
-		<item>30 分鐘</item>
-		<item>1 小時</item>
-		<item>1.5 小時</item>
-		<item>3 小時</item>
-		<item>永不提醒</item>
-	</string-array>
-	<string-array name="notification_interval_item">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-	</string-array>
 
 	<string-array name="status">
 		<item>失敗</item>
@@ -154,6 +137,24 @@
 	<string name="dialog_token_custom_id">應用ID</string>
 	<string name="dialog_token_custom_how_to_get_it">如何申請?</string>
 	<string name="item_enable_swipe_back">啟用滑動返回手勢</string>
+	<string name="category_notification">通知</string>
+	<string name="item_notification_interval">推送通知週期</string>
+	<string-array name="notification_interval">
+		<item>30 分鐘</item>
+		<item>1 小時</item>
+		<item>1.5 小時</item>
+		<item>3 小時</item>
+		<item>永不提醒</item>
+	</string-array>
+	<string-array name="notification_interval_item">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
+	<string name="item_notification_do_not_disturb">勿擾模式</string>
+	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 6:00 時段不推送通知</string>
 
 	<string name="action_select_company">速遞公司列單</string>
 	<string name="search_hint_company">搜尋 「速遞公司」</string>

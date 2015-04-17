@@ -138,6 +138,7 @@
 	<string name="dialog_token_custom_id">应用ID</string>
 	<string name="dialog_token_custom_how_to_get_it">如何申请?</string>
 	<string name="item_enable_swipe_back">启用滑动返回手势</string>
+	<string name="category_notification">通知</string>
 	<string name="item_notification_interval">推送通知频率</string>
 	<string-array name="notification_interval">
 		<item>30 分钟</item>
@@ -153,6 +154,8 @@
 		<item>3</item>
 		<item>4</item>
 	</string-array>
+	<string name="item_notification_do_not_disturb">勿扰模式</string>
+	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 6:00 期间不推送通知</string>
 
 	<string name="action_select_company">快递公司列表</string>
 	<string name="search_hint_company">搜索 「快递公司」</string>

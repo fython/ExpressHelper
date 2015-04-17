@@ -35,6 +35,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 	private Preference pref_version, pref_os_license, pref_api_provider,
 		pref_weibo, pref_github, pref_token_custom;
 	private SwitchPreference pref_swipe_back;
+	private SwitchPreference pref_do_not_disturb;
 	private MaterialListPreference pref_token_choose;
 	private MaterialListPreference pref_notification_interval;
 
@@ -59,6 +60,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_token_custom = findPreference("api_token_custom");
 		pref_swipe_back = (SwitchPreference) findPreference("swipe_back");
 		pref_notification_interval = (MaterialListPreference) findPreference("notification_interval");
+		pref_do_not_disturb = (SwitchPreference) findPreference("do_not_disturb");
 
 		String version = "Unknown";
 		try {
@@ -71,6 +73,8 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_swipe_back.setChecked(mSets.getBoolean(Settings.KEY_SWIPE_BACK, true));
 		pref_token_custom.setDefaultValue(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0));
 		pref_token_custom.setEnabled(mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0) == 2);
+		pref_do_not_disturb.setChecked(mSets.getBoolean(Settings.KEY_NOTIFICATION_DO_NOT_DISTURB, true));
+
 		String[] values = getResources().getStringArray(R.array.item_token_list_values);
 		int index, target = mSets.getInt(Settings.KEY_TOKEN_CHOOSE, 0);
 		for (index = 0; index < values.length; index++) {
@@ -98,6 +102,7 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 		pref_token_choose.setOnPreferenceChangeListener(this);
 		pref_swipe_back.setOnPreferenceChangeListener(this);
 		pref_notification_interval.setOnPreferenceChangeListener(this);
+		pref_do_not_disturb.setOnPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -200,6 +205,12 @@ public class SettingsMain extends PreferenceFragment implements Preference.OnPre
 			mSets.putBoolean(Settings.KEY_SWIPE_BACK, b);
 			pref_swipe_back.setChecked(b);
 			showRestartTips();
+			return true;
+		}
+		if (pref == pref_do_not_disturb) {
+			Boolean b = (Boolean) newValue;
+			mSets.putBoolean(Settings.KEY_NOTIFICATION_DO_NOT_DISTURB, b);
+			pref_do_not_disturb.setChecked(b);
 			return true;
 		}
 		return false;

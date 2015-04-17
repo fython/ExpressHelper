@@ -143,6 +143,7 @@
 	<string name="dialog_token_custom_id">API ID</string>
 	<string name="dialog_token_custom_how_to_get_it">How to get one?</string>
 	<string name="item_enable_swipe_back">Enable swipe back gesture</string>
+	<string name="category_notification">Notification</string>
 	<string name="item_notification_interval">Notification interval</string>
 	<string-array name="notification_interval">
 		<item>30 minutes</item>
@@ -158,6 +159,8 @@
 		<item>3</item>
 		<item>4</item>
 	</string-array>
+	<string name="item_notification_do_not_disturb">Do not disturb mode</string>
+	<string name="item_notification_do_not_disturb_desc">Don\'t send notifications from 23:00 to 06:00.</string>
 
 	<string name="action_select_company">Shipment companies list</string>
 	<string name="search_hint_company">Search 「Shipment companies」</string>

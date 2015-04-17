@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import info.papdt.express.helper.api.KuaiDi100Helper;
 
@@ -162,6 +163,11 @@ public class Utility {
 				return -1;
 		}
 		return -1;
+	}
+
+	public static boolean isDisturbTime(Calendar c) {
+		int hours = c.get(Calendar.HOUR_OF_DAY);
+		return hours >= 23 | hours < 6;
 	}
 
 }

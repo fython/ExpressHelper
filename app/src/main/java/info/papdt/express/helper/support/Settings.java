@@ -9,10 +9,10 @@ public class Settings {
 	public static final String KEY_TOKEN_CHOOSE = "token_choose",
 			KEY_CUSTOM_SECRET = "token_secret", KEY_CUSTOM_ID = "token_custom_id",
 			KEY_SWIPE_BACK = "swipe_back",
-			KEY_AUTO_REFRESH_FIRST = "first_refresh",
 			KEY_NOTIFICATION_SOUND = "noti_sound",
 			KEY_NOTIFICATION_VIBRATE = "noti_vibrate",
-			KEY_NOTIFICATION_INTERVAL = "noti_interval";
+			KEY_NOTIFICATION_INTERVAL = "noti_interval",
+			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb";
 
 	private static Settings sInstance;
 	
