@@ -43,11 +43,12 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 
 	@Override
 	public ClickableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		bindContext(parent.getContext());
 		switch (viewType) {
 			case VIEW_TYPE_HEADER:
 				return new HeaderViewHolder(headerView);
 			case VIEW_TYPE_ITEM:
-				View v = LayoutInflater.from(parent.getContext())
+				View v = LayoutInflater.from(getContext())
 						.inflate(R.layout.card_express_item, parent, false);
 				return new ViewHolder(v);
 			default:

@@ -31,6 +31,8 @@ import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomeCardRecyclerAdapter;
 import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInDownAnimator;
+import jp.wasabeef.recyclerview.animators.adapters.SlideInBottomAnimationAdapter;
 
 public abstract class BaseHomeFragment extends Fragment {
 
@@ -61,6 +63,7 @@ public abstract class BaseHomeFragment extends Fragment {
 		mRecyclerView = (ObservableRecyclerView) rootView.findViewById(R.id.scroll);
 		mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		mRecyclerView.setHasFixedSize(true);
+		mRecyclerView.setItemAnimator(new SlideInDownAnimator());
 		headerView = inflater.inflate(R.layout.padding, null);
 
 		Activity parentActivity = getActivity();

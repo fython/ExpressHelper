@@ -22,7 +22,8 @@ public class CompanyListRecyclerAdapter extends MyRecyclerViewAdapter {
 
 	@Override
 	public ClickableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View v = LayoutInflater.from(parent.getContext())
+		bindContext(parent.getContext());
+		View v = LayoutInflater.from(getContext())
 				.inflate(R.layout.list_item_company, parent, false);
 		ViewHolder holder = new ViewHolder(v);
 		return holder;

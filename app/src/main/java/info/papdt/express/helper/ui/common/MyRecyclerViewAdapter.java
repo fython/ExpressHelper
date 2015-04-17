@@ -1,9 +1,20 @@
 package info.papdt.express.helper.ui.common;
 
+import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+
+import info.papdt.express.helper.R;
 
 public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ClickableViewHolder> {
+
+	private int lastPosition = -1;
+	private boolean firstLoad = true;
+	private Context context;
 
 	public interface OnItemClickListener {
 		public void onItemClicked(int position);
@@ -22,6 +33,14 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 
 	public void setOnItemLongClickListener(OnItemLongClickListener listener) {
 		this.itemLongClickListener = listener;
+	}
+
+	public void bindContext(Context context) {
+		this.context = context;
+	}
+
+	public Context getContext() {
+		return this.context;
 	}
 
 	@Override
@@ -44,6 +63,47 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 				}
 			}
 		});
+		setAnimation(holder.parentView, position);
+	}
+
+	private void setAnimation(final View viewToAnimate, final int position) {
+		// If the bound view wasn't previously displayed on screen, it's animated
+		if (position > lastPosition) {
+			if (firstLoad) {
+				viewToAnimate.setAlpha(0f);
+				new Handler().postDelayed(
+						new Runnable() {
+							@Override
+							public void run() {
+								Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_down);
+								animation.setAnimationListener(new Animation.AnimationListener() {
+									@Override
+									public void onAnimationStart(Animation animation) {
+										viewToAnimate.setAlpha(1f);
+										firstLoad = true;
+									}
+
+									@Override
+									public void onAnimationEnd(Animation animation) {
+										firstLoad = false;
+									}
+
+									@Override
+									public void onAnimationRepeat(Animation animation) {
+
+									}
+								});
+								animation.setFillAfter(true);
+								viewToAnimate.startAnimation(animation);
+							}
+						}
+				, position * 180);
+			} else {
+				Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_down);
+				viewToAnimate.startAnimation(animation);
+			}
+			lastPosition = position;
+		}
 	}
 
 	public class ClickableViewHolder extends RecyclerView.ViewHolder {
