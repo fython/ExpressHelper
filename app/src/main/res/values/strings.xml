@@ -25,6 +25,7 @@
 	<string name="toast_network_error">Network error! Please check your internet connection and try again.</string>
 	<string name="toast_client_error">Client error! Please contact the author.</string>
 	<string name="toast_unknown_error">Unknown error!</string>
+	<string name="toast_add_package_failed">Failed to add the package.</string>
 	<string name="toast_has_been_exist">The package has been exist in your list.</string>
 	<string name="hint_company_name_empty">Select a carrier....</string>
 
@@ -75,6 +76,32 @@
 		<item>API error</item>
 		<item>API blocked</item>
 		<item>API used up</item>
+	</string-array>
+
+	<string-array name="errCode_toast">
+		<item>No error</item>
+		<item>No data</item>
+		<item>API code error</item>
+		<item>Server error</item>
+		<item>Internal error</item>
+		<item>Command error</item>
+		<item>The mail number is wrong.</item>
+		<item>The company is not exist or supported.</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>Unknown error</item>
+		<item>API error</item>
+		<item>This API Token has been blocked.</item>
+		<item>The daily times of this API Token have been used up.</item>
 	</string-array>
 
 	<string name="title_settings">Settings</string>

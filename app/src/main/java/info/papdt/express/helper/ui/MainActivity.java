@@ -77,11 +77,6 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		CrashHandler.init(getApplicationContext());
 		CrashHandler.register();
 
-		/** Start services */
-		if (ConnectivityReceiver.readNetworkState(getApplicationContext())) {
-			Utility.restartServices(getApplicationContext());
-		}
-
 		setSwipeBackEnable(false);
 
 		/** Init Database */

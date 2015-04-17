@@ -16,6 +16,7 @@
 	<string name="toast_company_not_exist">这家物流公司不存在或不支持。你可以试试中文简称。</string>
 	<string name="toast_network_error">网络错误！请检查你的连接后重试。</string>
 	<string name="toast_unknown_error">未知错误！</string>
+	<string name="toast_add_package_failed">添加包裹失败。</string>
 	<string name="toast_has_been_exist">这个快递单号已经存在于你的清单中。</string>
 	<string name="hint_company_name_empty">选择物流公司....</string>
 
@@ -43,30 +44,57 @@
 	</string-array>
 
 	<string-array name="errCode">
-		<item>No error</item>
-		<item>No data</item>
-		<item>API code error</item>
-		<item>Server error</item>
-		<item>Internal error</item>
-		<item>Command error</item>
-		<item>Wrong number</item>
-		<item>Company problem</item>
-		<item>null</item>
-		<item>null</item>
-		<item>Unknow error</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>API error</item>
-		<item>API blocked</item>
-		<item>API used up</item>
+		<item>没有错误</item>
+		<item>没有数据</item>
+		<item>API 编号错误</item>
+		<item>服务器错误</item>
+		<item>内部错误</item>
+		<item>命令错误</item>
+		<item>快递单号错误</item>
+		<item>快递公司不存在或未被支持</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>API 错误</item>
+		<item>API 被封禁</item>
+		<item>API 次数已用完</item>
 	</string-array>
+
+	<string-array name="errCode_toast">
+		<item>没有错误</item>
+		<item>没有数据</item>
+		<item>API 编号错误</item>
+		<item>服务器错误</item>
+		<item>内部错误</item>
+		<item>命令错误</item>
+		<item>这个快递单号错误。</item>
+		<item>这个快递公司不存在或未被支持。</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>未知错误</item>
+		<item>API 错误</item>
+		<item>API 被封禁了</item>
+		<item>API 次数已用完</item>
+	</string-array>
+
 	<string name="title_section_2">未签收</string>
 	<string name="toast_client_error">客户端错误! 请联系作者。</string>
 	<string name="category_about">关于</string>

@@ -16,7 +16,8 @@
 	<string name="toast_company_not_exist">這家物流公司不存在或不支持。你可以試試簡體中文名稱。</string>
 	<string name="toast_network_error">網路錯誤！請檢查你的連結後重試。</string>
 	<string name="toast_unknown_error">未知錯誤！</string>
-	<string name="toast_has_been_exist">這個快遞單號已存在于你的列單中。</string>
+	<string name="toast_add_package_failed">添加包裹失敗。</string>
+	<string name="toast_has_been_exist">這個速遞單號已存在于你的列單中。</string>
 	<string name="hint_company_name_empty">選擇物流公司....</string>
 
 	<string name="title_express_details">詳情</string>
@@ -29,7 +30,7 @@
 	<string name="action_edit">編輯</string>
 	<string name="action_copy">拷貝包裹訊息</string>
 	<string name="action_share">分享....</string>
-	<string name="string_copy_format">我的包裹：%1$s. 快遞單號：%2$s. 快遞公司：%3$s. </string>
+	<string name="string_copy_format">我的包裹：%1$s. 速遞單號：%2$s. 速遞公司：%3$s. </string>
 	<string name="string_share_format">包裹狀態：%1$s. 最新狀況：%2$s.</string>
 	<string name="action_should_push">推送通知</string>
 	<string name="item_notification_interval">推送通知週期</string>
@@ -58,36 +59,63 @@
 	</string-array>
 
 	<string-array name="errCode">
-		<item>No error</item>
-		<item>No data</item>
-		<item>API code error</item>
-		<item>Server error</item>
-		<item>Internal error</item>
-		<item>Command error</item>
-		<item>Wrong number</item>
-		<item>Company problem</item>
-		<item>null</item>
-		<item>null</item>
-		<item>Unknow error</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>null</item>
-		<item>API error</item>
-		<item>API blocked</item>
-		<item>API used up</item>
+		<item>沒有錯誤</item>
+		<item>沒有數據</item>
+		<item>API 編碼錯誤</item>
+		<item>伺服器錯誤</item>
+		<item>內部錯誤</item>
+		<item>命令錯誤</item>
+		<item>速遞單號錯誤</item>
+		<item>速遞公司不存在或未被支持</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>API 錯誤</item>
+		<item>API 被封禁</item>
+		<item>API 次數已用完</item>
 	</string-array>
+
+	<string-array name="errCode_toast">
+		<item>沒有錯誤</item>
+		<item>沒有數據</item>
+		<item>API 編碼錯誤</item>
+		<item>伺服器錯誤</item>
+		<item>內部錯誤</item>
+		<item>命令錯誤</item>
+		<item>這個速遞單號錯誤。</item>
+		<item>這個速遞公司不存在或未被支持。</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>未知錯誤</item>
+		<item>API 錯誤</item>
+		<item>API 被封禁了</item>
+		<item>API 次數已用完</item>
+	</string-array>
+	
 	<string name="title_section_2">未簽收</string>
 	<string name="toast_client_error">客戶端錯誤! 請聯繫作者。</string>
 	<string name="title_settings">設置</string>
 	<string name="category_about">關於</string>
 	<string name="item_open_source_license">開放式源代碼許可</string>
-	<string name="item_api_desc">愛查快遞</string>
+	<string name="item_api_desc">愛查速遞</string>
 	<string name="item_api_title">物流訊息接口供應商</string>
 	<string name="api_provider_home">"http://www.ickd.cn"</string>
 	<string name="donate_content">"如果這個應用程式對你有幫助並且你樂意支援我們，你可以通過阿里巴巴支付寶向我們捐助一筆小費。\n你可以掃描以上二維碼，或通過這個電郵地址轉賬：316643843\@qq.com"</string>
@@ -127,8 +155,8 @@
 	<string name="dialog_token_custom_how_to_get_it">如何申請?</string>
 	<string name="item_enable_swipe_back">啟用滑動返回手勢</string>
 
-	<string name="action_select_company">快遞公司列單</string>
-	<string name="search_hint_company">搜尋 「快遞公司」</string>
+	<string name="action_select_company">速遞公司列單</string>
+	<string name="search_hint_company">搜尋 「速遞公司」</string>
 	<string name="action_phone">撥打電話</string>
 	<string name="action_website">打開網頁</string>
 	<string name="toast_phone_is_not_exist">很抱歉，我們仍未收集該物流公司的電話號碼。</string>
