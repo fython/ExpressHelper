@@ -9,7 +9,7 @@
 		android:layout_height="300dp"
 		android:id="@+id/imageView"
 		android:padding="10dp"
-		android:src="@mipmap/alipay"
+		android:src="@drawable/alipay"
 		android:layout_weight="1"/>
 
 	<TextView
