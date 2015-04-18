@@ -65,6 +65,8 @@ public class AddActivity extends AbsActivity {
 			}
 		});
 
+		ViewCompat.setElevation(findViewById(R.id.headerView), getResources().getDimension(R.dimen.toolbar_elevation));
+
 		ImageButton mButtonSelect = (ImageButton) findViewById(R.id.btn_select);
 		mButtonSelect.setOnClickListener(new View.OnClickListener() {
 			@Override

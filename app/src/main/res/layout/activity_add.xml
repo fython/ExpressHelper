@@ -12,43 +12,48 @@
 
 		<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:id="@+id/headerView">
+			android:layout_height="290dp">
 
-			<ImageView
+			<FrameLayout
+				android:id="@+id/headerView"
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/background_title"
-				android:layout_marginBottom="40dp"
-				android:src="@drawable/background_title"
-				android:scaleType="centerCrop"/>
+				android:layout_height="250dp"
+				android:background="@android:color/white"
+				android:layout_above="@+id/blank_for_action_button">
 
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="40dp"
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:text="@string/title_add_express"
-				android:id="@+id/tv_title"
-				android:layout_gravity="left|bottom"
-				android:paddingLeft="24dp"
-				android:paddingBottom="16dp"
-				android:textColor="@android:color/white"
-				android:textSize="28sp"
-				android:layout_alignParentBottom="true"
-				android:layout_alignParentLeft="true"
-				android:layout_alignParentStart="true"
-				/>
+				<ImageView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/background_title"
+					android:src="@drawable/background_title"
+					android:scaleType="centerCrop"/>
 
-			<ProgressBar
-				style="?android:attr/progressBarStyleHorizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:id="@+id/progressBar"
-				android:layout_gravity="bottom"
-				android:visibility="invisible"
-				android:indeterminate="true"/>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textAppearance="?android:attr/textAppearanceLarge"
+					android:text="@string/title_add_express"
+					android:id="@+id/tv_title"
+					android:layout_gravity="left|bottom"
+					android:paddingLeft="24dp"
+					android:paddingBottom="16dp"
+					android:textColor="@android:color/white"
+					android:textSize="28sp"
+					android:layout_alignParentBottom="true"
+					android:layout_alignParentLeft="true"
+					android:layout_alignParentStart="true"
+					/>
+
+				<ProgressBar
+					style="?android:attr/progressBarStyleHorizontal"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/progressBar"
+					android:layout_gravity="bottom"
+					android:visibility="invisible"
+					android:indeterminate="true"/>
+
+			</FrameLayout>
 
 			<View
 				android:id="@+id/blank_for_action_button"
