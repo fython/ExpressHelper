@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -15,6 +14,12 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 	private int lastPosition = -1;
 	private boolean firstLoad = true;
 	private Context context;
+
+	private boolean useCardAnimation;
+
+	public MyRecyclerViewAdapter(boolean useCardAnimation) {
+		this.useCardAnimation = useCardAnimation;
+	}
 
 	public interface OnItemClickListener {
 		public void onItemClicked(int position);
@@ -75,7 +80,10 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 						new Runnable() {
 							@Override
 							public void run() {
-								Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_down);
+								Animation animation = AnimationUtils.loadAnimation(
+										context,
+										useCardAnimation ? R.anim.card_slide_in : R.anim.slide_out_down
+								);
 								animation.setAnimationListener(new Animation.AnimationListener() {
 									@Override
 									public void onAnimationStart(Animation animation) {

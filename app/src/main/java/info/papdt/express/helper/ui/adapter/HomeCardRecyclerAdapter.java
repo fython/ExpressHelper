@@ -2,7 +2,6 @@ package info.papdt.express.helper.ui.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +34,7 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 	}
 
 	public HomeCardRecyclerAdapter(Context context, ExpressDatabase db, int type, View headerView) {
+		super(true);
 		this.db = db;
 		this.defaultColors = context.getResources().getIntArray(R.array.statusColor);
 		this.type = type;
@@ -43,11 +43,11 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 
 	@Override
 	public ClickableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		bindContext(parent.getContext());
 		switch (viewType) {
 			case VIEW_TYPE_HEADER:
 				return new HeaderViewHolder(headerView);
 			case VIEW_TYPE_ITEM:
+				bindContext(parent.getContext());
 				View v = LayoutInflater.from(getContext())
 						.inflate(R.layout.card_express_item, parent, false);
 				return new ViewHolder(v);

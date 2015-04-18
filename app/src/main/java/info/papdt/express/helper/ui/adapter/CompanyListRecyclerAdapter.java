@@ -17,6 +17,7 @@ public class CompanyListRecyclerAdapter extends MyRecyclerViewAdapter {
 	private ArrayList<KuaiDi100Helper.CompanyInfo.Company> data;
 
 	public CompanyListRecyclerAdapter(ArrayList<KuaiDi100Helper.CompanyInfo.Company> data) {
+		super(false);
 		this.data = data;
 	}
 
