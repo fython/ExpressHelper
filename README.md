@@ -27,12 +27,12 @@ Edit package name
 
 Lollipop animations for CardView
 
-
-### TO-DO list 未完成的目标
-
 Auto refresh hourly and send a nonfiction if status has been changed 自动定时刷新并于状态更新时通知用户
 
 Allow users to search carriers in Traditional Chinese/English 允许用户使用繁体中文/英文搜索快递公司
+
+
+### TO-DO list 未完成的目标
 
 More order ways 更多排序方式
 
