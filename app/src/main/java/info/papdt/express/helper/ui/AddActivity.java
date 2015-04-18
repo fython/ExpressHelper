@@ -3,6 +3,8 @@ package info.papdt.express.helper.ui;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.melnykov.fab.FloatingActionButton;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Random;
@@ -29,10 +32,12 @@ public class AddActivity extends AbsActivity {
 	private MaterialEditText mEditTextSerial, mEditTextName;
 	private TextView mCompanyNameText;
 	private ProgressBar mProgress;
-	private View mButtonDone;
+	private FloatingActionButton mFAB;
 	private int mNow = -1;
 
 	public static final String TAG = "AddActivity";
+
+	public static final String TRANSITION_NAME_FAB = "fab";
 	
 	//918108247993
 
@@ -50,21 +55,15 @@ public class AddActivity extends AbsActivity {
 		mEditTextSerial = (MaterialEditText) findViewById(R.id.et_number);
 		mCompanyNameText = (TextView) findViewById(R.id.tv_company_name);
 		mEditTextName = (MaterialEditText) findViewById(R.id.et_name);
-		mButtonDone = findViewById(R.id.btn_done);
 		mProgress = (ProgressBar) findViewById(R.id.progressBar);
-		mButtonDone.setOnClickListener(new View.OnClickListener() {
+		mFAB = (FloatingActionButton) findViewById(R.id.fab);
+		mFAB.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (isChecking) return;
 				postData();
 			}
 		});
-
-		try {
-			ViewCompat.setElevation(findViewById(R.id.headerView), getResources().getDimension(R.dimen.toolbar_elevation));
-		} catch (Exception e) {
-
-		}
 
 		ImageButton mButtonSelect = (ImageButton) findViewById(R.id.btn_select);
 		mButtonSelect.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +74,8 @@ public class AddActivity extends AbsActivity {
 				CompanySelectActivity.launchActivity(AddActivity.this);
 			}
 		});
+
+		ViewCompat.setTransitionName(mFAB, TRANSITION_NAME_FAB);
 	}
 
 	@Override
@@ -87,6 +88,12 @@ public class AddActivity extends AbsActivity {
 				}
 				break;
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		setSwipeBackEnable(false);
+		super.onBackPressed();
 	}
 
 	private void setCompanyNameText() {
@@ -133,6 +140,21 @@ public class AddActivity extends AbsActivity {
 		intent.putExtra("name", name);
 		setResult(MainActivity.RESULT_ADD_FINISH, intent);
 		finish();
+	}
+
+	public static void launch(AbsActivity mActivity, View fab) {
+		ActivityOptionsCompat options =
+				ActivityOptionsCompat.makeSceneTransitionAnimation(
+						mActivity, fab, TRANSITION_NAME_FAB
+				);
+		Intent intent = new Intent(mActivity, AddActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+		ActivityCompat.startActivityForResult(
+				mActivity,
+				intent,
+				MainActivity.REQUEST_ADD,
+				options.toBundle()
+		);
 	}
 
 	private class PostApiTask extends AsyncTask<String, Void, String> {

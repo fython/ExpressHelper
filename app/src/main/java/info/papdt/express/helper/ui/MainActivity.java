@@ -172,9 +172,7 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		mFAB.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(MainActivity.this, AddActivity.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-				startActivityForResult(intent, REQUEST_ADD);
+				AddActivity.launch(MainActivity.this, mFAB);
 			}
 		});
 	}
