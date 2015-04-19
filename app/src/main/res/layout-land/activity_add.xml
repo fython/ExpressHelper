@@ -13,7 +13,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/background_title"
-			android:src="@drawable/background_title"
+			android:src="@drawable/background_title_webp"
 			android:scaleType="centerCrop"/>
 
 		<TextView
