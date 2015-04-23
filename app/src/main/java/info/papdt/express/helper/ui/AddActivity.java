@@ -77,7 +77,9 @@ public class AddActivity extends AbsActivity {
 			}
 		});
 
-		ViewCompat.setTransitionName(mFAB, TRANSITION_NAME_FAB);
+		if (!mSets.getBoolean(Settings.KEY_DISABLE_ANIMATION, false)) {
+			ViewCompat.setTransitionName(mFAB, TRANSITION_NAME_FAB);
+		}
 	}
 
 	@Override
@@ -145,18 +147,22 @@ public class AddActivity extends AbsActivity {
 	}
 
 	public static void launch(AbsActivity mActivity, View fab) {
-		ActivityOptionsCompat options =
-				ActivityOptionsCompat.makeSceneTransitionAnimation(
-						mActivity, fab, TRANSITION_NAME_FAB
-				);
 		Intent intent = new Intent(mActivity, AddActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-		ActivityCompat.startActivityForResult(
-				mActivity,
-				intent,
-				MainActivity.REQUEST_ADD,
-				options.toBundle()
-		);
+		if (!mActivity.mSets.getBoolean(Settings.KEY_DISABLE_ANIMATION, false)) {
+			ActivityOptionsCompat options =
+					ActivityOptionsCompat.makeSceneTransitionAnimation(
+							mActivity, fab, TRANSITION_NAME_FAB
+					);
+			ActivityCompat.startActivityForResult(
+					mActivity,
+					intent,
+					MainActivity.REQUEST_ADD,
+					options.toBundle()
+			);
+		} else {
+			mActivity.startActivity(intent);
+		}
 	}
 
 	private class PostApiTask extends AsyncTask<String, Void, String> {

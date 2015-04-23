@@ -14,6 +14,7 @@ import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.ExpressDatabase;
 import info.papdt.express.helper.support.Express;
 import info.papdt.express.helper.support.ExpressResult;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
 
 public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
@@ -34,7 +35,7 @@ public class HomeCardRecyclerAdapter extends MyRecyclerViewAdapter {
 	}
 
 	public HomeCardRecyclerAdapter(Context context, ExpressDatabase db, int type, View headerView) {
-		super(true);
+		super(!Settings.getInstance(context).getBoolean(Settings.KEY_DISABLE_ANIMATION, false));
 		this.db = db;
 		this.defaultColors = context.getResources().getIntArray(R.array.statusColor);
 		this.type = type;

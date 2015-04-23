@@ -12,7 +12,8 @@ public class Settings {
 			KEY_NOTIFICATION_SOUND = "noti_sound",
 			KEY_NOTIFICATION_VIBRATE = "noti_vibrate",
 			KEY_NOTIFICATION_INTERVAL = "noti_interval",
-			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb";
+			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb",
+			KEY_DISABLE_ANIMATION = "disable_animation";
 
 	private static Settings sInstance;
 	

@@ -15,10 +15,10 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 	private boolean firstLoad = true;
 	private Context context;
 
-	private boolean useCardAnimation;
+	private boolean useAnimation;
 
-	public MyRecyclerViewAdapter(boolean useCardAnimation) {
-		this.useCardAnimation = useCardAnimation;
+	public MyRecyclerViewAdapter(boolean useAnimation) {
+		this.useAnimation = useAnimation;
 	}
 
 	public interface OnItemClickListener {
@@ -68,7 +68,7 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 				}
 			}
 		});
-		setAnimation(holder.parentView, position);
+		if (useAnimation) setAnimation(holder.parentView, position);
 	}
 
 	private void setAnimation(final View viewToAnimate, final int position) {
@@ -82,7 +82,7 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 							public void run() {
 								Animation animation = AnimationUtils.loadAnimation(
 										context,
-										useCardAnimation ? R.anim.card_slide_in : R.anim.slide_out_down
+										R.anim.card_slide_in
 								);
 								animation.setAnimationListener(new Animation.AnimationListener() {
 									@Override
@@ -107,7 +107,7 @@ public abstract class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyc
 						}
 				, position * 180);
 			} else {
-				Animation animation = AnimationUtils.loadAnimation(context, R.anim.slide_out_down);
+				Animation animation = AnimationUtils.loadAnimation(context, R.anim.card_slide_in);
 				viewToAnimate.startAnimation(animation);
 			}
 			lastPosition = position;

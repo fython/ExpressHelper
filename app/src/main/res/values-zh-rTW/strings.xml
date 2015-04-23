@@ -155,6 +155,8 @@
 	</string-array>
 	<string name="item_notification_do_not_disturb">勿擾模式</string>
 	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 6:00 時段不推送通知</string>
+	<string name="item_disable_animation">禁用列表動效</string>
+	<string name="item_disable_animation_desc">在一些老機器上動效可能會造成卡頓</string>
 
 	<string name="action_select_company">速遞公司列單</string>
 	<string name="search_hint_company">搜尋 「速遞公司」</string>
