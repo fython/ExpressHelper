@@ -142,38 +142,9 @@ public class ExpressDatabase {
 			return ;
 		}
 
-		Express newExpress;
 		for (int i = 0; i < jsonArray.length(); i++){
 			try {
-				JSONObject obj = jsonArray.getJSONObject(i);
-				newExpress = new Express(obj.getString("companyCode"), obj.getString("mailNumber"));
-				String name;
-				try {
-					name = obj.getString("name");
-				} catch (Exception e) {
-					name = newExpress.getMailNumber();
-				}
-				newExpress.setName(name);
-				try {
-					newExpress.setData(obj.getString("cache"));
-				} catch (Exception e) {
-					newExpress.setData(null);
-				}
-
-				try {
-					newExpress.setLastData(obj.getString("lastCache"));
-				} catch (Exception e) {
-					newExpress.setLastData(null);
-				}
-
-				try {
-					newExpress.shouldPush = obj.getBoolean("shouldPush");
-					newExpress.needPush = obj.getBoolean("needPush");
-				} catch (Exception e) {
-
-				}
-
-				mExpressArray.add(newExpress);
+				mExpressArray.add(Express.buildFromJSONObject(jsonArray.getJSONObject(i)));
 			} catch (JSONException e){
 				Log.e(TAG, "第"+i+"组数据格式出现错误");
 				e.printStackTrace();

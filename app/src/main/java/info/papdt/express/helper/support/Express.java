@@ -5,8 +5,6 @@ import android.text.TextUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import info.papdt.express.helper.api.KuaiDi100Helper;
-
 public class Express {
 
 	private String companyCode, mailNumber, name;
@@ -86,6 +84,36 @@ public class Express {
 			e.printStackTrace();
 		}
 		return obj0;
+	}
+
+	public static Express buildFromJSONObject(JSONObject obj) throws JSONException {
+		Express newExpress = new Express(obj.getString("companyCode"), obj.getString("mailNumber"));
+		String name;
+		try {
+			name = obj.getString("name");
+		} catch (Exception e) {
+			name = newExpress.getMailNumber();
+		}
+		newExpress.setName(name);
+		try {
+			newExpress.setData(obj.getString("cache"));
+		} catch (Exception e) {
+			newExpress.setData(null);
+		}
+
+		try {
+			newExpress.setLastData(obj.getString("lastCache"));
+		} catch (Exception e) {
+			newExpress.setLastData(null);
+		}
+
+		try {
+			newExpress.shouldPush = obj.getBoolean("shouldPush");
+			newExpress.needPush = obj.getBoolean("needPush");
+		} catch (Exception e) {
+
+		}
+		return newExpress;
 	}
 
 	public String getName() {
