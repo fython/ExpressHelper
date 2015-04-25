@@ -2,6 +2,8 @@ package info.papdt.express.helper.port;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -65,11 +67,31 @@ public class ExpressHelper {
 	}
 
 	/** 将得到的快递包裹添加到水表助手App中便于追踪 */
-	public static void addExpressTrackToApp(Context context, Express express) {
-		Intent intent = new Intent();
+	public static boolean addExpressTrackToApp(Context context, Express express) {
+		if (!isApplicationAvailable(context, "info.papdt.express.helper")) return false;
+
+		Intent intent = new Intent(ACTION_ADD_TRACK);
 		intent.putExtra(EXTRA_ADD_EXPRESS_DATA, express.toJSONObject().toString());
-		intent.setAction(ACTION_ADD_TRACK);
 		context.sendBroadcast(intent);
+
+		return true;
+	}
+
+
+	/** 检查某个应用是否安装 */
+	private static boolean isApplicationAvailable(Context context, String packageName) {
+		if (packageName == null || "".equals(packageName))
+			return false;
+		try {
+			ApplicationInfo info = context.getPackageManager()
+					.getApplicationInfo(
+							packageName,
+							PackageManager.GET_UNINSTALLED_PACKAGES
+					);
+			return true;
+		} catch (PackageManager.NameNotFoundException e) {
+			return false;
+		}
 	}
 
 	/** HttpGet 方法 */

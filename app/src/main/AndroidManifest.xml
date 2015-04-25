@@ -1,76 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="info.papdt.express.helper">
+    package="info.papdt.express.helper" >
 
-	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="21"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher_webp"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
+        android:theme="@style/AppTheme" >
         <activity
-            android:name=".ui.MainActivity"
+            android:name="info.papdt.express.helper.ui.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="info.papdt.express.helper.ui.CompanySelectActivity"
+            android:label="@string/action_select_company"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="info.papdt.express.helper.ui.AddActivity"
+            android:label="@string/title_add_express"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="info.papdt.express.helper.ui.DetailsActivity"
+            android:label="@string/title_express_details"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="info.papdt.express.helper.ui.SettingsActivity"
+            android:label="@string/title_settings"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
 
-	    <activity
-		    android:name=".ui.CompanySelectActivity"
-		    android:label="@string/action_select_company"
-		    android:theme="@style/AppTheme.NoActionBar.Translucent">
-		    <intent-filter>
-			    <action android:name="android.intent.action.MAIN"/>
-		    </intent-filter>
-	    </activity>
+        <service android:name="info.papdt.express.helper.support.ReminderService" />
 
-	    <activity
-		    android:name=".ui.AddActivity"
-		    android:label="@string/title_add_express"
-		    android:theme="@style/AppTheme.NoActionBar.Translucent">
-		    <intent-filter>
-			    <action android:name="android.intent.action.MAIN"/>
-		    </intent-filter>
-	    </activity>
+        <receiver android:name="info.papdt.express.helper.support.ConnectivityReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
-	    <activity
-		    android:name=".ui.DetailsActivity"
-		    android:label="@string/title_express_details"
-		    android:theme="@style/AppTheme.NoActionBar.Translucent">
+	    <receiver android:name=".support.AddTrackReceiver">
 		    <intent-filter>
-			    <action android:name="android.intent.action.MAIN"/>
-		    </intent-filter>
-	    </activity>
-
-	    <activity
-		    android:name=".ui.SettingsActivity"
-		    android:label="@string/title_settings"
-		    android:theme="@style/AppTheme.NoActionBar.Translucent">
-		    <intent-filter>
-			    <action android:name="android.intent.action.MAIN"/>
-		    </intent-filter>
-	    </activity>
-
-	    <service android:name="info.papdt.express.helper.support.ReminderService" />
-
-	    <receiver android:name="info.papdt.express.helper.support.ConnectivityReceiver">
-		    <intent-filter>
-			    <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+			    <action android:name="info.papdt.express.helper.ACTION_ADD_TRACK" />
 		    </intent-filter>
 	    </receiver>
 
-    </application>
+        <activity
+            android:name="info.papdt.express.helper.ui.TestActivity"
+            android:label="@string/title_activity_test"
+            android:theme="@style/AppTheme.NoActionBar.Translucent" >
+	        <intent-filter>
+		        <action android:name="android.intent.action.MAIN" />
+	        </intent-filter>
+        </activity>
 
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    </application>
 
 </manifest>

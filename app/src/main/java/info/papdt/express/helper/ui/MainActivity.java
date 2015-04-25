@@ -463,6 +463,11 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 			showDonateDialog();
 			return true;
 		}
+		if (id == R.id.action_test) {
+			Intent intent = new Intent(this, TestActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+		}
 
 		return super.onOptionsItemSelected(item);
 	}
