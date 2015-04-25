@@ -151,6 +151,19 @@
 					app:primaryColor="?attr/colorPrimary"
 					android:textColorHint="@color/hint_foreground_material_light"/>
 
+				<CheckBox
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/checkbox_force_add"
+					android:id="@+id/cb_force_add"
+					android:layout_marginLeft="9dp"
+					android:layout_marginTop="12dp"
+					android:layout_marginRight="12dp"
+					android:paddingLeft="8dp"
+					android:textAppearance="@style/TextAppearance.AppCompat"
+					android:textColor="#af000000"
+					android:textSize="16sp"/>
+
 			</LinearLayout>
 
 		</android.support.v7.widget.CardView>

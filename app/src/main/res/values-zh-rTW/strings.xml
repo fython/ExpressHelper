@@ -17,6 +17,7 @@
 	<string name="toast_add_package_failed">添加包裹失敗。</string>
 	<string name="toast_has_been_exist">這個速遞單號已存在于你的列單中。</string>
 	<string name="hint_company_name_empty">選擇物流公司....</string>
+	<string name="checkbox_force_add">添加時無視錯誤</string>
 
 	<string name="title_express_details">詳情</string>
 	<string name="item_status">狀態</string>

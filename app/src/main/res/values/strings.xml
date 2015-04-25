@@ -28,6 +28,7 @@
 	<string name="toast_add_package_failed">Failed to add the package.</string>
 	<string name="toast_has_been_exist">The package has been exist in your list.</string>
 	<string name="hint_company_name_empty">Select a carrier....</string>
+	<string name="checkbox_force_add">Ignore error while adding</string>
 
 	<string name="title_express_details">Details</string>
 	<string name="item_status">Status</string>

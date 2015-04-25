@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class AddActivity extends AbsActivity {
 	private TextView mCompanyNameText;
 	private ProgressBar mProgress;
 	private FloatingActionButton mFAB;
+	private CheckBox mForceAddCheckBox;
 	private int mNow = -1;
 
 	public static final String TAG = "AddActivity";
@@ -57,6 +59,7 @@ public class AddActivity extends AbsActivity {
 		mEditTextName = (MaterialEditText) findViewById(R.id.et_name);
 		mProgress = (ProgressBar) findViewById(R.id.progressBar);
 		mFAB = (FloatingActionButton) findViewById(R.id.fab);
+		mForceAddCheckBox = (CheckBox) findViewById(R.id.cb_force_add);
 		mFAB.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -129,14 +132,16 @@ public class AddActivity extends AbsActivity {
 	}
 	
 	private void receiveData(String result, String name) {
-		ExpressResult er = ExpressResult.buildFromJSON(result);
-		if (er.getTrueStatus() == ExpressResult.STATUS_FAILED) {
-			Toast.makeText(
-					getApplicationContext(),
-					getResources().getStringArray(R.array.errCode_toast) [er.errCode],
-					Toast.LENGTH_SHORT
-			).show();
-			return;
+		if (!mForceAddCheckBox.isChecked()) {
+			ExpressResult er = ExpressResult.buildFromJSON(result);
+			if (er.getTrueStatus() == ExpressResult.STATUS_FAILED) {
+				Toast.makeText(
+						getApplicationContext(),
+						getResources().getStringArray(R.array.errCode_toast) [er.errCode],
+						Toast.LENGTH_SHORT
+				).show();
+				return;
+			}
 		}
 
 		Intent intent = new Intent(this, MainActivity.class);
@@ -161,7 +166,7 @@ public class AddActivity extends AbsActivity {
 					options.toBundle()
 			);
 		} else {
-			mActivity.startActivity(intent);
+			mActivity.startActivityForResult(intent, MainActivity.REQUEST_ADD);
 		}
 	}
 

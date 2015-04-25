@@ -89,8 +89,10 @@ public class DetailsActivity extends AbsActivity {
 		}.start();
 
 		int company_id = KuaiDi100Helper.CompanyInfo.findCompanyByCode(express.getCompanyCode());
-		phoneNumber = KuaiDi100Helper.CompanyInfo.info.get(company_id).phone;
-		hasPhoneNumber = phoneNumber != null && phoneNumber != "null" && !TextUtils.isEmpty(phoneNumber);
+		if (company_id != -1) {
+			phoneNumber = KuaiDi100Helper.CompanyInfo.info.get(company_id).phone;
+			hasPhoneNumber = phoneNumber != null && phoneNumber != "null" && !TextUtils.isEmpty(phoneNumber);
+		}
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setTitle(express.getName());
@@ -327,8 +329,14 @@ public class DetailsActivity extends AbsActivity {
 
 	private void setUpHeaderView() {
 		tv_status.setText(getResources().getStringArray(R.array.status)[cache.getTrueStatus()]);
-		tv_company.setText(cache.expTextName);
-		tv_round_center.setText(cache.expTextName.substring(0, 1));
+
+		try {
+			tv_company.setText(cache.expTextName);
+			tv_round_center.setText(cache.expTextName.substring(0, 1));
+		} catch (Exception e) {
+
+		}
+
 		tv_mail_no.setText(express.getMailNumber());
 		toggleNumberShowing();
 

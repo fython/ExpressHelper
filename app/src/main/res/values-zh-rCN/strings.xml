@@ -19,6 +19,7 @@
 	<string name="toast_add_package_failed">添加包裹失败。</string>
 	<string name="toast_has_been_exist">这个快递单号已经存在于你的清单中。</string>
 	<string name="hint_company_name_empty">选择物流公司....</string>
+	<string name="checkbox_force_add">添加时忽略错误</string>
 
 	<string name="title_express_details">详情</string>
 	<string name="item_status">状态</string>
