@@ -34,6 +34,7 @@ public abstract class AbsActivity extends SwipeBackActivity {
 
 		if (Build.VERSION.SDK_INT >= 21) {
 			getWindow().setStatusBarColor(Color.TRANSPARENT);
+			getWindow().setNavigationBarColor(getResources().getColor(R.color.pink_800));
 		}
 
 		/** Initialize Settings */

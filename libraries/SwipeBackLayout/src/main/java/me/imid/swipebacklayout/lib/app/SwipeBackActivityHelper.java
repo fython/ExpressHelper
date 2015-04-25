@@ -1,7 +1,7 @@
 package me.imid.swipebacklayout.lib.app;
 
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import me.imid.swipebacklayout.lib.SwipeBackLayout;
@@ -11,11 +11,11 @@ import me.imid.swipebacklayout.lib.SwipeBackLayout;
  * @author PeterCxy
  */
 public class SwipeBackActivityHelper {
-    protected ActionBarActivity mActivity;
+    protected AppCompatActivity mActivity;
 
     private SwipeBackLayout mSwipeBackLayout;
 
-    public SwipeBackActivityHelper(ActionBarActivity activity) {
+    public SwipeBackActivityHelper(AppCompatActivity activity) {
         mActivity = activity;
     }
 

@@ -14,14 +14,17 @@
 	<style name="BaseAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 		<item name="colorPrimary">@color/pink_500</item>
 		<item name="colorPrimaryDark">@color/pink_800</item>
+		<item name="colorAccent">@color/pink_300</item>
 	</style>
 
 	<style name="AppTheme.NoActionBar" parent="@style/AppTheme">
 		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
 	</style>
 
 	<style name="AppTheme.NoActionBar.Translucent" parent="@style/AppTheme.Translucent">
 		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
 	</style>
 
 </resources>

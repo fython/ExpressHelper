@@ -1,6 +1,5 @@
 package info.papdt.express.helper.ui;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,9 +26,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
 
 import info.papdt.express.helper.api.KuaiDi100Helper;
-import info.papdt.express.helper.support.ConnectivityReceiver;
 import info.papdt.express.helper.support.CrashHandler;
-import info.papdt.express.helper.support.Utility;
 import info.papdt.express.helper.ui.adapter.CompanyListRecyclerAdapter;
 import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
 import info.papdt.express.helper.ui.fragment.BaseHomeFragment;
