@@ -27,6 +27,7 @@ import com.github.ksoichiro.android.observablescrollview.Scrollable;
 
 import info.papdt.express.helper.api.KuaiDi100Helper;
 import info.papdt.express.helper.support.CrashHandler;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.adapter.CompanyListRecyclerAdapter;
 import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
 import info.papdt.express.helper.ui.fragment.BaseHomeFragment;
@@ -70,6 +71,8 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		int selectedTab = mSets.getInt(Settings.STATE_SELECTED_TAB, 0);
+
 		/** Init crash handler */
 		CrashHandler.init(getApplicationContext());
 		CrashHandler.register();
@@ -84,7 +87,14 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 		mPagerAdapter = new HomePagerAdapter(getApplicationContext(),
 				getSupportFragmentManager());
 		mPager.setAdapter(mPagerAdapter);
+		mPager.setCurrentItem(selectedTab, false);
 		mSlidingTab.setViewPager(mPager);
+	}
+
+	@Override
+	public void onStop() {
+		mSets.putInt(Settings.STATE_SELECTED_TAB, mPager.getCurrentItem());
+		super.onStop();
 	}
 
 	public void refreshDatabase(boolean pullNewData) {
