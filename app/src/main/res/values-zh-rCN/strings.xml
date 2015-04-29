@@ -167,6 +167,7 @@
 	<string name="action_phone">拨打电话</string>
 	<string name="action_website">打开网页</string>
 	<string name="toast_phone_is_not_exist">很抱歉，我们还没有收录该物流公司的电话号码。</string>
+	<string name="toast_mic_unsupported">很抱歉，你还没有安装魔趣语音助手。</string>
 
 	<string name="notification_delivered">" 已签收。"</string>
 	<string name="notification_on_the_way">" 即将到达。"</string>

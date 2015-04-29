@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -90,6 +92,21 @@ public class Utility {
         canvas.drawBitmap(bitmap, src, dst, paint);
         return output;
     }
+
+	public static boolean isApplicationAvailable(Context context, String packageName) {
+		if (packageName == null || "".equals(packageName))
+			return false;
+		try {
+			ApplicationInfo info = context.getPackageManager()
+					.getApplicationInfo(
+							packageName,
+							PackageManager.GET_UNINSTALLED_PACKAGES
+					);
+			return true;
+		} catch (PackageManager.NameNotFoundException e) {
+			return false;
+		}
+	}
 
 	public static void saveFile(Context context, String name, String text) throws IOException {
 		FileOutputStream fos = context.openFileOutput(name, Context.MODE_PRIVATE);

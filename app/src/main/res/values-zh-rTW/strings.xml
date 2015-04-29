@@ -166,6 +166,7 @@
 	<string name="action_phone">撥打電話</string>
 	<string name="action_website">打開網頁</string>
 	<string name="toast_phone_is_not_exist">很抱歉，我們仍未收集該物流公司的電話號碼。</string>
+	<string name="toast_mic_unsupported">很抱歉，你還沒有安裝魔趣語音精靈。</string>
 
 	<string name="notification_delivered">" 已簽收。"</string>
 	<string name="notification_on_the_way">" 即將到達。"</string>

@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.Menu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.github.ksoichiro.android.observablescrollview.ObservableRecyclerView;
 import com.quinny898.library.persistentsearch.SearchBox;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.api.KuaiDi100Helper;
+import info.papdt.express.helper.support.Utility;
 import info.papdt.express.helper.ui.adapter.CompanyListRecyclerAdapter;
 import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
 
@@ -145,7 +147,16 @@ public class CompanySelectActivity extends AbsActivity {
 	}
 
 	public void mic(View v) {
-		mSearchBox.micClick(this);
+		if (Utility.isApplicationAvailable(getApplicationContext(), "com.mokee.assist")) {
+			Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("com.mokee.assist");
+			startActivity(LaunchIntent);
+		} else {
+			Toast.makeText(
+					getApplicationContext(),
+					R.string.toast_mic_unsupported,
+					Toast.LENGTH_SHORT
+			).show();
+		}
 	}
 
 }

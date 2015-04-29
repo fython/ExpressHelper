@@ -24,14 +24,6 @@ import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCal
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.github.ksoichiro.android.observablescrollview.Scrollable;
-
-import info.papdt.express.helper.api.KuaiDi100Helper;
-import info.papdt.express.helper.support.CrashHandler;
-import info.papdt.express.helper.support.Settings;
-import info.papdt.express.helper.ui.adapter.CompanyListRecyclerAdapter;
-import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
-import info.papdt.express.helper.ui.fragment.BaseHomeFragment;
-import info.papdt.express.helper.view.SlidingTabLayout;
 import com.melnykov.fab.FloatingActionButton;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
@@ -43,8 +35,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.api.KuaiDi100Helper;
 import info.papdt.express.helper.dao.ExpressDatabase;
+import info.papdt.express.helper.support.CrashHandler;
+import info.papdt.express.helper.support.Settings;
+import info.papdt.express.helper.support.Utility;
+import info.papdt.express.helper.ui.adapter.CompanyListRecyclerAdapter;
 import info.papdt.express.helper.ui.adapter.HomePagerAdapter;
+import info.papdt.express.helper.ui.common.MyRecyclerViewAdapter;
+import info.papdt.express.helper.ui.fragment.BaseHomeFragment;
+import info.papdt.express.helper.view.SlidingTabLayout;
 
 public class MainActivity extends AbsActivity implements ObservableScrollViewCallbacks {
 
@@ -478,7 +478,16 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 	}
 
 	public void mic(View v) {
-		mSearchBox.micClick(this);
+		if (Utility.isApplicationAvailable(getApplicationContext(), "com.mokee.assist")) {
+			Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("com.mokee.assist");
+			startActivity(LaunchIntent);
+		} else {
+			Toast.makeText(
+					getApplicationContext(),
+					R.string.toast_mic_unsupported,
+					Toast.LENGTH_SHORT
+			).show();
+		}
 	}
 
 	public class SearchCompanyTask extends AsyncTask<String, Void, ArrayList<KuaiDi100Helper.CompanyInfo.Company>> {
