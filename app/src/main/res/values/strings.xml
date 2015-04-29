@@ -165,6 +165,9 @@
     <string name="item_notification_do_not_disturb_desc">Don\'t send notifications from 23:00 to 06:00.</string>
     <string name="item_disable_animation">Disable list animations</string>
     <string name="item_disable_animation_desc">Recommend old devices to disable it</string>
+	<string name="item_navigation_tint">Navigation bar tint</string>
+	<string name="item_navigation_tint_desc">Available only on Android 5.x or higher versions.</string>
+
     <string name="action_select_company">Shipment companies list</string>
     <string name="search_hint_company">Search 「Shipment companies」</string>
     <string name="action_phone">Phone</string>

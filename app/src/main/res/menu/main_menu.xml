@@ -15,8 +15,4 @@
 	      android:title="@string/item_donate"
 	      app:showAsAction="never"/>
 
-	<item android:id="@+id/action_test"
-	      android:title="Test"
-	      app:showAsAction="never"/>
-
 </menu>

@@ -13,7 +13,8 @@ public class Settings {
 			KEY_NOTIFICATION_VIBRATE = "noti_vibrate",
 			KEY_NOTIFICATION_INTERVAL = "noti_interval",
 			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb",
-			KEY_DISABLE_ANIMATION = "disable_animation";
+			KEY_DISABLE_ANIMATION = "disable_animation",
+			KEY_NAVIGATION_TINT = "navigation_tint";
 	public static final String STATE_SELECTED_TAB = "selected_tab";
 
 	private static Settings sInstance;

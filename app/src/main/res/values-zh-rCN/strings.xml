@@ -159,6 +159,8 @@
 	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 6:00 期间不推送通知</string>
 	<string name="item_disable_animation">禁用列表动画</string>
 	<string name="item_disable_animation_desc">在一些老机器上动画可能会造成卡顿</string>
+	<string name="item_navigation_tint">导航栏变色</string>
+	<string name="item_navigation_tint_desc">仅支持 Android 5.x 或更高版本</string>
 
 	<string name="action_select_company">快递公司列表</string>
 	<string name="search_hint_company">搜索 「快递公司」</string>

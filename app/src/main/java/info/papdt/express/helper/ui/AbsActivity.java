@@ -26,6 +26,9 @@ public abstract class AbsActivity extends SwipeBackActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		/** Initialize Settings */
+		mSets = Settings.getInstance(getApplicationContext());
+
 		/** Set up translucent status bar */
 		if (Build.VERSION.SDK_INT >= 19 && !Utility.isChrome()) {
 			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -34,11 +37,10 @@ public abstract class AbsActivity extends SwipeBackActivity {
 
 		if (Build.VERSION.SDK_INT >= 21) {
 			getWindow().setStatusBarColor(Color.TRANSPARENT);
-			getWindow().setNavigationBarColor(getResources().getColor(R.color.pink_800));
+			if (mSets.getBoolean(Settings.KEY_NAVIGATION_TINT, true)) {
+				getWindow().setNavigationBarColor(getResources().getColor(R.color.pink_800));
+			}
 		}
-
-		/** Initialize Settings */
-		mSets = Settings.getInstance(getApplicationContext());
 
 		super.onCreate(savedInstanceState);
 	}

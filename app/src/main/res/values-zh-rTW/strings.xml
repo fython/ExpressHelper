@@ -158,6 +158,8 @@
 	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 6:00 時段不推送通知</string>
 	<string name="item_disable_animation">禁用列表動效</string>
 	<string name="item_disable_animation_desc">在一些老機器上動效可能會造成卡頓</string>
+	<string name="item_navigation_tint">導覽欄變色</string>
+	<string name="item_navigation_tint_desc">僅支援 Android 5.x 或更高版本</string>
 
 	<string name="action_select_company">速遞公司列單</string>
 	<string name="search_hint_company">搜尋 「速遞公司」</string>
