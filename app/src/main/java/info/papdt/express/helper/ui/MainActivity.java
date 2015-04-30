@@ -473,6 +473,23 @@ public class MainActivity extends AbsActivity implements ObservableScrollViewCal
 			showDonateDialog();
 			return true;
 		}
+		if (id == R.id.action_add) {
+			AddActivity.launch(MainActivity.this, mFAB);
+			return true;
+		}
+		if (id == R.id.action_manual_refresh) {
+			Fragment fragment = mPagerAdapter.getItemAt(mPager.getCurrentItem());
+			if (fragment instanceof BaseHomeFragment) {
+				((BaseHomeFragment) fragment).mHandler.sendEmptyMessage(BaseHomeFragment.FLAG_REFRESH_LIST);
+			}
+			
+			Toast.makeText(
+					getApplicationContext(),
+					R.string.toast_pull_to_refresh_tips,
+					Toast.LENGTH_LONG
+			).show();
+			return true;
+		}
 
 		return super.onOptionsItemSelected(item);
 	}

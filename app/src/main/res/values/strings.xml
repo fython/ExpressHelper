@@ -6,6 +6,10 @@
     <string name="title_section_2">Pending</string>
     <string name="title_section_3">Delivered</string>
 
+	<string name="action_manual_refresh">Refresh</string>
+	<string name="toast_pull_to_refresh_tips">You can also refresh by pulling down the lists.</string>
+	<string name="action_add">Add express</string>
+
     <string-array name="title_sections">
         <item>@string/title_section_1</item>
         <item>@string/title_section_2</item>
@@ -177,8 +181,6 @@
     <string name="notification_delivered">" has been delivered."</string>
     <string name="notification_on_the_way">" is on the way."</string>
     <string name="notification_new_message">" has a new message."</string>
-    <string name="title_activity_test">test</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
 </resources>

@@ -5,6 +5,10 @@
 	<string name="title_section_1">主頁</string>
 	<string name="title_section_3">已簽收</string>
 
+	<string name="action_manual_refresh">刷新</string>
+	<string name="toast_pull_to_refresh_tips">你也可以通過下拉列表來刷新。</string>
+	<string name="action_add">添加速遞</string>
+
 	<string name="title_add_express">新增物流跟蹤</string>
 	<string name="hint_et_name">標題 (可選)</string>
 	<string name="hint_et_company">物流公司名稱</string>

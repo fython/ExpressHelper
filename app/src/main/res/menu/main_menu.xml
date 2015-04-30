@@ -7,6 +7,14 @@
 	      android:icon="@drawable/ic_local_shipping_white_24dp"
 	      app:showAsAction="always"/>
 
+	<item android:id="@+id/action_manual_refresh"
+	      android:title="@string/action_manual_refresh"
+	      app:showAsAction="never"/>
+
+	<item android:id="@+id/action_add"
+	      android:title="@string/action_add"
+	      app:showAsAction="never"/>
+
 	<item android:id="@+id/action_settings"
 	      android:title="@string/title_settings"
 	      app:showAsAction="never"/>

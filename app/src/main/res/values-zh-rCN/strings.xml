@@ -5,6 +5,10 @@
 	<string name="title_section_1">全部</string>
 	<string name="title_section_3">已签收</string>
 
+	<string name="action_manual_refresh">刷新</string>
+	<string name="toast_pull_to_refresh_tips">你也可以通过下拉列表来刷新信息。</string>
+	<string name="action_add">添加快递</string>
+
 	<string name="title_settings">设置</string>
 
 	<string name="title_add_express">新增物流追踪</string>
